@@ -1,0 +1,17 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  become: true
+
+  tasks:
+
+
+    - name: "Get the Docker \"daemon.json\" File"
+      ansible.builtin.slurp:
+        src: "/etc/docker/daemon.json"
+      register: docker_daemon_json
+
+    - name: "Print contents of Docker daemon.json"
+      ansible.builtin.debug:
+        msg: "{{ docker_daemon_json.content | b64decode }}"

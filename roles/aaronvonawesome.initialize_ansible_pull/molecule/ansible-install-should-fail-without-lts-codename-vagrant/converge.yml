@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: false
+
+  tasks:
+
+    - name: "Scenario: Ansible Install should fail if \"varLtsCodename\" is not set"
+      ansible.builtin.include_tasks: ../../tasks/install-latest-ansible.yaml

@@ -1,0 +1,26 @@
+Host *
+    AddressFamily inet
+
+{% if 'codberg' in _var_ansible_pull_git_repo %}
+Host codeberg.org
+    HostName codeberg.org
+{% elif 'gitlab' in _var_ansible_pull_git_repo %}
+Host gitlab.com
+    HostName gitlab.com
+{% elif 'bitbucket' in _var_ansible_pull_git_repo %}
+Host bitbucket.org
+    HostName bitbucket.org
+{% elif 'github' in _var_ansible_pull_git_repo %}
+Host github.com
+	  HostName github.com
+{% else %}
+Host codeberg.org
+    HostName codeberg.org
+{% endif %}
+    PreferredAuthentications publickey
+    IdentityFile /home/{{ _var_ansible_pull_user }}/.ssh/id_ansible-pull
+    User git
+    Port 22
+    IdentitiesOnly yes
+    StrictHostKeyChecking no
+    UserKnownHostsFile=/dev/null

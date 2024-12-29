@@ -1,0 +1,160 @@
+---
+# ============================================================
+#                     Role: install_docker
+# ============================================================
+
+- name: "Block: \"install_docker\" Ansible Role"
+  become: true
+  vars:
+    _var_lts_codename: "{{ var_lts_codename }}"
+    _var_user_list: "{{ var_user_list }}"
+    _var_docker_daemon_file: "{{ var_docker_daemon_file }}"
+    _var_should_install_ansible_community_docker_collection_compatibility: >
+      {{ var_should_install_ansible_community_docker_collection_compatibility }}
+  block:
+
+    - name: "Add Docker apt key"
+      ansible.builtin.get_url:
+        url: "https://download.docker.com/linux/ubuntu/gpg"
+        dest: "/etc/apt/trusted.gpg.d/docker.asc"
+        mode: "0644"
+        force: true
+
+    - name: "Add Docker repo to sources list"
+      ansible.builtin.apt_repository:
+        repo: >
+          deb [arch={{ ansible_architecture |
+          replace('x86_64', 'amd64') |
+          replace('aarch64', 'arm64') |
+          replace('armv7l', 'arm') }}]
+          https://download.docker.com/linux/ubuntu {{ _var_lts_codename }} stable
+        filename: docker
+        update_cache: true
+        mode: "0600"
+      register: add_docker_repo_result
+      until: add_docker_repo_result is succeeded
+      retries: 3
+      delay: 60
+      ignore_errors: true
+
+    - name: "Fail if unable to add Docker repository after 3 attempts"
+      ansible.builtin.fail:
+        msg: "Adding the Docker repository failed after 3 retries."
+      when: add_docker_repo_result is failed
+
+    # ============================================================
+
+    - name: "Run install docker"
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: latest
+        update_cache: true
+      vars:
+        packages:
+          - containerd.io
+          - docker-ce
+          - docker-ce-cli
+          - docker-compose-plugin
+          - python3-pip
+
+    - name: "Create Docker folder in etc"
+      ansible.builtin.file:
+        path: /etc/docker
+        state: directory
+        mode: "0644"
+        owner: "root"
+        group: "root"
+        force: false
+
+    - name: "Copy daemon.json so Docker daemon does *not* use Google DNS"
+      ansible.builtin.copy:
+        src: "{{ lookup('first_found', file_paths) }}"
+        dest: /etc/docker/daemon.json
+        owner: root
+        group: root
+        mode: "0644"
+        force: true
+      vars:
+        file_paths:
+          - "{{ _var_docker_daemon_file }}"
+          - "{{ playbook_dir }}/files/{{ _var_docker_daemon_file }}"
+          - "{{ role_path }}/files/{{ _var_docker_daemon_file }}"
+      when: _var_docker_daemon_file | length > 0
+
+    - name: "Enable Docker Service and Ensure it is not Masked"
+      ansible.builtin.systemd:
+        name: docker
+        enabled: true
+        masked: false
+
+    - name: "Ensure group \"docker\" exists"
+      ansible.builtin.group:
+        name: docker
+        state: present
+
+    - name: "Add user(s) to \"docker\" group"
+      ansible.builtin.user:
+        name: "{{ item.username }}"
+        groups:
+          docker
+        append: true
+        shell: /bin/bash
+      loop: "{{ _var_user_list }}"
+      when: _var_user_list is defined and _var_user_list | length > 0
+
+
+    - name: "Install PIP Packages for Ansible community.docker collection"
+      block:
+
+        - name: "Install PIP Packages: docker, docker-compose, PyYAML for Ubuntu 22.04 Systems"
+          become: true
+          become_user: "{{ item.username }}"
+          ansible.builtin.pip:
+            name: "{{ packages }}"
+            executable: pip3
+            state: latest
+            extra_args: --user
+          vars:
+            packages:
+              - docker
+              - docker-compose
+              - PyYAML
+          when: >
+            (_var_should_install_ansible_community_docker_collection_compatibility and _var_user_list is defined and _var_user_list | length > 0) and
+            (_var_lts_codename == "jammy")
+          loop: "{{ _var_user_list }}"
+
+        - name: "Install PIP Packages: docker, docker-compose, PyYAML for Ubuntu 24.04 Systems"
+          ansible.builtin.apt:
+            name: "{{ packages }}"
+            state: latest
+            update_cache: true
+          vars:
+            packages:
+              - python3-compose
+              - python3-docker
+              - python3-yaml
+          when: >
+            _var_should_install_ansible_community_docker_collection_compatibility and
+            (_var_lts_codename == "noble")
+
+      rescue:
+
+        - name: "Did not Install python Docker pip packages"
+          ansible.builtin.debug:
+            msg: "Does user exist on the target machine?"
+
+        - name: "Error detected! Stopping Playbook :-("
+          ansible.builtin.fail:
+            msg: "Error detected! Stopping Playbook :-("
+
+
+  rescue:
+
+    - name: "ERROR: \"install_docker\" Ansible Role"
+      ansible.builtin.debug:
+        msg: "ERROR: \"install_docker\" Ansible Role"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

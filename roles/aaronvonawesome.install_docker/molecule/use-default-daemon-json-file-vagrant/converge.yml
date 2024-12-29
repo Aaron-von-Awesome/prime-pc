@@ -1,0 +1,19 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: true
+  vars:
+    _lts_codename: "{{ lts_codename }}"
+    _user_list: "{{ user_list }}"
+    _docker_daemon_file: "install-docker_custom-docker-daemon.json"
+
+
+  tasks:
+
+    - name: "Scenario: Use default daemon.json file"
+      ansible.builtin.include_role:
+        name: "aaronvonawesome.install_docker"
+      vars:
+        var_docker_daemon_file: "{{ _docker_daemon_file }}"
+        var_lts_codename: "{{ _lts_codename }}"
+        var_user_list: "{{ _user_list }}"

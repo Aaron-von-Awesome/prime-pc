@@ -1,0 +1,20 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: true
+  vars:
+    _lts_codename: "{{ lts_codename }}"
+    _user_list: "{{ user_list }}"
+    _should_install_ansible_community_docker_collection_compatibility: true
+
+
+  tasks:
+
+    - name: "Scenario: install_docker with community.docker collection compatibility"
+      ansible.builtin.include_role:
+        name: "aaronvonawesome.install_docker"
+      vars:
+        var_lts_codename: "{{ _lts_codename }}"
+        var_user_list: "{{ _user_list }}"
+        var_should_install_ansible_community_docker_collection_compatibility: >
+          {{ _should_install_ansible_community_docker_collection_compatibility }}

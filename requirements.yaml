@@ -1,0 +1,18 @@
+---
+
+roles:
+
+  - name: "aaronvonawesome.initialize_ansible_pull"
+    scm: git
+    src: "https://codeberg.org/aaronvonawesome/ansible-role-initialize-ansible-pull.git"
+    version: "main"
+
+  - name: "aaronvonawesome.install_docker"
+    scm: git
+    src: "https://codeberg.org/aaronvonawesome/ansible-role-install-docker.git"
+    version: "main"
+
+
+collections:
+
+  - name: "community.general"

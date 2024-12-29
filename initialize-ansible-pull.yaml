@@ -1,0 +1,27 @@
+---
+############################################################################
+### ***       Prime PC: Initialize ansible-pull - Playbook          ***  ###
+############################################################################
+
+# =========================================================================
+# =====             Play - Initialize ansible-pull                   ======
+# =========================================================================
+#
+- name: "Initialize ansible-pull on a Prime PC"
+  hosts:
+    - all
+  gather_facts: true
+  become: true
+
+  # ---------------------------------------------------------------------------
+  # ---------                          Roles                         ----------
+  # ---------------------------------------------------------------------------
+
+  roles:
+
+    - name: ROLE - Initialize Ansible Pull
+      role: "aaronvonawesome.initialize_ansible_pull"
+      vars:
+        var_ansible_pull_lts_codename: "noble"
+        var_ansible_pull_git_repo: ""
+        var_ansible_pull_playbook: "configure-prime-pc.yaml"

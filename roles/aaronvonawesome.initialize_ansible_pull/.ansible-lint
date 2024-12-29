@@ -1,0 +1,4 @@
+skip_list:
+  - "package-latest"
+  - "name[template]"
+  - "var-naming[pattern]"

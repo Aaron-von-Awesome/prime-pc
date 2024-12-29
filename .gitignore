@@ -1,3 +1,5 @@
 # ---> Ansible
 *.retry
-
+secret_*
+ansible.log
+**/__pycache__/**

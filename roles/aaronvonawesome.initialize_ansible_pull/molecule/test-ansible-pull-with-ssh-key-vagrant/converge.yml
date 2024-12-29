@@ -1,0 +1,12 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: false
+
+  tasks:
+
+    - name: "Scenario: Test ansible-pull with SSH key"
+      ansible.builtin.include_role:
+        name: "aaronvonawesome.initialize_ansible_pull"
+      vars:
+        var_ansible_pull_lts_codename: "virginia"

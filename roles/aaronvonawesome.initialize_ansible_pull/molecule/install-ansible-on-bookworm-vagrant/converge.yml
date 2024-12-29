@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: false
+
+  tasks:
+
+    - name: "Scenario: Install Ansible on Debian Bookworm"
+      ansible.builtin.include_tasks: ../../tasks/install-latest-ansible.yaml
+      vars:
+        varLtsCodename: "bookworm"

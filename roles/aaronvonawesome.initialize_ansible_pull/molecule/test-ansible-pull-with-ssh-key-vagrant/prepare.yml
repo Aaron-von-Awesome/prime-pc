@@ -1,0 +1,23 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  become: true
+
+  tasks:
+
+    - name: "Create \"/root/.ssh/ansible-pull\" directory"
+      ansible.builtin.file:
+        path: "/root/.ssh/ansible-pull"
+        state: directory
+        owner: "root"
+        group: "root"
+        mode: "0775"
+
+    - name: "Create \"id_ansible-pull\" file"
+      ansible.builtin.file:
+        path: "/root/.ssh/ansible-pull/id_ansible-pull"
+        state: touch
+        owner: "root"
+        group: "root"
+        mode: "0775"

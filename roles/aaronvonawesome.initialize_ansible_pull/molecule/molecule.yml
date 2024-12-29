@@ -1,0 +1,45 @@
+---
+driver:
+  name: vagrant
+scenario:
+  test_sequence:
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - verify
+    - cleanup
+    - destroy
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+platforms:
+  - name: molecule-test-vagrant
+    box: aaronvonawesome/linux-mint-22-cinnamon
+    memory: 4096
+    cpus: 2
+    provider_raw_config_args:
+      - "gui = ${SHOW_VAGRANT_VM_GUI:-false}"
+      - "name = 'molecule-test-vagrant'"
+      - "customize ['modifyvm', :id, '--graphicscontroller', 'vmsvga']"
+      - "customize ['modifyvm', :id, '--vram', '128']"
+      - "customize ['modifyvm', :id, '--accelerate3d', 'on']"
+      - "customize ['modifyvm', :id, '--accelerate2dvideo', 'on']"
+provisioner:
+  name: ansible
+  options:
+    v: true
+  config_options:
+    defaults:
+      remote_user: root
+  inventory:
+    hosts:
+      all:
+        hosts:
+          molecule-test-vagrant:
+    host_vars:
+      molecule-test-vagrant:
+        ansible_python_interpreter: "/usr/bin/python3"

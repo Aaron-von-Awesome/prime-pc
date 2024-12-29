@@ -1,0 +1,19 @@
+---
+# defaults file for ansible-role-install-docker
+
+var_docker_daemon_file: ""
+var_lts_codename: "noble"
+var_should_install_ansible_community_docker_collection_compatibility: false
+
+
+# Example:
+#
+#   _user_list:
+#      - username: "orionpax"
+#      - username: "grimlock"
+#      - username: "computron"
+#      - username: ...
+#
+#   var_user_list: "{{ _user_list }}"
+
+var_user_list: []

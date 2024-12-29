@@ -1,0 +1,11 @@
+---
+# defaults file for ansible-role-initialize-ansible-pull
+var_ansible_pull_lts_codename: ""  # bionic, focal, jammy, noble, bullseye, bookworm, vanessa, vera, victoria, virginia
+var_ansible_pull_git_repo: ""
+var_ansible_pull_git_repo_branch: "main"
+var_ansible_pull_playbook: "local.yaml"
+var_cron_minute: "*/20"
+var_cron_hour: "*"
+var_cron_weekday: "*"
+var_cron_month: "*"
+var_cron_day: "*"

@@ -1,0 +1,98 @@
+---
+- name: "Block: Install latest version of Ansible"
+  become: true
+  vars:
+    _varLtsCodename: "{{ varLtsCodename }}"
+
+  block:
+
+    - name: "Check the value of the LTS Codename variable"
+      ansible.builtin.fail:
+        msg: |
+          The variable "varLtsCodename" is blank or null. Please set a valid value of:
+            - bionic
+            - focal
+            - jammy
+            - noble
+            - bullseye
+            - bookworm
+            - vanessa
+            - vera
+            - victoria
+            - virginia
+      when: >
+        _varLtsCodename is undefined
+        or
+        _varLtsCodename | length == 0
+
+    - name: "Change LTS Codename value from Linux Mint 22 to noble"
+      ansible.builtin.set_fact:
+        _varLtsCodename: "noble"
+      when: >
+        _varLtsCodename == "wilma"
+
+    - name: "Change LTS Codename value from Linux Mint 21 to jammy"
+      ansible.builtin.set_fact:
+        _varLtsCodename: "jammy"
+      when: >
+        _varLtsCodename == "vanessa"
+        or
+        _varLtsCodename == "vera"
+        or
+        _varLtsCodename == "victoria"
+        or
+        _varLtsCodename == "virginia"
+
+    - name: "Change LTS Codename value from bookworm to jammy"
+      ansible.builtin.set_fact:
+        _varLtsCodename: "jammy"
+      when: _varLtsCodename == "bookworm"
+
+    - name: "Change LTS Codename from bullseye to focal"
+      ansible.builtin.set_fact:
+        _varLtsCodename: "focal"
+      when: _varLtsCodename == "bullseye"
+
+    - name: "Add Ansible apt key"
+      ansible.builtin.get_url:
+        url: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x93c4a3fd7bb9c367"
+        dest: "/etc/apt/trusted.gpg.d/ansible.asc"
+        mode: "0644"
+        force: true
+      changed_when: false
+
+    - name: "Add Ansible repo to sources list"
+      ansible.builtin.apt_repository:
+        repo: "deb https://ppa.launchpadcontent.net/ansible/ansible/ubuntu {{ _varLtsCodename }} main "
+        filename: ansible
+        update_cache: true
+        mode: "0600"
+      register: add_ansible_repo_result
+      until: add_ansible_repo_result is succeeded
+      retries: 3
+      delay: 60
+      ignore_errors: true
+
+    - name: "Run \"sudo apt update\""
+      ansible.builtin.apt:
+        update_cache: true
+      changed_when: false
+
+    - name: "Install Ansible"
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: latest
+      vars:
+        packages:
+          - ansible
+          - ansible-core
+
+  rescue:
+
+    - name: "ERROR:  Installing the latest version of Ansible had an error"
+      ansible.builtin.debug:
+        msg: "ERROR:  Installing the latest version of Ansible had an error"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

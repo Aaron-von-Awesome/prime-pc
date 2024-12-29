@@ -1,0 +1,17 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: true
+  vars:
+    _lts_codename: "{{ lts_codename }}"
+    _user_list: []
+
+
+  tasks:
+
+    - name: "Scenario: Do not add any users to docker group"
+      ansible.builtin.include_role:
+        name: "aaronvonawesome.install_docker"
+      vars:
+        var_lts_codename: "{{ _lts_codename }}"
+        var_user_list: "{{ _user_list }}"

@@ -1,0 +1,223 @@
+---
+# ============================================================
+#                     Role: initialize_ansible_pull
+# ============================================================
+
+- name: "Block: \"initialize_ansible_pull\" Ansible Role "
+  become: true
+  vars:
+    _var_ansible_pull_base_ssh_source_directory: "{ __var_ansible_pull_base_ssh_source_directory }}"
+    _var_ansible_pull_git_repo_branch: "{{ var_ansible_pull_git_repo_branch }}"
+    _var_ansible_pull_git_repo: "{{ var_ansible_pull_git_repo }}"
+    _var_ansible_pull_lts_codename: "{{ var_ansible_pull_lts_codename }}"
+    _var_ansible_pull_playbook: "{{ var_ansible_pull_playbook }}"
+    _var_ansible_pull_ssh_source_directory: "{{ __var_ansible_pull_ssh_source_directory }}"
+    _var_ansible_pull_stderr_file: "{{ __var_ansible_pull_stderr_file }}"
+    _var_ansible_pull_stdout_file: "{{ __var_ansible_pull_stdout_file }}"
+    _var_ansible_pull_user: "{{ __var_ansible_pull_user }}"
+    _var_ansible_pull_vault_password_file_source_directory: "{{ __var_ansible_pull_vault_password_file_source_directory }}"
+    _var_ansible_pull_vault_password_file_source_filename: "{{ __var_ansible_pull_vault_password_file_source_filename }}"
+    _var_cron_day: "{{ var_cron_day }}"
+    _var_cron_hour: "{{ var_cron_hour }}"
+    _var_cron_minute: "{{ var_cron_minute }}"
+    _var_cron_month: "{{ var_cron_month }}"
+    _var_cron_weekday: "{{ var_cron_weekday }}"
+  block:
+
+    - name: "-------> RUN: Install Latest Ansible"
+      include_tasks: tasks/install-latest-ansible.yaml
+      vars:
+        varLtsCodename: "{{ _var_ansible_pull_lts_codename }}"
+
+    - name: "Create system user \"{{ _var_ansible_pull_user }}\" for ansible-pull architecture"
+      ansible.builtin.user:
+        name: "{{ _var_ansible_pull_user }}"
+        system: true
+
+    - name: "Create sudoers file for user \"{{ _var_ansible_pull_user }}\""
+      ansible.builtin.template:
+        src: "files/sudoers_ansible-pull-user.j2"
+        dest: "/etc/sudoers.d/{{ _var_ansible_pull_user }}"
+        owner: "root"
+        group: "root"
+        mode: "0440"
+
+    - name: "Read file contents for \"{{ _var_ansible_pull_user }}\" sudoers file"
+      ansible.builtin.command:
+        cmd: >
+          cat
+          /etc/sudoers.d/{{ _var_ansible_pull_user }}
+      register: file_contents
+      changed_when: false
+
+    - name: "Output sudoers file for \"{{ _var_ansible_pull_user }}\""
+      ansible.builtin.debug:
+        var: file_contents.stdout
+
+    - name: "Check if \"{{ _var_ansible_pull_ssh_source_directory }}\" (source) directory exists"
+      ansible.builtin.stat:
+        path: "{{ _var_ansible_pull_ssh_source_directory }}"
+      register: root_ssh_directory
+
+    - name: "Ensure \".ssh\" (destination) directory exists"
+      ansible.builtin.file:
+        path: "/home/{{ _var_ansible_pull_user }}/.ssh"
+        state: directory
+        owner: "{{ _var_ansible_pull_user }}"
+        group: "{{ _var_ansible_pull_user }}"
+        mode: "0775"
+      when: root_ssh_directory.stat.exists
+
+    - name: "Find initial SSH private key"
+      ansible.builtin.command:
+        cmd: >
+          find
+          {{ _var_ansible_pull_ssh_source_directory }}
+          -maxdepth 1
+          -name 'id_*'
+      register: ssh_private_key
+      changed_when: false
+      when: root_ssh_directory.stat.exists
+
+
+    - name: "Block: Ensure exactly one private key is found"
+      when: ssh_private_key.stdout_lines is defined
+      block:
+
+        - name: "Ensure exactly one private key is found"
+          ansible.builtin.fail:
+            msg: "Expected exactly one file, but found {{ ssh_private_key.stdout_lines | length }} files."
+          when: >
+            ssh_private_key.stdout_lines | length != 1 and
+            root_ssh_directory.stat.exists
+
+
+    - name: "Copy initial SSH private key"
+      ansible.builtin.command:
+        cmd: >
+          cp
+          {{ ssh_private_key.stdout }}
+          /home/{{ _var_ansible_pull_user }}/.ssh/id_ansible-pull
+      changed_when: false
+      when: root_ssh_directory.stat.exists
+
+
+    - name: "Ensure SSH private key has the proper permissions"
+      ansible.builtin.file:
+        path: "/home/{{ _var_ansible_pull_user }}/.ssh/id_ansible-pull"
+        owner: "{{ _var_ansible_pull_user }}"
+        group: "{{ _var_ansible_pull_user }}"
+        mode: "0600"
+      when: root_ssh_directory.stat.exists
+
+    - name: "Create \"/home/{{ _var_ansible_pull_user }}/.ssh/config\""
+      ansible.builtin.template:
+        src: "files/config_ansible-pull-user.j2"
+        dest: "/home/{{ _var_ansible_pull_user }}/.ssh/config"
+        force: true
+        owner: "{{ _var_ansible_pull_user }}"
+        group: "{{ _var_ansible_pull_user }}"
+        mode: "0664"
+      when: root_ssh_directory.stat.exists
+
+    - name: "Remove SSH artifacts for \"root\""
+      ansible.builtin.file:
+        path: "{{ _var_ansible_pull_base_ssh_source_directory }}"
+        state: absent
+      when: root_ssh_directory.stat.exists
+
+    - name: "Check if \"{{ _var_ansible_pull_vault_password_file_source_directory }}/{{ _var_ansible_pull_vault_password_file_source_filename }}\" (source) file exists"
+      ansible.builtin.stat:
+        path: "{{ _var_ansible_pull_vault_password_file_source_directory }}/{{ _var_ansible_pull_vault_password_file_source_filename }}"
+      register: vault_password_file
+
+    - name: "Copy Ansible Vault password file"
+      ansible.builtin.command:
+        cmd: >
+          cp
+          {{ _var_ansible_pull_vault_password_file_source_directory }}/{{ _var_ansible_pull_vault_password_file_source_filename }}
+          /home/{{ _var_ansible_pull_user }}/{{ _var_ansible_pull_vault_password_file_source_filename }}
+      changed_when: false
+      when: vault_password_file.stat.exists
+
+    - name: "Ensure Ansible Vault password file has the proper permissions"
+      ansible.builtin.file:
+        path: "/home/{{ _var_ansible_pull_user }}/{{ _var_ansible_pull_vault_password_file_source_filename }}"
+        owner: "{{ _var_ansible_pull_user }}"
+        group: "{{ _var_ansible_pull_user }}"
+        mode: "0600"
+      when: vault_password_file.stat.exists
+
+    - name: "Remove ansible-pull artifacts for \"root\""
+      ansible.builtin.file:
+        path: "{{ _var_ansible_pull_vault_password_file_source_directory }}"
+        state: absent
+      when: vault_password_file.stat.exists
+
+    - name: "Install ansible-pull cron job"
+      ansible.builtin.cron:
+        user: "{{ _var_ansible_pull_user }}"
+        name: "Run ansible-pull to configure node"
+        minute: "{{ _var_cron_minute }}"
+        hour: "{{ _var_cron_hour }}"
+        weekday: "{{ _var_cron_weekday }}"
+        month: "{{ _var_cron_month }}"
+        day: "{{ _var_cron_day }}"
+        job: >
+          /usr/bin/ansible-pull
+          -o
+          -U {{ _var_ansible_pull_git_repo }}
+          -C {{ _var_ansible_pull_git_repo_branch }}
+          {{ _var_ansible_pull_playbook }}
+          >
+          {{ _var_ansible_pull_stdout_file }}
+          2>
+          {{ _var_ansible_pull_stderr_file }}
+      when: >
+        _var_ansible_pull_git_repo is defined and
+        _var_ansible_pull_git_repo != "" and
+        not vault_password_file.stat.exists
+
+    - name: "Install ansible-pull that uses an Ansible Vault password file cron job"
+      ansible.builtin.cron:
+        user: "{{ _var_ansible_pull_user }}"
+        name: "Run ansible-pull to configure node"
+        minute: "{{ _var_cron_minute }}"
+        hour: "{{ _var_cron_hour }}"
+        weekday: "{{ _var_cron_weekday }}"
+        month: "{{ _var_cron_month }}"
+        day: "{{ _var_cron_day }}"
+        job: >
+          /usr/bin/ansible-pull
+          -o
+          -U {{ _var_ansible_pull_git_repo }}
+          --vault-password-file /home/{{ _var_ansible_pull_user }}/{{ _var_ansible_pull_vault_password_file_source_filename }}
+          -C {{ _var_ansible_pull_git_repo_branch }}
+          {{ _var_ansible_pull_playbook }}
+          >
+          {{ _var_ansible_pull_stdout_file }}
+          2>
+          {{ _var_ansible_pull_stderr_file }}
+      when: >
+        _var_ansible_pull_git_repo is defined and
+        _var_ansible_pull_git_repo != "" and
+        vault_password_file.stat.exists
+
+    - name: "Remove ansible-pull cron job"
+      ansible.builtin.cron:
+        user: "{{ _var_ansible_pull_user }}"
+        name: "Run ansible-pull to configure node"
+        state: absent
+      when: >
+        _var_ansible_pull_git_repo is not defined or
+        _var_ansible_pull_git_repo == ""
+
+  rescue:
+
+    - name: "ERROR: Ansible Role --> initialize_ansible_pull"
+      ansible.builtin.debug:
+        msg: "ERROR: Ansible Role --> initialize_ansible_pull"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

@@ -1,0 +1,10 @@
+---
+# vars file for ansible-role-initialize-ansible-pull
+
+__var_ansible_pull_base_ssh_source_directory: "/root/.ssh"
+__var_ansible_pull_ssh_source_directory: "/root/.ssh/ansible-pull"
+__var_ansible_pull_stderr_file: "ansible-pull_stderr.txt"
+__var_ansible_pull_stdout_file: "ansible-pull_stdout.txt"
+__var_ansible_pull_user: "ansible-pull"
+__var_ansible_pull_vault_password_file_source_directory: "/root/ansible-pull"
+__var_ansible_pull_vault_password_file_source_filename: "ansible-pull-vault-password-file"

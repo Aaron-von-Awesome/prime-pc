@@ -1,0 +1,32 @@
+---
+platforms:
+  - name: molecule-test-vagrant
+    box: aaronvonawesome/ubuntu-server-2404
+    memory: 4096
+    cpus: 2
+    provider_raw_config_args:
+      - "gui = ${SHOW_VAGRANT_VM_GUI:-false}"
+      - "name = 'molecule-test-vagrant'"
+      - "customize ['modifyvm', :id, '--graphicscontroller', 'vmsvga']"
+      - "customize ['modifyvm', :id, '--vram', '128']"
+      - "customize ['modifyvm', :id, '--accelerate3d', 'on']"
+      - "customize ['modifyvm', :id, '--accelerate2dvideo', 'on']"
+provisioner:
+  name: ansible
+  playbooks:
+    verify: "../verify.yml"
+  env:
+    ANSIBLE_CONFIG: "../ansible.cfg"
+  options:
+    v: true
+  config_options:
+    defaults:
+      remote_user: root
+  inventory:
+    hosts:
+      all:
+        hosts:
+          molecule-test-vagrant:
+    host_vars:
+      molecule-test-vagrant:
+        ansible_python_interpreter: "/usr/bin/python3"
