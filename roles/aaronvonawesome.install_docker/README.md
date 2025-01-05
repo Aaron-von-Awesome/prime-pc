@@ -30,7 +30,7 @@ Set the codename for the version of Ubuntu you will be using.  This is especiall
 
 ***default:*** false
 
-Boolean value.  Set to `true` if you want to install the `pip` packages that all you to use Docker with Ansible Playbooks.
+Boolean value.  Set to `true` if you want to install the `pip` packages that allow you to use Docker with Ansible Playbooks.
 
 ### var_user_list
 
