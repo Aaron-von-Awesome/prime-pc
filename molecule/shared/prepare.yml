@@ -1,9 +1,30 @@
 ---
 - name: Prepare
-  hosts: all
-  gather_facts: false
+  hosts:
+    - all
+  become: true
+  vars_files:
+    - "../../tasks/vault/vars-files/configuration-vars.yaml"
 
   # -----------------------------------------
   # -----         TASKS                ------
   # -----------------------------------------
   tasks:
+
+
+    - name: "Create Groups"
+      ansible.builtin.group:
+        name: "{{ item.username }}"
+        state: present
+      loop: "{{ vault_user_list }}"
+
+    - name: "Create Users"
+      ansible.builtin.user:
+        name: "{{ item.username }}"
+        create_home: true
+        group: "{{ item.username }}"
+        groups: >
+          {{ item.username }},adm,cdrom,dialout,dip,lpadmin,plugdev,sambashare,sudo
+        append: false
+        shell: "/bin/bash"
+      loop: "{{ vault_user_list }}"

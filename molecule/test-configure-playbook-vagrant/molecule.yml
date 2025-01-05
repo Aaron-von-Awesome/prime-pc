@@ -14,7 +14,9 @@ platforms:
       - "customize ['modifyvm', :id, '--accelerate3d', 'on']"
       - "customize ['modifyvm', :id, '--accelerate2dvideo', 'on']"
 provisioner:
+  playbooks:
+    prepare: ../shared/prepare.yml
   inventory:
     group_vars:
       all:
-        username: "vagrant"
+        ansible_python_interpreter: "/usr/bin/python3"

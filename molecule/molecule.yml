@@ -22,9 +22,7 @@ provisioner:
     defaults:
       remote_user: root
   env:
-    ANSIBLE_COLLECTIONS_PATH: "../../collections"
     ANSIBLE_CONFIG: "../../ansible.cfg"
-    ANSIBLE_ROLES_PATH: "../../roles"
     ANSIBLE_VAULT_PASSWORD_FILE: "../../secret_vault-password-file"
     ANSIBLE_VERBOSITY: 2
   inventory:

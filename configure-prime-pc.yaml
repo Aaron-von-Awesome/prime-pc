@@ -14,9 +14,24 @@
   become: true
   vars:
     _lts_codename: "noble"
-    _user_list:
-      - username: ""
-      - username: ""
+    _should_install_ansible_community_docker_collection_compatibility: true
+  vars_files:
+    - "./tasks/vault/vars-files/configuration-vars.yaml"
+
+  # ---------------------------------------------------------------------------
+  # ---------                          Roles                         ----------
+  # ---------------------------------------------------------------------------
+
+  roles:
+
+    - name: "ROLE - Install Docker"
+      role: "aaronvonawesome.install_docker"
+      vars:
+        var_docker_daemon_file: "install-docker_custom-docker-daemon.json"
+        var_lts_codename: "{{ _lts_codename }}"
+        var_should_install_ansible_community_docker_collection_compatibility: >
+          {{ _should_install_ansible_community_docker_collection_compatibility }}
+        var_user_list: "{{ vault_user_list }}"
 
 
   # ---------------------------------------------------------------------------
@@ -27,4 +42,4 @@
 
     - name: "Set Timezone"
       community.general.timezone:
-        name: "Asia/Singapore"
+        name: "{{ vault_timezone }}"
