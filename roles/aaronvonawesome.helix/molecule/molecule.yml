@@ -20,12 +20,10 @@ provisioner:
     defaults:
       remote_user: root
   env:
-    ANSIBLE_COLLECTIONS_PATH: "../../collections"
-    ANSIBLE_CONFIG: "../../ansible.cfg"
-    ANSIBLE_ROLES_PATH: "../..roles"
-    ANSIBLE_VAULT_PASSWORD_FILE: "../../secret_vault-password-file"
-    ANSIBLE_VERBOSITY: 2
+    ANSIBLE_CONFIG: "../ansible.cfg"
+    # ANSIBLE_VERBOSITY: 2
   inventory:
     group_vars:
       all:
-        ansible_host: "localhost"
+        ansible_python_interpreter: "/usr/bin/python3"
+        lts_codename: "noble"

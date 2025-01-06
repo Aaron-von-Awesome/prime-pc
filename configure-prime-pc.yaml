@@ -33,6 +33,11 @@
           {{ _should_install_ansible_community_docker_collection_compatibility }}
         var_user_list: "{{ vault_user_list }}"
 
+    - name: "ROLE - Install Helix"
+      role: "aaronvonawesome.helix"
+      vars:
+        var_lts_codename: "{{ _lts_codename }}"
+
 
   # ---------------------------------------------------------------------------
   # ---------                          Tasks                         ----------

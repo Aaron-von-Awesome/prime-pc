@@ -1,0 +1,17 @@
+---
+- name: Converge
+  hosts:
+    - all
+  become: true
+  gather_facts: false
+  vars:
+    _lts_codename: "{{ lts_codename }}"
+
+
+  tasks:
+
+    - name: "Converge - Scenario: Test Helix Install"
+      ansible.builtin.include_role:
+        name: "aaronvonawesome.helix"
+      vars:
+        var_lts_codename: "{{ _lts_codename }}"

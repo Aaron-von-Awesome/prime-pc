@@ -19,4 +19,4 @@ provisioner:
   inventory:
     group_vars:
       all:
-        ansible_python_interpreter: "/usr/bin/python3"
+        username: "localhost"
