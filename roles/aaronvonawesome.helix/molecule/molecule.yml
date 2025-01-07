@@ -1,4 +1,8 @@
 ---
+prerun: false
+dependency:
+  name: galaxy
+  enabled: false
 scenario:
   test_sequence:
     - destroy
@@ -21,9 +25,8 @@ provisioner:
       remote_user: root
   env:
     ANSIBLE_CONFIG: "../ansible.cfg"
-    # ANSIBLE_VERBOSITY: 2
+    ANSIBLE_VERBOSITY: 1
   inventory:
     group_vars:
       all:
-        ansible_python_interpreter: "/usr/bin/python3"
         lts_codename: "noble"
