@@ -1,4 +1,8 @@
 ---
+prerun: false
+dependency:
+  name: galaxy
+  enabled: false
 scenario:
   test_sequence:
     - destroy
