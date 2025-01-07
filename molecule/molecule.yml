@@ -28,7 +28,7 @@ provisioner:
     ANSIBLE_CONFIG: "../../ansible.cfg"
     ANSIBLE_ROLES_PATH: "../..roles"
     ANSIBLE_VAULT_PASSWORD_FILE: "../../secret_vault-password-file"
-    ANSIBLE_VERBOSITY: 1
+    ANSIBLE_VERBOSITY: 0
   inventory:
     group_vars:
       all:

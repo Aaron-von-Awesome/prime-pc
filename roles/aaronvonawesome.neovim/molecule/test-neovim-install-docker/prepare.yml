@@ -1,0 +1,22 @@
+---
+- name: Prepare
+  hosts:
+    - all
+  become: true
+  gather_facts: false
+
+  tasks:
+
+    - name: "Check if Neovim is installed"
+      ansible.builtin.command:
+        cmd: >
+          which nvim
+      register: neovim_installed
+      ignore_errors: true
+
+    - name: "Assert Neovim is NOT installed"
+      ansible.builtin.assert:
+        that:
+          - neovim_installed.rc > 0
+        fail_msg: "Neovim IS installed...bad :-("
+        success_msg: "Neovim is not installed...good!"

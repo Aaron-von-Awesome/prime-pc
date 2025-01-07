@@ -1,0 +1,50 @@
+---
+# ============================================================
+#                       Role: neovim
+# ============================================================
+
+- name: "Block: Install Neovim Ansible Role"
+  become: true
+  vars:
+    _var_lts_codename: "{{ var_lts_codename }}"
+  block:
+
+    - name: "Add Neovim apt key"
+      ansible.builtin.get_url:
+        url: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x55f96fcf8231b6dd"
+        dest: "/etc/apt/trusted.gpg.d/neovim.asc"
+        mode: "0644"
+        force: true
+      changed_when: false
+
+    - name: "Add Neovim repo to sources list"
+      ansible.builtin.apt_repository:
+        repo: >
+          deb
+          https://ppa.launchpadcontent.net/neovim-ppa/unstable/ubuntu
+          {{ _var_lts_codename }}
+          main
+        filename: neovim
+        update_cache: true
+        mode: "0600"
+      register: add_neovim_repo_result
+      until: add_neovim_repo_result is succeeded
+      retries: 3
+      delay: 60
+      ignore_errors: true
+
+    - name: "Install Neovim"
+      ansible.builtin.apt:
+        name: "neovim"
+        state: latest
+        update_cache: true
+
+  rescue:
+
+    - name: "ERROR: Failed to install Neovim"
+      ansible.builtin.debug:
+        msg: "ERROR: Failed to install Neovim"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

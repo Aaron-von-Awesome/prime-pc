@@ -38,6 +38,11 @@
       vars:
         var_lts_codename: "{{ _lts_codename }}"
 
+    - name: "ROLE - Install Neovim"
+      role: "aaronvonawesome.neovim"
+      vars:
+        var_lts_codename: "{{ _lts_codename }}"
+
 
   # ---------------------------------------------------------------------------
   # ---------                          Tasks                         ----------
