@@ -1,0 +1,17 @@
+---
+- name: Converge
+  hosts:
+    - all
+  become: true
+  gather_facts: false
+  vars:
+    _lts_codename: "{{ lts_codename }}"
+
+
+  tasks:
+
+    - name: "Converge - Scenario: Test the Nextcloud Desktop Client Install"
+      ansible.builtin.include_role:
+        name: "aaronvonawesome.nextcloud_desktop_client"
+      vars:
+        var_lts_codename: "{{ _lts_codename }}"

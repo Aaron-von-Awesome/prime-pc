@@ -1,0 +1,50 @@
+---
+# ============================================================
+#                       Role: nextcloud_desktop_client
+# ============================================================
+
+- name: "Block: Install the Nextcloud Desktop Client Ansible Role"
+  become: true
+  vars:
+    _var_lts_codename: "{{ var_lts_codename }}"
+  block:
+
+    - name: "Add the Nextcloud Desktop Client apt key"
+      ansible.builtin.get_url:
+        url: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x60ee47fbad3dd469"
+        dest: "/etc/apt/trusted.gpg.d/nextcloud-desktop.asc"
+        mode: "0644"
+        force: true
+      changed_when: false
+
+    - name: "Add the Nextcloud Desktop Client repo to sources list"
+      ansible.builtin.apt_repository:
+        repo: >
+          deb
+          https://ppa.launchpadcontent.net/nextcloud-devs/client/ubuntu
+          {{ _var_lts_codename }}
+          main
+        filename: nextcloud-desktop
+        update_cache: true
+        mode: "0600"
+      register: add_nextcloud_desktop_repo_result
+      until: add_nextcloud_desktop_repo_result is succeeded
+      retries: 3
+      delay: 60
+      ignore_errors: true
+
+    - name: "Install the Nextcloud Desktop Client"
+      ansible.builtin.apt:
+        name: "nextcloud-desktop"
+        state: latest
+        update_cache: true
+
+  rescue:
+
+    - name: "ERROR: Failed to install the Nextcloud Desktop Client"
+      ansible.builtin.debug:
+        msg: "ERROR: Failed to install the Nextcloud Desktop Client"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

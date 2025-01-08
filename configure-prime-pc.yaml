@@ -43,6 +43,11 @@
       vars:
         var_lts_codename: "{{ _lts_codename }}"
 
+    - name: "ROLE - Install the Nextcloud Desktop Client"
+      role: "aaronvonawesome.nextcloud_desktop_client"
+      vars:
+        var_lts_codename: "{{ _lts_codename }}"
+
 
   # ---------------------------------------------------------------------------
   # ---------                          Tasks                         ----------

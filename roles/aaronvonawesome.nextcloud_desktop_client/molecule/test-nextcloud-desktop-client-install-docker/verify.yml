@@ -1,0 +1,22 @@
+---
+- name: Verify
+  hosts:
+    - all
+  become: true
+  gather_facts: false
+
+  tasks:
+
+    - name: "Check if the Nextcloud Desktop Client is installed"
+      ansible.builtin.command:
+        cmd: >
+          which nextcloud
+      register: nextcloud_desktop_client_installed
+      ignore_errors: true
+
+    - name: "Assert that the Nextcloud Desktop Client is NOT installed"
+      ansible.builtin.assert:
+        that:
+          - nextcloud_desktop_client_installed.rc == 0
+        fail_msg: "Nextcloud Desktop Client is not installed"
+        success_msg: "Nextcloud Desktop Client is installed"

@@ -1,10 +1,10 @@
 ---
 galaxy_info:
   namespace: "aaronvonawesome"
-  role_name: "neovim"
+  role_name: "nextcloud_desktop_client"
   author: "Aaron von Awesome"
   description: <
-    Ansible Role that will install Neovim using the Neovim Personal Package Archive (PPA).
+    Ansible Role that will install the Nextcloud Desktop Client using the Nextcloud Desktop Client Personal Package Archive (PPA).
   company: "AvA"
 
   # If the issue tracker for your role is not on github, uncomment the
