@@ -1,0 +1,28 @@
+---
+# ============================================================
+#                     development-flatpaks.yaml
+# ============================================================
+
+- name: "Block: development-flatpaks.yaml"
+  become: true
+  vars:
+    _var_lts_codename: "{{ var_lts_codename }}"
+  block:
+
+    - name: Install Development flatpaks
+      community.general.flatpak:
+        name: "{{ item }}"
+        state: present
+        method: system
+      loop:
+        - com.github.Murmele.Gittyup
+
+  rescue:
+
+    - name: "ERROR: development-flatpaks.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: development-flatpaks.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

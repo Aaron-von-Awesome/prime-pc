@@ -1,0 +1,28 @@
+---
+# ============================================================
+#                     desktop-flatpaks.yaml
+# ============================================================
+
+- name: "Block: desktop-flatpaks.yaml"
+  become: true
+  vars:
+    _var_lts_codename: "{{ var_lts_codename }}"
+  block:
+
+    - name: Install Desktop flatpaks
+      community.general.flatpak:
+        name: "{{ item }}"
+        state: present
+        method: system
+      loop:
+        - md.obsidian.Obsidian
+
+  rescue:
+
+    - name: "ERROR: desktop-flatpaks.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: desktop-flatpaks.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("
