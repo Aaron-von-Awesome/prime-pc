@@ -1,8 +1,9 @@
 ---
 - name: Prepare
-  hosts: all
-  gather_facts: false
+  hosts:
+    - all
   become: true
+  gather_facts: false
 
   tasks:
 

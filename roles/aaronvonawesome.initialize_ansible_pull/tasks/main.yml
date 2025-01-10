@@ -164,6 +164,9 @@
         month: "{{ _var_cron_month }}"
         day: "{{ _var_cron_day }}"
         job: >
+          flock
+          -n
+          /var/lock/ansible-pull.lock
           /usr/bin/ansible-pull
           -o
           -U {{ _var_ansible_pull_git_repo }}
@@ -188,6 +191,9 @@
         month: "{{ _var_cron_month }}"
         day: "{{ _var_cron_day }}"
         job: >
+          flock
+          -n
+          /var/lock/ansible-pull.lock
           /usr/bin/ansible-pull
           -o
           -U {{ _var_ansible_pull_git_repo }}

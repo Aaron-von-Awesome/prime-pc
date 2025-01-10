@@ -1,0 +1,73 @@
+---
+- name: Prepare
+  hosts:
+    - all
+  become: true
+
+
+  tasks:
+
+    - name: "Install ansible and git"
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: latest
+        update_cache: true
+      vars:
+        packages:
+          - ansible
+          - ansible-lint
+          - git
+          - util-linux
+
+
+    - name: "Block: Check if Ansible got installed"
+      block:
+
+        - name: "Run ansible --version command"
+          ansible.builtin.command:
+            cmd: ansible --version
+          register: ansible_version_output
+          ignore_errors: true
+
+        - name: "Check if Ansible is installed and return an error if not"
+          ansible.builtin.fail:
+            msg: "Ansible is not installed on the target node."
+          when: >
+            ansible_version_output.stdout is not defined
+            or
+            ansible_version_output.stdout == ""
+
+        - name: "Print the Ansible version"
+          ansible.builtin.debug:
+            msg: "Ansible version installed: {{ ansible_version_output.stdout }}"
+          when: >
+            ansible_version_output.stdout is defined
+            and
+            ansible_version_output.stdout != ""
+
+      rescue:
+
+        - name: "ERROR:  Installing Ansible had an error"
+          ansible.builtin.debug:
+            msg: "ERROR:  Installing Ansible had an error"
+
+        - name: "Error detected! Stopping Playbook :-("
+          ansible.builtin.fail:
+            msg: "Error detected! Stopping Playbook :-("
+
+
+    - name: "Ensure \"/root/ansible-pull\" (source) directory exists"
+      ansible.builtin.file:
+        path: "/root/ansible-pull"
+        state: directory
+        owner: "root"
+        group: "root"
+        mode: "0660"
+
+    - name: "Copy Vault Password File"
+      ansible.builtin.copy:
+        src: "../../secret_vault-password-file"
+        dest: "/root/ansible-pull/ansible-pull-vault-password-file"
+        owner: "root"
+        group: "root"
+        mode: "0600"

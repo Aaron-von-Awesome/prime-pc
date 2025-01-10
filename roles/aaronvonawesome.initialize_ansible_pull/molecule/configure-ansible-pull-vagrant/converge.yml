@@ -1,7 +1,8 @@
 ---
 - name: Converge
-  hosts: all
-  gather_facts: false
+  hosts:
+    - all
+  become: true
 
   tasks:
 
@@ -9,4 +10,4 @@
       ansible.builtin.include_role:
         name: "aaronvonawesome.initialize_ansible_pull"
       vars:
-        var_ansible_pull_lts_codename: "virginia"
+        var_ansible_pull_lts_codename: "wilma"

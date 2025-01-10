@@ -17,13 +17,13 @@ lint: |
   yamllint .
   ansible-lint
 platforms:
-  - name: molecule-test-vagrant
+  - name: molecule-test-instance
     box: aaronvonawesome/linux-mint-22-cinnamon
     memory: 4096
     cpus: 2
     provider_raw_config_args:
       - "gui = ${SHOW_VAGRANT_VM_GUI:-false}"
-      - "name = 'molecule-test-vagrant'"
+      - "name = 'molecule-test-instance'"
       - "customize ['modifyvm', :id, '--graphicscontroller', 'vmsvga']"
       - "customize ['modifyvm', :id, '--vram', '128']"
       - "customize ['modifyvm', :id, '--accelerate3d', 'on']"
@@ -35,11 +35,11 @@ provisioner:
   config_options:
     defaults:
       remote_user: root
+  env:
+    ANSIBLE_CONFIG: "../ansible.cfg"
+    ANSIBLE_VERBOSITY: 0
   inventory:
     hosts:
       all:
         hosts:
-          molecule-test-vagrant:
-    host_vars:
-      molecule-test-vagrant:
-        ansible_python_interpreter: "/usr/bin/python3"
+          molecule-test-instance:

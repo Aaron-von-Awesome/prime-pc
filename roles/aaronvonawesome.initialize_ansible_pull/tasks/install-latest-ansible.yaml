@@ -20,6 +20,7 @@
             - vera
             - victoria
             - virginia
+            - wilma
       when: >
         _varLtsCodename is undefined
         or
