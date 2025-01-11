@@ -1,7 +1,7 @@
 ---
 - name: Converge
   hosts:
-    - all
+    - PrimePC
   become: true
 
   # ---------------------------------------------------------------------------
@@ -13,7 +13,7 @@
     - name: "Scenario: Set up ansible-pull"
       role: "aaronvonawesome.initialize_ansible_pull"
       vars:
-        var_ansible_pull_lts_codename: "wilma"
+        var_ansible_pull_lts_codename: "noble"
         var_ansible_pull_git_repo: "https://codeberg.org/aaronvonawesome/prime-pc.git"
         var_ansible_pull_playbook: "configure-prime-pc.yaml"
-        var_cron_minute: "*/2"
+        var_cron_minute: "*/3"

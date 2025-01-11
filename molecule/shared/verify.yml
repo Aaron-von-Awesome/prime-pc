@@ -1,6 +1,7 @@
 ---
 - name: Verify
-  hosts: all
+  hosts:
+    - PrimePC
   gather_facts: false
 
   # -----------------------------------------

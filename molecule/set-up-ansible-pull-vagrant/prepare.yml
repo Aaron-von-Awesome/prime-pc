@@ -1,13 +1,13 @@
 ---
 - name: Prepare
   hosts:
-    - all
+    - PrimePC
   become: true
 
 
   tasks:
 
-    - name: "Install ansible and git"
+    - name: "Install ansible, git, and flock"
       ansible.builtin.apt:
         name: "{{ packages }}"
         state: latest

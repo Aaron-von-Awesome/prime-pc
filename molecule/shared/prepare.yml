@@ -1,7 +1,7 @@
 ---
 - name: Prepare
   hosts:
-    - all
+    - PrimePC
   become: true
   vars_files:
     - "../../tasks/vault/vars-files/configuration-vars.yaml"

@@ -9,7 +9,7 @@
 #
 - name: "Initialize ansible-pull on a Prime PC"
   hosts:
-    - all
+    - PrimePC
   gather_facts: true
   become: true
 
