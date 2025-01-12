@@ -10,7 +10,7 @@
 #
 - name: "Configure Prime PC"
   hosts:
-    - PrimePC
+    - all
   become: true
   vars:
     _lts_codename: "noble"
