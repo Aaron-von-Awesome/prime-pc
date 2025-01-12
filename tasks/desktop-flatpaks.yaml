@@ -16,6 +16,7 @@
         method: system
       loop:
         - md.obsidian.Obsidian
+        - me.kozec.syncthingtk
 
   rescue:
 

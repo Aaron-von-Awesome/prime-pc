@@ -17,3 +17,14 @@
         var_ansible_pull_git_repo: "https://codeberg.org/aaronvonawesome/prime-pc.git"
         var_ansible_pull_playbook: "configure-prime-pc.yaml"
         var_cron_minute: "*/3"
+
+
+  # ---------------------------------------------------------------------------
+  # ---------                          Tasks                         ----------
+  # ---------------------------------------------------------------------------
+
+  tasks:
+
+    - name: "Reboot machine"
+      ansible.builtin.reboot:
+        reboot_timeout: 600
