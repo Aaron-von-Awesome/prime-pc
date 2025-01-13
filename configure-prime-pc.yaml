@@ -29,6 +29,14 @@
       ansible.builtin.debug:
         var: ansible_inventory_sources
 
+    - name: "Display the \"hostname\" as defined in the Inventory File"
+      ansible.builtin.debug:
+        msg: "Inventery File Host: {{ ansible_hostname }}"
+
+    - name: "Display the ACTUAL \"hostname\""
+      ansible.builtin.debug:
+        msg: "The ACTUAL \"hostname\": {{ ansible_facts.hostname }}"
+
 
   # ---------------------------------------------------------------------------
   # ---------                          Roles                         ----------
