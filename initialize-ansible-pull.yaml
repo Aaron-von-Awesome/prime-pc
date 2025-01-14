@@ -23,5 +23,5 @@
       role: "aaronvonawesome.initialize_ansible_pull"
       vars:
         var_ansible_pull_lts_codename: "noble"
-        var_ansible_pull_git_repo: ""
+        var_ansible_pull_git_repo: "https://codeberg.org/aaronvonawesome/prime-pc.git"
         var_ansible_pull_playbook: "configure-prime-pc.yaml"
