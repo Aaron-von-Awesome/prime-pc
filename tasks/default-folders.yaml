@@ -1,0 +1,31 @@
+---
+# ============================================================
+#                     default-folders.yaml
+# ============================================================
+
+- name: "Block: default-folders.yaml"
+  become: true
+  vars:
+    _var_username: "{{ var_username }}"
+    _var_folder_list: "{{ var_folder_list }}"
+  block:
+
+    - name: "Create Home Folders for \"{{ _var_username }}\""
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+        owner: "{{ _var_username }}"
+        group: "{{ _var_username }}"
+        force: false
+      loop: "{{ _var_folder_list }}"
+
+  rescue:
+
+    - name: "ERROR: default-folders.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: default-folders.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

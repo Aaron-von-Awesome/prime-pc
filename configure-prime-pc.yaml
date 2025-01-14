@@ -12,11 +12,14 @@
   hosts:
     - all
   become: true
-  vars:
-    _lts_codename: "noble"
-    _should_install_ansible_community_docker_collection_compatibility: true
   vars_files:
     - "./tasks/vault/vars-files/configuration-vars.yaml"
+  vars:
+    _folder_list: "{{ vault_folder_list }}"
+    _lts_codename: "noble"
+    _should_install_ansible_community_docker_collection_compatibility: true
+    _timezone: "{{ vault_timezone }}"
+    _username: "{{ vault_username }}"
 
 
   # ---------------------------------------------------------------------------
@@ -51,7 +54,8 @@
         var_lts_codename: "{{ _lts_codename }}"
         var_should_install_ansible_community_docker_collection_compatibility: >
           {{ _should_install_ansible_community_docker_collection_compatibility }}
-        var_user_list: "{{ vault_user_list }}"
+        var_user_list:
+          - username: "{{ _username }}"
 
     - name: "ROLE - Install Helix"
       role: "aaronvonawesome.helix"
@@ -77,7 +81,13 @@
 
     - name: "Set Timezone"
       community.general.timezone:
-        name: "{{ vault_timezone }}"
+        name: "{{ _timezone }}"
+
+    - name: "-------> RUN: Setup Default Folders"
+      include_tasks: tasks/default-folders.yaml
+      vars:
+        var_username: "{{ _username }}"
+        var_folder_list: "{{ _folder_list }}"
 
     - name: "-------> RUN: Desktop Flatpaks Tasks"
       include_tasks: tasks/desktop-flatpaks.yaml

@@ -3,6 +3,7 @@
   hosts:
     - all
   become: true
+  gather_facts: false
   vars_files:
     - "../../tasks/vault/vars-files/configuration-vars.yaml"
 
@@ -14,17 +15,15 @@
 
     - name: "Create Groups"
       ansible.builtin.group:
-        name: "{{ item.username }}"
+        name: "{{ vault_username }}"
         state: present
-      loop: "{{ vault_user_list }}"
 
     - name: "Create Users"
       ansible.builtin.user:
-        name: "{{ item.username }}"
+        name: "{{ vault_username }}"
         create_home: true
-        group: "{{ item.username }}"
+        group: "{{ vault_username }}"
         groups: >
-          {{ item.username }},adm,cdrom,dialout,dip,lpadmin,plugdev,sambashare,sudo
+          {{ vault_username }},adm,cdrom,dialout,dip,lpadmin,plugdev,sambashare,sudo
         append: false
         shell: "/bin/bash"
-      loop: "{{ vault_user_list }}"
