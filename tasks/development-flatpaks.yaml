@@ -5,8 +5,6 @@
 
 - name: "Block: development-flatpaks.yaml"
   become: true
-  vars:
-    _var_lts_codename: "{{ var_lts_codename }}"
   block:
 
     - name: Install Development flatpaks

@@ -91,10 +91,6 @@
 
     - name: "-------> RUN: Desktop Flatpaks Tasks"
       include_tasks: tasks/desktop-flatpaks.yaml
-      vars:
-        var_lts_codename: "{{ _lts_codename }}"
 
     - name: "-------> RUN: Development Flatpaks Tasks"
       include_tasks: tasks/development-flatpaks.yaml
-      vars:
-        var_lts_codename: "{{ _lts_codename }}"
