@@ -40,6 +40,9 @@
       ansible.builtin.debug:
         msg: "The ACTUAL \"hostname\": {{ ansible_facts.hostname }}"
 
+    - name: "-------> RUN: Enable snaps Tasks"
+      include_tasks: tasks/enable-snaps.yaml
+
 
   # ---------------------------------------------------------------------------
   # ---------                          Roles                         ----------

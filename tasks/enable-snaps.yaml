@@ -1,0 +1,32 @@
+---
+# ============================================================
+#                     enable-snaps.yaml
+# ============================================================
+
+- name: "Block: enable-snaps.yaml"
+  become: true
+  block:
+
+    - name: "Remove file: sudo rm /etc/apt/preferences.d/nosnap.pref"
+      file:
+        path: "/etc/apt/preferences.d/nosnap.pref"
+        state: absent
+
+    - name: "Run: apt-get update"
+      apt:
+        update_cache: true
+
+    - name: "Run: install snapd"
+      apt:
+        name: snapd
+        state: latest
+
+  rescue:
+
+    - name: "ERROR: enable-snaps.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: enable-snaps.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("
