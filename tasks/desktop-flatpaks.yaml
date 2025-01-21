@@ -7,16 +7,42 @@
   become: true
   block:
 
-    - name: Install Desktop flatpaks
+    - name: "REMOVE Desktop flatpaks"
+      community.general.flatpak:
+        name: "{{ item }}"
+        state: absent
+        method: system
+      loop:
+        - me.kozec.syncthingtk
+
+    - name: "Install Desktop flatpaks"
       community.general.flatpak:
         name: "{{ item }}"
         state: present
         method: system
       loop:
+        - com.belmoussaoui.Authenticator
+        - com.bitwarden.desktop
+        - com.github.johnfactotum.Foliate
+        - com.github.junrrein.PDFSlicer
+        - com.github.KRTirtho.Spotube
+        - com.github.marktext.marktext
+        - com.github.tchx84.Flatseal
+        - com.github.xournalpp.xournalpp
+        - com.jgraph.drawio.desktop
+        - com.tutanota.Tutanota
+        - com.uploadedlobster.peek
+        - com.usebottles.bottles
+        - io.freetubeapp.FreeTube
+        - io.github.martchus.syncthingtray
+        - io.github.Pithos
         - md.obsidian.Obsidian
-        - me.kozec.syncthingtk
+        - org.gabmus.whatip
         - org.gnome.gitlab.cheywood.Buffer
-
+        - org.keepassxc.KeePassXC
+        - org.kiwix.desktop
+        - org.onlyoffice.desktopeditors
+        - us.zoom.Zoom
   rescue:
 
     - name: "ERROR: desktop-flatpaks.yaml"
