@@ -1,0 +1,27 @@
+---
+# ============================================================
+#                     desktop-packages.yaml
+# ============================================================
+
+- name: "Block: desktop-packages.yaml"
+  become: true
+  block:
+
+    - name: "Install Desktop APT packages"
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: latest
+        update_cache: true
+      vars:
+        packages:
+          - redshift-gtk
+
+  rescue:
+
+    - name: "ERROR: desktop-packages.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: desktop-packages.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

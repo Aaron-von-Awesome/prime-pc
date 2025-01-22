@@ -92,6 +92,9 @@
         var_username: "{{ _username }}"
         var_folder_list: "{{ _folder_list }}"
 
+    - name: "-------> RUN: Desktop Packages Tasks"
+      include_tasks: tasks/desktop-packages.yaml
+
     - name: "-------> RUN: Desktop Flatpaks Tasks"
       include_tasks: tasks/desktop-flatpaks.yaml
 
