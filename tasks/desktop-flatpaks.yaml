@@ -13,7 +13,7 @@
         state: absent
         method: system
       loop:
-        - me.kozec.syncthingtk
+        - io.github.martchus.syncthingtray
 
     - name: "Install Desktop flatpaks"
       community.general.flatpak:
@@ -34,9 +34,9 @@
         - com.uploadedlobster.peek
         - com.usebottles.bottles
         - io.freetubeapp.FreeTube
-        - io.github.martchus.syncthingtray
         - io.github.Pithos
         - md.obsidian.Obsidian
+        - me.kozec.syncthingtk
         - org.gabmus.whatip
         - org.gnome.gitlab.cheywood.Buffer
         - org.keepassxc.KeePassXC
