@@ -24,7 +24,7 @@
           https://ppa.launchpadcontent.net/maveonair/helix-editor/ubuntu
           {{ _var_lts_codename }}
           main
-        filename: helix
+        filename: "maveonair-helix-editor-{{ _var_lts_codename }}"
         update_cache: true
         mode: "0600"
       register: add_helix_repo_result
