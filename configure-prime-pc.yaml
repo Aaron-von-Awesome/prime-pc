@@ -28,6 +28,10 @@
 
   pre_tasks:
 
+    - name: "Set Timezone"
+      community.general.timezone:
+        name: "{{ _timezone }}"
+
     - name: "Display the Inventory File Path"
       ansible.builtin.debug:
         var: ansible_inventory_sources
@@ -81,10 +85,6 @@
   # ---------------------------------------------------------------------------
 
   tasks:
-
-    - name: "Set Timezone"
-      community.general.timezone:
-        name: "{{ _timezone }}"
 
     - name: "-------> RUN: Setup Default Folders"
       include_tasks: tasks/default-folders.yaml
