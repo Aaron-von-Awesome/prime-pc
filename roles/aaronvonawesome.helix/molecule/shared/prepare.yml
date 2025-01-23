@@ -1,5 +1,5 @@
 ---
-- name: Verify
+- name: Prepare
   hosts:
     - all
   become: true
@@ -15,9 +15,9 @@
       register: helix_installed
       ignore_errors: true
 
-    - name: "Assert Helix editor is installed"
-      assert:
+    - name: "Assert Helix editor is NOT installed"
+      ansible.builtin.assert:
         that:
-          - helix_installed.rc == 0
-        fail_msg: "Helix editor is not installed"
-        success_msg: "Helix editor is installed"
+          - helix_installed.rc > 0
+        fail_msg: "Helix editor IS installed...bad :-("
+        success_msg: "Helix editor is not installed...good!"

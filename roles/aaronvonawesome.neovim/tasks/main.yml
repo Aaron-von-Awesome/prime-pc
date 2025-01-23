@@ -26,7 +26,7 @@
           main
         filename: neovim
         update_cache: true
-        mode: "0600"
+        mode: "0644"
       register: add_neovim_repo_result
       until: add_neovim_repo_result is succeeded
       retries: 3

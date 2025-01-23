@@ -21,6 +21,7 @@
             - victoria
             - virginia
             - wilma
+            - xia
       when: >
         _varLtsCodename is undefined
         or
@@ -31,6 +32,8 @@
         _varLtsCodename: "noble"
       when: >
         _varLtsCodename == "wilma"
+        or
+        _varLtsCodename == "xia"
 
     - name: "Change LTS Codename value from Linux Mint 21 to jammy"
       ansible.builtin.set_fact:
@@ -67,7 +70,7 @@
         repo: "deb https://ppa.launchpadcontent.net/ansible/ansible/ubuntu {{ _varLtsCodename }} main "
         filename: ansible
         update_cache: true
-        mode: "0600"
+        mode: "0644"
       register: add_ansible_repo_result
       until: add_ansible_repo_result is succeeded
       retries: 3
