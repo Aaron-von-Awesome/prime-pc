@@ -14,6 +14,7 @@
         method: system
       loop:
         - io.github.martchus.syncthingtray
+        - me.kozec.syncthingtk
 
     - name: "Install Desktop flatpaks"
       community.general.flatpak:
@@ -29,6 +30,7 @@
         - com.github.marktext.marktext
         - com.github.tchx84.Flatseal
         - com.github.xournalpp.xournalpp
+        - com.github.zocker_160.SyncThingy
         - com.jgraph.drawio.desktop
         - com.tutanota.Tutanota
         - com.uploadedlobster.peek
@@ -36,7 +38,6 @@
         - io.freetubeapp.FreeTube
         - io.github.Pithos
         - md.obsidian.Obsidian
-        - me.kozec.syncthingtk
         - org.gabmus.whatip
         - org.gnome.gitlab.cheywood.Buffer
         - org.keepassxc.KeePassXC
