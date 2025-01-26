@@ -95,6 +95,9 @@
     - name: "-------> RUN: Desktop Packages Tasks"
       include_tasks: tasks/desktop-packages.yaml
 
+    - name: "-------> RUN: Development Packages Tasks"
+      include_tasks: tasks/development-packages.yaml
+
     - name: "-------> RUN: Desktop Flatpaks Tasks"
       include_tasks: tasks/desktop-flatpaks.yaml
 

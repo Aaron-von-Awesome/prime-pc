@@ -1,0 +1,27 @@
+---
+# ============================================================
+#                     development-packages.yaml
+# ============================================================
+
+- name: "Block: development-packages.yaml"
+  become: true
+  block:
+
+    - name: "Install Development APT packages"
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: latest
+        update_cache: true
+      vars:
+        packages:
+          - meld
+
+  rescue:
+
+    - name: "ERROR: development-packages.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: development-packages.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("
