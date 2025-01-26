@@ -79,6 +79,11 @@
       vars:
         var_lts_codename: "{{ _lts_codename }}"
 
+    - name: "ROLE - Install Redshift"
+      role: "aaronvonawesome.redshift"
+      vars:
+        var_redshift_username: "{{ _username }}"
+
 
   # ---------------------------------------------------------------------------
   # ---------                          Tasks                         ----------

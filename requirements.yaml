@@ -27,6 +27,11 @@ roles:
     src: "https://codeberg.org/aaronvonawesome/ansible-role-nextcloud-desktop-client.git"
     version: "main"
 
+  - name: "aaronvonawesome.redshift"
+    scm: git
+    src: "https://codeberg.org/aaronvonawesome/ansible-role-redshift.git"
+    version: "main"
+
 collections:
 
   - name: "community.general"

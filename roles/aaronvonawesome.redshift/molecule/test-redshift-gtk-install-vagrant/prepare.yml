@@ -1,0 +1,22 @@
+---
+- name: Prepare
+  hosts:
+    - all
+  become: true
+  gather_facts: false
+
+  tasks:
+
+    - name: "Check if the Redshift-gtk is installed"
+      ansible.builtin.command:
+        cmd: >
+          which redshift-gtk
+      register: redshift_gtk_installed
+      ignore_errors: true
+
+    - name: "Assert that the Redshift-gtk is NOT installed"
+      ansible.builtin.assert:
+        that:
+          - redshift_gtk_installed.rc > 0
+        fail_msg: "Redshift-gtk IS installed...bad :-("
+        success_msg: "Redshift-gtk is not installed...good!"

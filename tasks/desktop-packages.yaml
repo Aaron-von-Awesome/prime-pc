@@ -14,7 +14,7 @@
         update_cache: true
       vars:
         packages:
-          - redshift-gtk
+          - xiphos
 
   rescue:
 
