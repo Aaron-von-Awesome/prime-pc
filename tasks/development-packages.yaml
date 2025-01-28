@@ -14,7 +14,9 @@
         update_cache: true
       vars:
         packages:
+          - cargo
           - meld
+          - php
 
   rescue:
 
