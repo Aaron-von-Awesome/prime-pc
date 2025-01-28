@@ -1,0 +1,24 @@
+---
+# ============================================================
+#                     desktop-snaps.yaml
+# ============================================================
+
+- name: "Block: desktop-snaps.yaml"
+  become: true
+  block:
+
+    - name: "Install xyz Snap Package"
+      community.general.snap:
+        name: xyz
+        state: present
+        channel: latest/stable
+
+  rescue:
+
+    - name: "ERROR: desktop-snaps.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: desktop-snaps.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

@@ -20,6 +20,7 @@
     _should_install_ansible_community_docker_collection_compatibility: true
     _timezone: "{{ vault_timezone }}"
     _username: "{{ vault_username }}"
+    _node_version: "{{ vault_node_version }}"
 
 
   # ---------------------------------------------------------------------------
@@ -97,17 +98,31 @@
         var_username: "{{ _username }}"
         var_folder_list: "{{ _folder_list }}"
 
+
+    # ======================     Desktop     ==================================
+
     - name: "-------> RUN: Desktop Packages Tasks"
       include_tasks: tasks/desktop-packages.yaml
-
-    - name: "-------> RUN: Development Packages Tasks"
-      include_tasks: tasks/development-packages.yaml
 
     - name: "-------> RUN: Desktop Flatpaks Tasks"
       include_tasks: tasks/desktop-flatpaks.yaml
 
+
+    # ======================     Development     ==============================
+
+    - name: "-------> RUN: Development Packages Tasks"
+      include_tasks: tasks/development-packages.yaml
+
     - name: "-------> RUN: Development Flatpaks Tasks"
       include_tasks: tasks/development-flatpaks.yaml
+
+    - name: "-------> RUN: Development Snaps Tasks"
+      include_tasks: tasks/development-snaps.yaml
+      vars:
+        var_node_version: "{{ _node_version }}"
+
+
+    # ======================     Communication     ============================
 
     - name: "-------> RUN: Communication Flatpaks Tasks"
       include_tasks: tasks/communication-flatpaks.yaml

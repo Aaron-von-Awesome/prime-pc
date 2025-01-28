@@ -1,0 +1,96 @@
+---
+# ============================================================
+#                development-snaps.yaml
+# ============================================================
+
+- name: "Block: development-snaps.yaml"
+  become: true
+  vars:
+    _var_node_version: "{{ var_node_version }}"
+
+  block:
+
+    - name: "Install Snap: node {{_var_node_version }}"
+      community.general.snap:
+        name: node
+        state: present
+        channel: "{{ _var_node_version }}/stable"
+        classic: true
+
+    - name: "Install Snap: go"
+      community.general.snap:
+        name: go
+        state: present
+        channel: latest/stable
+        classic: true
+
+    - name: "Install Snap: hugo"
+      community.general.snap:
+        name: hugo
+        state: present
+        channel: latest/stable
+
+    # https://snapcraft.io/kubectl
+    # https://snapcraft.io/helm
+    - name: "Install k8s CLI Snaps"
+      community.general.snap:
+        name: "{{ item }}"
+        state: present
+        channel: latest/stable
+        classic: true
+      loop:
+        - kubectl
+        - helm
+
+    - name: "Install Snap: bash-language-server"
+      community.general.snap:
+        name: bash-language-server
+        state: present
+        channel: latest/edge
+        classic: true
+
+    - name: "Install Snap: yaml-language-server"
+      community.general.snap:
+        name: yaml-language-server
+        state: present
+        channel: latest/edge
+
+    - name: "Install Snap: pylsp"
+      community.general.snap:
+        name: pylsp
+        state: present
+        channel: latest/stable
+
+    - name: "Install Snap: typescript-language-server"
+      community.general.snap:
+        name: typescript-language-server
+        state: present
+        channel: latest/stable
+
+    - name: "Install Snap: vscode-json-languageserver"
+      community.general.snap:
+        name: vscode-json-languageserver
+        state: present
+        channel: latest/stable
+
+    - name: "Install Snap: chirp-snap"
+      community.general.snap:
+        name: chirp-snap
+        state: present
+        channel: latest/edge
+
+    - name: "Install Snap: marksman"
+      community.general.snap:
+        name: marksman
+        state: present
+        channel: latest/stable
+
+  rescue:
+
+    - name: "ERROR: development-snaps.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: development-snaps.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

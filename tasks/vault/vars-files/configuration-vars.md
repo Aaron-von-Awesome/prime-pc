@@ -1,8 +1,9 @@
 # Variables in File
 
 ```yaml
-vault_username: ""
+vault_node_version: ""
 vault_timezone: ""
+vault_username: ""
 vault_folder_list:
   - /path/to/folder/number-one
   - /path/to/folder/number-two
