@@ -108,3 +108,6 @@
 
     - name: "-------> RUN: Development Flatpaks Tasks"
       include_tasks: tasks/development-flatpaks.yaml
+
+    - name: "-------> RUN: Communication Flatpaks Tasks"
+      include_tasks: tasks/communication-flatpaks.yaml
