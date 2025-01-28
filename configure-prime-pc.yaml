@@ -65,15 +65,8 @@
         var_user_list:
           - username: "{{ _username }}"
 
-    - name: "ROLE - Install Helix"
-      role: "aaronvonawesome.helix"
-      vars:
-        var_lts_codename: "{{ _lts_codename }}"
 
-    - name: "ROLE - Install Neovim"
-      role: "aaronvonawesome.neovim"
-      vars:
-        var_lts_codename: "{{ _lts_codename }}"
+    # ======================     Desktop     ==================================
 
     - name: "ROLE - Install the Nextcloud Desktop Client"
       role: "aaronvonawesome.nextcloud_desktop_client"
@@ -84,6 +77,21 @@
       role: "aaronvonawesome.redshift"
       vars:
         var_redshift_username: "{{ _username }}"
+
+
+    # ======================     Development     ==============================
+
+    - name: "ROLE - Install Helix"
+      role: "aaronvonawesome.helix"
+      vars:
+        var_lts_codename: "{{ _lts_codename }}"
+
+    - name: "ROLE - Install Neovim"
+      role: "aaronvonawesome.neovim"
+      vars:
+        var_lts_codename: "{{ _lts_codename }}"
+
+
 
 
   # ---------------------------------------------------------------------------

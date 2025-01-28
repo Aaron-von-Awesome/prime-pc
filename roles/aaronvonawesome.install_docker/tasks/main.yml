@@ -102,6 +102,26 @@
       loop: "{{ _var_user_list }}"
       when: _var_user_list is defined and _var_user_list | length > 0
 
+    - name: "Backup .bashrc file for user: {{ item.username }}"
+      become: true
+      become_user: "{{ item.username }}"
+      ansible.builtin.command:
+        cmd: cp ~/.bashrc ~/.bashrc.backup
+      changed_when: false
+      loop: "{{ _var_user_list }}"
+      when: _var_user_list is defined and _var_user_list | length > 0
+
+    - name: "Install Bash Alias for using Dockly for User: {{ item.username }}"
+      become: true
+      become_user: "{{ item.username }}"
+      ansible.builtin.blockinfile:
+        path: ~/.bashrc
+        marker: "# <-- {mark} ANSIBLE MANAGED BLOCK -->"
+        block: |
+          # Dockly
+          alias dockly='docker run --rm -it --name=dockly --volume /var/run/docker.sock:/var/run/docker.sock:ro lirantal/dockly'
+      loop: "{{ _var_user_list }}"
+      when: _var_user_list is defined and _var_user_list | length > 0
 
     - name: "Install PIP Packages for Ansible community.docker collection"
       block:
