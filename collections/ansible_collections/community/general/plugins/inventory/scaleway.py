@@ -3,9 +3,8 @@
 # GNU General Public License v3.0+ (see LICENSES/GPL-3.0-or-later.txt or https://www.gnu.org/licenses/gpl-3.0.txt)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from __future__ import (absolute_import, division, print_function)
+from __future__ import annotations
 
-__metaclass__ = type
 
 DOCUMENTATION = r'''
     name: scaleway
@@ -77,6 +76,7 @@ EXAMPLES = r'''
 # scaleway_inventory.yml file in YAML format
 # Example command line: ansible-inventory --list -i scaleway_inventory.yml
 
+---
 # use hostname as inventory_hostname
 # use the private IP address to connect to the host
 plugin: community.general.scaleway
@@ -91,6 +91,7 @@ variables:
   ansible_host: private_ip
   state: state
 
+---
 # use hostname as inventory_hostname and public IP address to connect to the host
 plugin: community.general.scaleway
 hostnames:
@@ -100,6 +101,7 @@ regions:
 variables:
   ansible_host: public_ip.address
 
+---
 # Using static strings as variables
 plugin: community.general.scaleway
 hostnames:

@@ -3,8 +3,7 @@
 # GNU General Public License v3.0+ (see LICENSES/GPL-3.0-or-later.txt or https://www.gnu.org/licenses/gpl-3.0.txt)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from __future__ import (absolute_import, division, print_function)
-__metaclass__ = type
+from __future__ import annotations
 
 DOCUMENTATION = '''
     author: Unknown (!UNKNOWN)
@@ -97,18 +96,20 @@ DOCUMENTATION = '''
         - 'TODO: add OS fingerprinting'
 '''
 EXAMPLES = '''
+---
 # inventory.config file in YAML format
 plugin: community.general.nmap
 strict: false
 address: 192.168.0.0/24
 
-
+---
 # a sudo nmap scan to fully use nmap scan power.
 plugin: community.general.nmap
 sudo: true
 strict: false
 address: 192.168.0.0/24
 
+---
 # an nmap scan specifying ports and classifying results to an inventory group
 plugin: community.general.nmap
 address: 192.168.0.0/24

@@ -3,8 +3,7 @@
 # GNU General Public License v3.0+ (see LICENSES/GPL-3.0-or-later.txt or https://www.gnu.org/licenses/gpl-3.0.txt)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from __future__ import (absolute_import, division, print_function)
-__metaclass__ = type
+from __future__ import annotations
 
 DOCUMENTATION = '''
     author: Unknown (!UNKNOWN)
@@ -56,15 +55,16 @@ DOCUMENTATION = '''
 '''
 
 EXAMPLES = '''
+---
 # file must be named vbox.yaml or vbox.yml
-simple_config_file:
-    plugin: community.general.virtualbox
-    settings_password_file: /etc/virtulbox/secrets
-    query:
-      logged_in_users: /VirtualBox/GuestInfo/OS/LoggedInUsersList
-    compose:
-      ansible_connection: ('indows' in vbox_Guest_OS)|ternary('winrm', 'ssh')
+plugin: community.general.virtualbox
+settings_password_file: /etc/virtualbox/secrets
+query:
+  logged_in_users: /VirtualBox/GuestInfo/OS/LoggedInUsersList
+compose:
+  ansible_connection: ('indows' in vbox_Guest_OS)|ternary('winrm', 'ssh')
 
+---
 # add hosts (all match with minishift vm) to the group container if any of the vms are in ansible_inventory'
 plugin: community.general.virtualbox
 groups:

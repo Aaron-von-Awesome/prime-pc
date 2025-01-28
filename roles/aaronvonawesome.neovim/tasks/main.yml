@@ -39,6 +39,21 @@
         state: latest
         update_cache: true
 
+    - name: "Install Extra Packages"
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: latest
+        update_cache: true
+      vars:
+        packages:
+          - fd-find
+          - lua5.4
+          - luajit
+          - python3-pynvim
+          - ripgrep
+          - universal-ctags
+          - xsel
+
   rescue:
 
     - name: "ERROR: Failed to install Neovim"

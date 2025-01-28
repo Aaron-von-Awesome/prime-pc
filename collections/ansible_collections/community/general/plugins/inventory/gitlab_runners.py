@@ -4,9 +4,8 @@
 # GNU General Public License v3.0+ (see LICENSES/GPL-3.0-or-later.txt or https://www.gnu.org/licenses/gpl-3.0.txt)
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-from __future__ import (absolute_import, division, print_function)
+from __future__ import annotations
 
-__metaclass__ = type
 
 DOCUMENTATION = '''
     name: gitlab_runners
@@ -58,10 +57,12 @@ DOCUMENTATION = '''
 '''
 
 EXAMPLES = '''
+---
 # gitlab_runners.yml
 plugin: community.general.gitlab_runners
 host: https://gitlab.com
 
+---
 # Example using constructed features to create groups and set ansible_host
 plugin: community.general.gitlab_runners
 host: https://gitlab.com

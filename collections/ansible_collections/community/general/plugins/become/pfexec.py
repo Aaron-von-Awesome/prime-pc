@@ -2,8 +2,7 @@
 # Copyright (c) 2018, Ansible Project
 # GNU General Public License v3.0+ (see LICENSES/GPL-3.0-or-later.txt or https://www.gnu.org/licenses/gpl-3.0.txt)
 # SPDX-License-Identifier: GPL-3.0-or-later
-from __future__ import (absolute_import, division, print_function)
-__metaclass__ = type
+from __future__ import annotations
 
 DOCUMENTATION = r"""
 name: pfexec
@@ -15,8 +14,8 @@ options:
   become_user:
     description:
       - User you 'become' to execute the task.
-      - This plugin ignores this setting as pfexec uses its own C(exec_attr) to figure this out, but it is supplied here
-        for Ansible to make decisions needed for the task execution, like file permissions.
+      - This plugin ignores this setting as pfexec uses its own C(exec_attr) to figure this out, but it is supplied here for
+        Ansible to make decisions needed for the task execution, like file permissions.
     type: string
     default: root
     ini:
