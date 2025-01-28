@@ -49,6 +49,7 @@
           - fd-find
           - lua5.4
           - luajit
+          - luarocks
           - python3-pynvim
           - ripgrep
           - universal-ctags
