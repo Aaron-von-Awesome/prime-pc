@@ -16,7 +16,7 @@
         packages:
           - cargo
           - composer
-          - javacc
+          - default-jdk
           - meld
           - php
           - ruby
