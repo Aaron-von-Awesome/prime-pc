@@ -55,6 +55,13 @@
           - universal-ctags
           - xsel
 
+    - name: "Install jsregexp"
+      ansible.builtin.command:
+        cmd: |
+          luarocks install jsregexp
+      changed_when: false
+
+
   rescue:
 
     - name: "ERROR: Failed to install Neovim"
