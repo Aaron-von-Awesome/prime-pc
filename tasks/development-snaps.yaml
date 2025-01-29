@@ -85,6 +85,14 @@
         state: present
         channel: latest/stable
 
+    - name: "Install Snap: Julia Programming Language"
+      community.general.snap:
+        name: julia
+        state: present
+        channel: latest/stable
+        classic: true
+
+
   rescue:
 
     - name: "ERROR: development-snaps.yaml"
