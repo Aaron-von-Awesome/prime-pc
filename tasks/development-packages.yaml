@@ -15,8 +15,12 @@
       vars:
         packages:
           - cargo
+          - composer
+          - javacc
           - meld
           - php
+          - ruby
+          - ruby-rubygems
 
   rescue:
 
