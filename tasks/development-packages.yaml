@@ -21,6 +21,7 @@
           - php
           - ruby
           - ruby-rubygems
+          - tree-sitter-cli
 
   rescue:
 
