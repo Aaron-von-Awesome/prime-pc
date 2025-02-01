@@ -1,0 +1,44 @@
+---
+# ============================================================
+#                     ansible-addons-pack.yaml
+# ============================================================
+
+- name: "Block: ansible-addons-pack.yaml"
+  become: true
+  vars:
+    _var_username: "{{ var_username }}"
+
+  block:
+
+    - name: Install passlib for use with Ansible Vault encryption (Python crpyt module is being deprecated)
+      ansible.builtin.apt:
+        name: python3-passlib
+        state: latest
+        update_cache: true
+
+
+    - name: "Install Ansible Molecule via PIP for user {{ _var_username }}"
+      become_user: "{{ _var_username }}"
+      block:
+
+        - name: "Run \"pip install --user {{ item }} (for user {{ _var_username }})\""
+          ansible.builtin.pip:
+            name: "{{ item }}"
+            executable: pip3
+            state: latest
+            extra_args: --user
+          loop:
+            - molecule
+            - molecule-plugins[docker]
+            - molecule-plugins[vagrant]
+
+
+  rescue:
+
+    - name: "ERROR: ansible-addons-pack.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: ansible-addons-pack.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("
