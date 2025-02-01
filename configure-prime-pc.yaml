@@ -129,10 +129,10 @@
       vars:
         var_node_version: "{{ _node_version }}"
 
-    - name: "-------> RUN: Ansible Add-ons Pack Tasks"
-      include_tasks: tasks/ansible-addons-pack.yaml
-      vars:
-        var_username: "{{ _username }}"
+    # - name: "-------> RUN: Ansible Add-ons Pack Tasks"
+    #   include_tasks: tasks/ansible-addons-pack.yaml
+    #   vars:
+    #     var_username: "{{ _username }}"
 
 
     # ======================     Communication     ============================
