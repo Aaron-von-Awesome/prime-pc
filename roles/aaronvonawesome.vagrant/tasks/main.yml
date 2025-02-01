@@ -10,19 +10,18 @@
     _var_vagrant_should_install_virtualbox: "{{ var_vagrant_should_install_virtualbox }}"
   block:
 
-    - name: "Add Hashicorp apt key"
-      ansible.builtin.get_url:
-        url: "https://apt.releases.hashicorp.com/gpg"
-        dest: "/etc/apt/trusted.gpg.d/hashicorp-archive-keyring.gpg"
-        mode: "0644"
-        force: true
-      changed_when: false
 
-    - name: "Add Hashicorp repo to sources list"
+    - name: "Add HashiCorp APT key"
+      ansible.builtin.apt_key:
+        id: 798AEC654E5C15428C8E42EEAA16FCBCA621E701
+        url: "https://apt.releases.hashicorp.com/gpg"
+        state: present
+
+    - name: "Add HashiCorp Linux Repo to sources list"
       ansible.builtin.apt_repository:
         repo: >
           deb
-          [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg]
+          [arch=amd64]
           https://apt.releases.hashicorp.com
           {{ _var_vagrant_lts_codename }}
           main
@@ -34,8 +33,6 @@
       retries: 3
       delay: 60
       ignore_errors: true
-
-    # ============================================================
 
 
     - name: "Block: Install Virtualbox"
