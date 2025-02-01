@@ -1,5 +1,5 @@
 ---
 # defaults file for ansible-role-vagrant
 
-var_lts_codename: "noble"
-var_should_install_virtualbox: false
+var_vagrant_lts_codename: "noble"
+var_vagrant_should_install_virtualbox: false

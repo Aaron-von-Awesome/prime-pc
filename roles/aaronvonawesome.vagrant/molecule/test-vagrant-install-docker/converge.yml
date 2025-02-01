@@ -15,5 +15,5 @@
       ansible.builtin.include_role:
         name: "aaronvonawesome.vagrant"
       vars:
-        var_lts_codename: "{{ _lts_codename }}"
-        var_should_install_virtualbox: "{{ _should_install_virtualbox }}"
+        var_vagrant_lts_codename: "{{ _lts_codename }}"
+        var_vagrant_should_install_virtualbox: "{{ _should_install_virtualbox }}"

@@ -8,13 +8,13 @@ This Ansible Role will install [Vagrant](https://www.vagrantup.com/) using the [
 
 ## Role Variables
 
-### var_lts_codename
+### var_vagrant_lts_codename
 
 ***default:*** noble
 
 Set the codename for the version (or base version) of Ubuntu you will be using.
 
-### var_should_install_virtualbox
+### var_vagrant_should_install_virtualbox
 
 ***default:*** false
 
@@ -42,7 +42,7 @@ Set to `true` if you would like to also install Virtualbox.
       ansible.builtin.include_role:
         name: "aaronvonawesome.vargrant
       vars:
-        var_lts_codename: "{{ _lts_codename }}"
+        var_vagrant_lts_codename: "{{ _lts_codename }}"
 ```
 
 ## License

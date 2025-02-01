@@ -21,6 +21,9 @@
     _timezone: "{{ vault_timezone }}"
     _username: "{{ vault_username }}"
     _node_version: "{{ vault_node_version }}"
+    _should_install_virtualbox: true
+
+
 
 
   # ---------------------------------------------------------------------------
@@ -47,6 +50,8 @@
 
     - name: "-------> RUN: Enable snaps Tasks"
       include_tasks: tasks/enable-snaps.yaml
+
+
 
 
   # ---------------------------------------------------------------------------
@@ -90,6 +95,12 @@
       role: "aaronvonawesome.neovim"
       vars:
         var_lts_codename: "{{ _lts_codename }}"
+
+    - name: "ROLE - Install Virtualbox + Vagrant"
+      role: "aaronvonawesome.vagrant"
+      vars:
+        var_vagrant_username: "{{ _username }}"
+        var_vagrant_should_install_virtualbox: "{{ _should_install_virtualbox }}"
 
 
 

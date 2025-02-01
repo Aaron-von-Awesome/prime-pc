@@ -6,8 +6,8 @@
 - name: "Block: Install Vagrant Ansible Role"
   become: true
   vars:
-    _var_lts_codename: "{{ var_lts_codename }}"
-    _var_should_install_virtualbox: "{{ var_should_install_virtualbox }}"
+    _var_vagrant_lts_codename: "{{ var_vagrant_lts_codename }}"
+    _var_vagrant_should_install_virtualbox: "{{ var_vagrant_should_install_virtualbox }}"
   block:
 
     - name: "Add Hashicorp apt key"
@@ -24,7 +24,7 @@
           deb
           [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg]
           https://apt.releases.hashicorp.com
-          {{ _var_lts_codename }}
+          {{ _var_vagrant_lts_codename }}
           main
         filename: hashicorp
         update_cache: true
@@ -39,7 +39,7 @@
 
 
     - name: "Block: Install Virtualbox"
-      when: _var_should_install_virtualbox
+      when: _var_vagrant_should_install_virtualbox
       block:
 
         - name: "Accept virtualbox-ext-pack select license"
