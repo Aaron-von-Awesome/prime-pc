@@ -1,0 +1,19 @@
+---
+- name: Converge
+  hosts:
+    - all
+  become: true
+  gather_facts: false
+  vars:
+    _lts_codename: "{{ lts_codename }}"
+    _should_install_virtualbox: "{{ should_install_virtualbox }}"
+
+
+  tasks:
+
+    - name: "Converge - Scenario: Test Vagrant Install"
+      ansible.builtin.include_role:
+        name: "aaronvonawesome.vagrant"
+      vars:
+        var_lts_codename: "{{ _lts_codename }}"
+        var_should_install_virtualbox: "{{ _should_install_virtualbox }}"

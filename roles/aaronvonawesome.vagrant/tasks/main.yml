@@ -1,0 +1,89 @@
+---
+# ============================================================
+#                       Role: vagrant
+# ============================================================
+
+- name: "Block: Install Vagrant Ansible Role"
+  become: true
+  vars:
+    _var_lts_codename: "{{ var_lts_codename }}"
+    _var_should_install_virtualbox: "{{ var_should_install_virtualbox }}"
+  block:
+
+    - name: "Add Hashicorp apt key"
+      ansible.builtin.get_url:
+        url: "https://apt.releases.hashicorp.com/gpg"
+        dest: "/etc/apt/trusted.gpg.d/hashicorp-archive-keyring.gpg"
+        mode: "0644"
+        force: true
+      changed_when: false
+
+    - name: "Add Hashicorp repo to sources list"
+      ansible.builtin.apt_repository:
+        repo: >
+          deb
+          [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg]
+          https://apt.releases.hashicorp.com
+          {{ _var_lts_codename }}
+          main
+        filename: hashicorp
+        update_cache: true
+        mode: "0644"
+      register: add_hashicorp_repo_result
+      until: add_hashicorp_repo_result is succeeded
+      retries: 3
+      delay: 60
+      ignore_errors: true
+
+    # ============================================================
+
+
+    - name: "Block: Install Virtualbox"
+      when: _var_should_install_virtualbox
+      block:
+
+        - name: "Accept virtualbox-ext-pack select license"
+          ansible.builtin.debconf:
+            name: virtualbox-ext-pack
+            question: virtualbox-ext-pack/license
+            value: "true"
+            vtype: select
+          changed_when: false
+
+        - name: "Install Virtualbox Packages"
+          ansible.builtin.apt:
+            name: "{{ packages }}"
+            state: latest
+            update_cache: true
+          vars:
+            packages:
+              - virtualbox
+              - virtualbox-qt
+              - virtualbox-ext-pack
+
+      rescue:
+
+        - name: "ERROR: Did not finish installing Virtualbox Packages"
+          ansible.builtin.debug:
+            msg: "ERROR: Did not finish installing Virtualbox Packages"
+
+        - name: "Error detected! Stopping Playbook :-("
+          ansible.builtin.fail:
+            msg: "Error detected! Stopping Playbook :-("
+
+
+    - name: "Install Vagrant Package"
+      ansible.builtin.apt:
+        name: vagrant
+        state: latest
+        update_cache: true
+
+  rescue:
+
+    - name: "ERROR: Failed to install Vagrant"
+      ansible.builtin.debug:
+        msg: "ERROR: Failed to install Vagrant"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

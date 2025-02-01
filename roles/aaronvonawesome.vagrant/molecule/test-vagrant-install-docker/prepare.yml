@@ -1,0 +1,21 @@
+---
+- name: Prepare
+  hosts:
+    - all
+  gather_facts: false
+
+  tasks:
+
+    - name: "Check if Vagrant is installed"
+      ansible.builtin.command:
+        cmd: >
+          which vagrant
+      register: vagrant_installed
+      ignore_errors: true
+
+    - name: "Assert Vagrant is NOT installed"
+      ansible.builtin.assert:
+        that:
+          - vagrant_installed.rc > 0
+        fail_msg: "Vagrant IS installed...bad :-("
+        success_msg: "Vagrant is not installed...good!"

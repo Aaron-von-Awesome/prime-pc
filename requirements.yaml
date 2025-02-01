@@ -32,6 +32,11 @@ roles:
     src: "https://codeberg.org/aaronvonawesome/ansible-role-redshift.git"
     version: "main"
 
+  - name: "aaronvonawesome.vagrant"
+    scm: git
+    src: "https://codeberg.org/aaronvonawesome/ansible-role-vagrant.git"
+    version: "main"
+
 collections:
 
   - name: "community.general"
