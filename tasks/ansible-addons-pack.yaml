@@ -10,14 +10,18 @@
 
   block:
 
-    - name: Install passlib for use with Ansible Vault encryption (Python crpyt module is being deprecated)
+    - name: "Install passlib for use with Ansible Vault encryption (Python crpyt module is being deprecated)"
       ansible.builtin.apt:
         name: python3-passlib
         state: latest
         update_cache: true
 
+    - name: "Current \"_var_username\" value"
+      ansible.builtin.debug:
+        msg: "_var_username => {{ _var_username }}"
 
     - name: "Install Ansible Molecule via PIP for user {{ _var_username }}"
+      become: true
       become_user: "{{ _var_username }}"
       block:
 

@@ -1,0 +1,23 @@
+---
+- name: Prepare
+  hosts:
+    - all
+  become: true
+  gather_facts: false
+
+  # -----------------------------------------
+  # -----         TASKS                ------
+  # -----------------------------------------
+  tasks:
+
+
+    - name: "Install APT Packages"
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: latest
+        update_cache: true
+      vars:
+        packages:
+          - ansible
+          - ansible-lint
+          - python3-pip
