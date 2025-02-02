@@ -26,4 +26,4 @@ provisioner:
     group_vars:
       all:
         lts_codename: "noble"
-        should_install_virtualbox: true
+        should_install_virtualbox: false
