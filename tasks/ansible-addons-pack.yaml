@@ -16,25 +16,35 @@
         state: latest
         update_cache: true
 
+    - name: "Install pipx"
+      ansible.builtin.apt:
+        name: pipx
+        state: latest
+        update_cache: true
+
     - name: "Current \"_var_username\" value"
       ansible.builtin.debug:
         msg: "_var_username => {{ _var_username }}"
 
-    - name: "Install Ansible Molecule via PIP for user {{ _var_username }}"
+    - name: "Install Ansible Molecule via PIPx for user {{ _var_username }}"
       become: true
       become_user: "{{ _var_username }}"
       block:
 
-        - name: "Run \"pip install --user {{ item }} (for user {{ _var_username }})\""
-          ansible.builtin.pip:
-            name: "{{ item }}"
-            executable: pip3
+        - name: "Install molecule using pipx"
+          community.general.pipx:
+            name: "molecule"
+            system_site_packages: true
+            include_injected: true
             state: latest
-            extra_args: --user
-          loop:
-            - molecule
-            - molecule-plugins[docker]
-            - molecule-plugins[vagrant]
+
+        - name: "Inject molecule-plugins for docker and vagrant"
+          community.general.pipx:
+            name: "molecule"
+            state: inject
+            inject_packages:
+              - molecule-plugins[docker]
+              - molecule-plugins[vagrant]
 
 
   rescue:
