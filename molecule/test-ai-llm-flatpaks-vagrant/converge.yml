@@ -1,0 +1,12 @@
+---
+- name: "Converge - Scenario: AI/LLM Flatpaks"
+  hosts:
+    - all
+  become: true
+  gather_facts: false
+
+
+  tasks:
+
+    - name: "-------> RUN: AI/LLM Flatpaks Tasks"
+      include_tasks: ../../tasks/ai-llm-flatpaks.yaml

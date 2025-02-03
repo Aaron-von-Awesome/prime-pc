@@ -1,0 +1,26 @@
+---
+# ============================================================
+#                     ai-llm-flatpaks.yaml
+# ============================================================
+
+- name: "Block: ai-llm-flatpaks.yaml"
+  become: true
+  block:
+
+    - name: Install A.I. and LLM-related flatpaks
+      community.general.flatpak:
+        name: "{{ item }}"
+        state: present
+        method: system
+      loop:
+        - net.mkiol.SpeechNote
+
+  rescue:
+
+    - name: "ERROR: ai-llm-flatpaks.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: ai-llm-flatpaks.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

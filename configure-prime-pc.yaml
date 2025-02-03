@@ -150,3 +150,9 @@
 
     - name: "-------> RUN: Communication Flatpaks Tasks"
       include_tasks: tasks/communication-flatpaks.yaml
+
+
+    # ======================      LLM-Related      ============================
+
+    - name: "-------> RUN: AI/LLM Flatpaks Tasks"
+      include_tasks: tasks/ai-llm-flatpaks.yaml
