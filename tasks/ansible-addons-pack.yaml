@@ -33,14 +33,14 @@
 
         - name: "Install molecule using pipx"
           community.general.pipx:
-            name: "molecule"
+            name: molecule
             system_site_packages: true
             include_injected: true
             state: latest
 
         - name: "Inject molecule-plugins for docker and vagrant"
           community.general.pipx:
-            name: "molecule"
+            name: molecule
             state: inject
             inject_packages:
               - molecule-plugins[docker]
