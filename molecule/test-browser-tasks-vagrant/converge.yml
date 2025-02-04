@@ -1,0 +1,22 @@
+---
+- name: "Converge - Scenario: Test Browser Installation Tasks"
+  hosts:
+    - all
+  become: true
+  gather_facts: false
+
+
+  tasks:
+
+    - name: "Run: apt-get update"
+      apt:
+        update_cache: true
+
+    - name: "-------> RUN: Browser Packages Tasks"
+      include_tasks: ../../tasks/browser-packages.yaml
+
+    - name: "-------> RUN: Browser Flatpaks Tasks"
+      include_tasks: ../../tasks/browser-flatpaks.yaml
+
+    - name: "-------> RUN: Browser Snaps Tasks"
+      include_tasks: ../../tasks/browser-snaps.yaml

@@ -1,0 +1,24 @@
+---
+# ============================================================
+#                     browser-snaps.yaml
+# ============================================================
+
+- name: "Block: browser-snaps.yaml"
+  become: true
+  block:
+
+    - name: "Install Vivaldi Snap Package"
+      community.general.snap:
+        name: vivaldi
+        state: present
+        channel: latest/stable
+
+  rescue:
+
+    - name: "ERROR: browser-snaps.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: browser-snaps.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

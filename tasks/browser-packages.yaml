@@ -1,0 +1,24 @@
+---
+# ============================================================
+#                     browser-packages.yaml
+# ============================================================
+
+- name: "Block: browser-packages.yaml"
+  become: true
+  block:
+
+    - name: "Install Tor Browser Launcher APT package"
+      ansible.builtin.apt:
+        name: "torbrowser-launcher"
+        state: latest
+        update_cache: true
+
+  rescue:
+
+    - name: "ERROR: browser-packages.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: browser-packages.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

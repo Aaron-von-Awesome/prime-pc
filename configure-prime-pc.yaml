@@ -152,7 +152,19 @@
       include_tasks: tasks/communication-flatpaks.yaml
 
 
-    # ======================      LLM-Related      ============================
+    # ======================     LLM-Related      =============================
 
     - name: "-------> RUN: AI/LLM Flatpaks Tasks"
       include_tasks: tasks/ai-llm-flatpaks.yaml
+
+
+    # ======================     Browsers     =================================
+
+    - name: "-------> RUN: Browser Packages Tasks"
+      include_tasks: tasks/browser-packages.yaml
+
+    - name: "-------> RUN: Browser Flatpaks Tasks"
+      include_tasks: tasks/browser-flatpaks.yaml
+
+    - name: "-------> RUN: Browser Snaps Tasks"
+      include_tasks: tasks/browser-snaps.yaml

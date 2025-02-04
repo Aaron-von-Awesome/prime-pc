@@ -1,0 +1,15 @@
+---
+- name: Prepare
+  hosts:
+    - all
+  become: true
+  gather_facts: false
+
+  # -----------------------------------------
+  # -----         TASKS                ------
+  # -----------------------------------------
+  tasks:
+
+
+    - name: "-------> RUN: Enable snaps Tasks"
+      include_tasks: ../../tasks/enable-snaps.yaml

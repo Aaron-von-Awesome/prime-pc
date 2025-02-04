@@ -37,3 +37,4 @@ provisioner:
       all:
         hosts:
           molecule-test-instance:
+            username: "vagrant"

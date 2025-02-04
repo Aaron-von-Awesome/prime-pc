@@ -1,0 +1,26 @@
+---
+# ============================================================
+#                     browser-flatpaks.yaml
+# ============================================================
+
+- name: "Block: browser-flatpaks.yaml"
+  become: true
+  block:
+
+    - name: "Install Browser Pack flatpaks"
+      community.general.flatpak:
+        name: "{{ item }}"
+        state: present
+        method: system
+      loop:
+        - io.gitlab.librewolf-community
+
+  rescue:
+
+    - name: "ERROR: browser-flatpaks.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: browser-flatpaks.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("
