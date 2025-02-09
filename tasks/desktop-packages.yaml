@@ -18,6 +18,10 @@
           - wireguard
           - xiphos
 
+    # ####################################################
+    # TODO: sudo setfacl -m u:$username:rx /etc/wireguard
+    # ####################################################
+
     - name: "Install APT Packages for Zim Wiki"
       ansible.builtin.apt:
         name: "{{ packages }}"
