@@ -16,6 +16,7 @@
         packages:
           - tree
           - xiphos
+          - zim
 
   rescue:
 
