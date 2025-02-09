@@ -15,6 +15,7 @@
       vars:
         packages:
           - tree
+          - wireguard
           - xiphos
 
     - name: "Install APT Packages for Zim Wiki"
