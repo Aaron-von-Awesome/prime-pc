@@ -16,6 +16,17 @@
         packages:
           - tree
           - xiphos
+
+    - name: "Install APT Packages for Zim Wiki"
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: latest
+        update_cache: true
+      vars:
+        packages:
+          - python3-enchant
+          - python3-graphviz
+          - python3-gtkspellcheck
           - zim
 
   rescue:

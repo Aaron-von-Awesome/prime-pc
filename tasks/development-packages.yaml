@@ -19,6 +19,7 @@
           - default-jdk
           - meld
           - php
+          - python3-graphviz
           - ruby
           - ruby-rubygems
           - tree-sitter-cli
