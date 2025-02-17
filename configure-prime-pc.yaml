@@ -117,6 +117,9 @@
         var_username: "{{ _username }}"
         var_folder_list: "{{ _folder_list }}"
 
+    - name: "-------> RUN: Base Packages Tasks"
+      include_tasks: tasks/base-packages.yaml
+
 
     # ======================     Desktop     ==================================
 

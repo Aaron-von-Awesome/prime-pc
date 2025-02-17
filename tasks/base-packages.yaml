@@ -1,0 +1,28 @@
+---
+# ============================================================
+#                     base-packages.yaml
+# ============================================================
+
+- name: "Block: base-packages.yaml"
+  become: true
+  block:
+
+    - name: "Install Base/Foundational APT packages"
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: latest
+        update_cache: true
+      vars:
+        packages:
+          - cryptsetup
+          - cryptsetup-initramfs
+
+  rescue:
+
+    - name: "ERROR: base-packages.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: base-packages.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("
