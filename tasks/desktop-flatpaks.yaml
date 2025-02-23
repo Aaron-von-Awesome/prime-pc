@@ -35,15 +35,8 @@
         - org.gnome.gitlab.cheywood.Buffer
         - org.keepassxc.KeePassXC
         - org.kiwix.desktop
-        - us.zoom.Zoom
-
-    - name: "Remove Desktop flatpaks"
-      community.general.flatpak:
-        name: "{{ item }}"
-        state: absent
-        method: system
-      loop:
         - org.onlyoffice.desktopeditors
+        - us.zoom.Zoom
 
   rescue:
 
