@@ -17,7 +17,7 @@
   vars:
     _folder_list: "{{ vault_folder_list }}"
     _lts_codename: "noble"
-    _molecule_version: "25.3.1"
+    _molecule_version: "25.1.0"
     _node_version: "{{ vault_node_version }}"
     _should_install_ansible_community_docker_collection_compatibility: true
     _should_install_virtualbox: true
