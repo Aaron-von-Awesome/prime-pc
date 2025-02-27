@@ -38,6 +38,7 @@
             source: "molecule=={{ _var_molecule_version }}"
             system_site_packages: true
             include_injected: true
+            force: true
             state: install
 
         - name: "Inject molecule-plugins for docker and vagrant"
