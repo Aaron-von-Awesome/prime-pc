@@ -29,6 +29,7 @@
         - com.usebottles.bottles
         - io.freetubeapp.FreeTube
         - io.github.flattool.Warehouse
+        - io.github.input_leap.input-leap
         - io.github.Pithos
         - md.obsidian.Obsidian
         - org.gabmus.whatip
