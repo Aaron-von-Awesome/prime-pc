@@ -1,7 +1,0 @@
----
-var_redshift_config_filename: "redshift-conf.j2"
-var_redshift_username: ""
-var_redshift_temp_day: "7000"
-var_redshift_temp_night: "4000"
-var_redshift_gamma_day: "1.0"
-var_redshift_gamma_night: "0.9"
