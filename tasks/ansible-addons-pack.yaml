@@ -23,6 +23,12 @@
         state: latest
         update_cache: true
 
+    - name: "Install python-vagrant"
+      ansible.builtin.apt:
+        name: python-vagrant
+        state: latest
+        update_cache: true
+
     - name: "Current \"_var_username\" value"
       ansible.builtin.debug:
         msg: "_var_username => {{ _var_username }}"
