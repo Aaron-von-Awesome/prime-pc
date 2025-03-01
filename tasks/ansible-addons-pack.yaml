@@ -48,7 +48,14 @@
             inject_packages:
               - molecule-plugins[docker]
               - molecule-plugins[vagrant]
-              - vagpy
+
+        - name: "Install python-vagrant using pipx"
+          community.general.pipx:
+            name: vagpy
+            system_site_packages: true
+            include_injected: true
+            force: true
+            state: install
 
 
   rescue:
