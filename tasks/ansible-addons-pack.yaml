@@ -48,7 +48,6 @@
             inject_packages:
               - molecule-plugins[docker]
               - molecule-plugins[vagrant]
-              - python-vagrant
 
 
   rescue:
