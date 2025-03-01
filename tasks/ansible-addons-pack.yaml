@@ -51,7 +51,7 @@
 
         - name: "Install python-vagrant using pipx"
           community.general.pipx:
-            name: vagpy
+            name: python-vagrant
             system_site_packages: true
             include_injected: true
             force: true
