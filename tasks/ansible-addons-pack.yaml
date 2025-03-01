@@ -36,7 +36,7 @@
         - name: "Install python-vagrant using pipx"
           community.general.pipx:
             name: python-vagrant
-            source: "git+https://github.com:pycontribs/python-vagrant.git"
+            source: "git+https://github.com/pycontribs/python-vagrant.git"
             system_site_packages: true
             include_injected: true
             force: true
