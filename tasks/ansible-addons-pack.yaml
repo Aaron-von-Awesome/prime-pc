@@ -27,6 +27,13 @@
       ansible.builtin.debug:
         msg: "_var_username => {{ _var_username }}"
 
+    - name: "pip install --user ansible (for user {{ _var_username }})"
+      ansible.builtin.pip:
+        name: python-vagrant
+        executable: pip3
+        state: latest
+        extra_args: --user
+
     - name: "Install Ansible Molecule via PIPx for user {{ _var_username }}"
       become: true
       become_user: "{{ _var_username }}"
