@@ -1,0 +1,6 @@
+---
+lazygit_dep_pkgs:
+  - lazygit
+
+lazygit_distro_pkgs:
+  - neovim

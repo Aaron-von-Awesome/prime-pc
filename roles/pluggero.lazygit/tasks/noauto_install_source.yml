@@ -1,0 +1,59 @@
+---
+- name: Ensure lazygit is installed
+  block:
+    - name: Get installed lazygit version
+      ansible.builtin.command:
+        cmd: "lazygit --version"
+      ignore_errors: true
+      changed_when: false
+      failed_when: false
+      register: lazygit_version_cmd
+
+    - name: Extract only the version into a variable
+      ansible.builtin.set_fact:
+        lazygit_installed_version: "{{ lazygit_version_cmd.stdout | regex_replace('^.*?version=([\\d\\.]{6}),.*$', '\\1') }}"
+
+    - name: Debug installed lazygit version
+      ansible.builtin.debug:
+        var: lazygit_installed_version
+
+    - name: Force install if the version numbers do not match
+      ansible.builtin.set_fact:
+        lazygit_reinstall_from_source: true
+      when:
+        - lazygit_installed_version is defined
+        - lazygit_installed_version != lazygit_version
+
+    - name: Install lazygit from source
+      when: lazygit_installed_version is not defined or lazygit_reinstall_from_source
+      block:
+        - name: Download lazygit
+          ansible.builtin.get_url:
+            url: "https://github.com/jesseduffield/lazygit/releases/download/v{{ lazygit_version }}/lazygit_{{ lazygit_version }}_Linux_x86_64.tar.gz"
+            dest: "{{ lazygit_build_dir }}/lazygit-{{ lazygit_version }}.tar.gz"
+            mode: "0600"
+            owner: "{{ ansible_user }}"
+            group: "{{ ansible_user }}"
+
+        - name: Extract archive
+          ansible.builtin.unarchive:
+            src: "{{ lazygit_build_dir }}/lazygit-{{ lazygit_version }}.tar.gz"
+            dest: "{{ lazygit_build_dir }}"
+            remote_src: true
+            creates: "{{ lazygit_build_dir }}/lazygit"
+
+        - name: Install lazygit
+          ansible.builtin.command:
+            cmd: install {{ lazygit_build_dir }}/lazygit /usr/local/bin
+          become: true
+          changed_when: true
+
+        - name: Remove extracted binary
+          ansible.builtin.file:
+            path: "{{ lazygit_build_dir }}/lazygit"
+            state: absent
+
+        - name: Remove archive
+          ansible.builtin.file:
+            path: "{{ lazygit_build_dir }}/lazygit-{{ lazygit_version }}.tar.gz"
+            state: absent

@@ -37,6 +37,9 @@ roles:
     src: "https://codeberg.org/aaronvonawesome/ansible-role-vagrant.git"
     version: "main"
 
+  - name: "pluggero.lazygit"
+
+
 collections:
 
   - name: "community.general"
