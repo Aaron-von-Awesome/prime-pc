@@ -158,6 +158,7 @@
         ansible_user: "{{ _username }}"
         lazygit_version: "{{ _lazygit_version }}"
 
+
     # ======================     Communication     ============================
 
     - name: "-------> RUN: Communication Flatpaks Tasks"
