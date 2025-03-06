@@ -47,8 +47,10 @@
             name: molecule
             state: inject
             inject_packages:
-              - molecule-plugins
-              - python-vagrant
+              - "molecule-plugins[docker]"
+              - "molecule-plugins[vagrant]"
+              - "python-vagrant"
+              - "python3-passlib"
 
 
   rescue:
