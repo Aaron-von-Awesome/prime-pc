@@ -46,7 +46,6 @@
             inject_packages:
               - "molecule-plugins[docker]=={{ _var_molecule_plugins_version }}"
               - "molecule-plugins[vagrant]=={{ _var_molecule_plugins_version }}"
-              - "passlib"
             install_apps: true
             install_deps: true
 
