@@ -19,6 +19,7 @@
     _lts_codename: "noble"
     _lazygit_version: "0.48.0"
     _molecule_version: "24.12.0"
+    _molecule_plugins_version: "23.6.0"
     _node_version: "{{ vault_node_version }}"
     _should_install_ansible_community_docker_collection_compatibility: true
     _should_install_virtualbox: true
@@ -148,7 +149,7 @@
     - name: "-------> RUN: Ansible Add-ons Pack Tasks"
       include_tasks: tasks/ansible-addons-pack.yaml
       vars:
-        var_molecule_version: "{{ _molecule_version }}"
+        var_molecule_plugins_version: "{{ _molecule_plugins_version }}"
         var_username: "{{ _username }}"
 
     - name: "Install lazygit"
