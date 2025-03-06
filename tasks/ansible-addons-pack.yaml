@@ -38,7 +38,6 @@
             name: molecule
             state: install
             force: true
-            include_injected: true
             install_deps: true
             source: "molecule=={{ _var_molecule_version }}"
             system_site_packages: true
