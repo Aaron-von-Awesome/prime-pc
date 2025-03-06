@@ -19,7 +19,7 @@
     _lts_codename: "noble"
     _lazygit_version: "0.48.0"
     _molecule_version: "24.12.0"
-    _molecule_plugins_version: "23.6.0"
+    _molecule_plugins_version: "23.5.3"
     _node_version: "{{ vault_node_version }}"
     _should_install_ansible_community_docker_collection_compatibility: true
     _should_install_virtualbox: true
