@@ -43,12 +43,6 @@
             source: "molecule=={{ _var_molecule_version }}"
             system_site_packages: true
 
-        - name: "Install paramiko using pipx"
-          community.general.pipx:
-            name: paramiko
-            state: latest
-            system_site_packages: true
-
         - name: "Inject molecule-plugins for docker and vagrant"
           community.general.pipx:
             name: molecule
