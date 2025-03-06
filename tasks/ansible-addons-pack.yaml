@@ -51,6 +51,7 @@
               - "molecule-plugins[vagrant]"
               - "python-vagrant"
             install_apps: true
+            install_deps: true
 
 
   rescue:
