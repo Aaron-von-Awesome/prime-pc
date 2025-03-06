@@ -47,8 +47,7 @@
             name: molecule
             state: inject
             inject_packages:
-              - molecule-plugins[docker]
-              - molecule-plugins[vagrant]
+              - molecule-plugins
               - python-vagrant
 
 
