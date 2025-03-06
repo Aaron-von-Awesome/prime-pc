@@ -149,7 +149,7 @@
     - name: "-------> RUN: Ansible Add-ons Pack Tasks"
       include_tasks: tasks/ansible-addons-pack.yaml
       vars:
-        var_molecule_version: "{{ _molecule__version }}"
+        var_molecule_version: "{{ _molecule_version }}"
         var_molecule_plugins_version: "{{ _molecule_plugins_version }}"
         var_username: "{{ _username }}"
 
