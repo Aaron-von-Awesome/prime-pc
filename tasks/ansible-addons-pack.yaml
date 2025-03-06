@@ -47,8 +47,8 @@
             name: molecule
             state: inject
             inject_packages:
-              - molecule-plugins[docker]
-              - molecule-plugins[vagrant]
+              - "molecule-plugins[docker]"
+              - "molecule-plugins[vagrant]"
             install_apps: true
             install_deps: true
 
