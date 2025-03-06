@@ -33,6 +33,12 @@
       become_user: "{{ _var_username }}"
       block:
 
+        - name: "Install molecule using pipx"
+          community.general.pipx:
+            name: molecule
+            state: install
+            system_site_packages: true
+
         - name: "Inject molecule-plugins for docker and vagrant"
           community.general.pipx:
             name: molecule
