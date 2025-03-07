@@ -21,7 +21,7 @@
     - name: "Install pipx"
       ansible.builtin.apt:
         name: pipx
-        state: absent
+        state: latest
         update_cache: true
 
     - name: "Current \"_var_username\" value"
