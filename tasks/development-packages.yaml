@@ -17,6 +17,7 @@
           - cargo
           - composer
           - default-jdk
+          - libxml2-utils
           - meld
           - php
           - python3-graphviz
