@@ -20,6 +20,7 @@
           - meld
           - php
           - python3-graphviz
+          - python3-libxml2
           - python-is-python3
           - ruby
           - ruby-rubygems
