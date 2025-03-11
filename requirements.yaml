@@ -37,6 +37,11 @@ roles:
     src: "https://codeberg.org/aaronvonawesome/ansible-role-vagrant.git"
     version: "main"
 
+  - name: "aaronvonawesome.conda"
+    scm: git
+    src: "https://codeberg.org/aaronvonawesome/ansible-role-conda.git"
+    version: "main"
+
   - name: "pluggero.lazygit"
 
 
