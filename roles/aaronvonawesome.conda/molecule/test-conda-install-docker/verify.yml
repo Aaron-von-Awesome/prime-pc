@@ -1,0 +1,25 @@
+---
+- name: Verify
+  hosts:
+    - all
+  gather_facts: false
+
+  tasks:
+
+    - name: "Check if conda is installed"
+      ansible.builtin.command:
+        cmd: >
+          bash
+          -c
+          "source /opt/conda/etc/profile.d/conda.sh
+          &&
+          conda -V"
+      register: conda_installed
+      ignore_errors: true
+
+    - name: "Assert conda is installed"
+      ansible.builtin.assert:
+        that:
+          - conda_installed.rc == 0
+        fail_msg: "conda is not installed"
+        success_msg: "conda is installed"

@@ -1,0 +1,50 @@
+---
+# ============================================================
+#                       Role: conda
+# ============================================================
+
+- name: "Block: Install Miniconda Ansible Role"
+  become: true
+  block:
+
+
+    - name: "Add Conda APT key"
+      ansible.builtin.apt_key:
+        id: "34161F5BF5EB1D4BFBBB8F0A8AEB4F8B29D82806"
+        url: "https://repo.anaconda.com/pkgs/misc/gpgkeys/anaconda.asc"
+        keyring: "/usr/share/keyrings/conda-archive-keyring.gpg"
+        state: present
+
+    - name: "Add Conda Debian Repo to sources list"
+      ansible.builtin.apt_repository:
+        repo: >
+          deb
+          [arch=amd64 signed-by=/usr/share/keyrings/conda-archive-keyring.gpg]
+          https://repo.anaconda.com/pkgs/misc/debrepo/conda
+          stable
+          main
+        filename: conda
+        update_cache: true
+        mode: "0644"
+      register: add_conda_repo_result
+      until: add_conda_repo_result is succeeded
+      retries: 3
+      delay: 60
+      ignore_errors: true
+
+    - name: "Install conda Package"
+      ansible.builtin.apt:
+        name: conda
+        state: latest
+        update_cache: true
+
+
+  rescue:
+
+    - name: "ERROR: Failed to install conda"
+      ansible.builtin.debug:
+        msg: "ERROR: Failed to install conda"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

@@ -1,0 +1,7 @@
+---
+driver:
+  name: docker
+platforms:
+  - name: molecule-test-instance
+    image: docker.io/linuxmintd/mint22-amd64
+    pre_build_image: true
