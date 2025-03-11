@@ -146,6 +146,8 @@
 
     - name: "-------> RUN: Ansible Add-ons Pack Tasks"
       include_tasks: tasks/ansible-addons-pack.yaml
+      vars:
+        var_username: "{{ _username }}"
 
     - name: "Install lazygit"
       ansible.builtin.include_role:

@@ -5,6 +5,8 @@
 
 - name: "Block: ansible-addons-pack.yaml"
   become: true
+  vars:
+    _var_username: "{{ var_username }}"
 
   block:
 
@@ -17,6 +19,31 @@
     - name: "Install conda"
       ansible.builtin.include_role:
         name: "aaronvonawesome.conda"
+
+    - name: "Current \"_var_username\" value"
+      ansible.builtin.debug:
+        msg: "_var_username => {{ _var_username }}"
+
+
+    - name: "Source Conda in the .bashrc file for user {{ _var_username }}"
+      become: true
+      become_user: "{{ _var_username }}"
+      block:
+
+        - name: "Backup .bashrc file for user {{ _var_username }}"
+          ansible.builtin.command:
+            cmd: cp ~/.bashrc ~/.bashrc.backup
+          changed_when: false
+
+        - name: "Update .bashrc file for user {{ _var_username }}"
+          ansible.builtin.blockinfile:
+            path: ~/.bashrc
+            marker: "# <-- {mark} ANSIBLE MANAGED BLOCK -->"
+            block: |
+              # Conda
+              source /opt/conda/etc/profile.d/conda.sh
+          register: bashrc_file
+
 
   rescue:
 
