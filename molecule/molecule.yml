@@ -37,5 +37,6 @@ provisioner:
       all:
         hosts:
           molecule-test-instance:
+            lts_codename: "noble"
             molecule_version: "25.1.0"
             username: "vagrant"

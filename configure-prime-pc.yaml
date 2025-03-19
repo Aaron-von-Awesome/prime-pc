@@ -126,6 +126,8 @@
 
     - name: "-------> RUN: Desktop Packages Tasks"
       include_tasks: tasks/desktop-packages.yaml
+      vars:
+        var_lts_codename: "{{ _lts_codename }}"
 
     - name: "-------> RUN: Desktop Flatpaks Tasks"
       include_tasks: tasks/desktop-flatpaks.yaml

@@ -1,0 +1,24 @@
+---
+- name: "Converge - Scenario: Test Desktop Software Installation Tasks"
+  hosts:
+    - all
+  become: true
+  gather_facts: false
+  vars:
+    _lts_codename: "noble"
+
+  tasks:
+
+    - name: "Run: apt-get update"
+      apt:
+        update_cache: true
+
+    - name: "-------> RUN: Desktop Packages Tasks"
+      include_tasks: ../../tasks/desktop-packages.yaml
+      vars:
+        var_lts_codename: "{{ _lts_codename }}"
+
+    - name: "-------> RUN: Desktop Flatpaks Tasks"
+      include_tasks: ../../tasks/desktop-flatpaks.yaml
+
+

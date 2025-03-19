@@ -5,6 +5,8 @@
 
 - name: "Block: desktop-packages.yaml"
   become: true
+  vars:
+    _var_lts_codename: "{{ var_lts_codename }}"
   block:
 
     - name: "Install Desktop APT packages"
@@ -35,6 +37,13 @@
           - python3-graphviz
           - python3-gtkspellcheck
           - zim
+
+    - name: "Install yt-dlp"
+      ansible.builtin.include_role:
+        name: "aaronvonawesome.yt_dlp"
+      vars:
+        yt_dlp_var_lts_codename: "{{ _var_lts_codename }}"
+
 
   rescue:
 

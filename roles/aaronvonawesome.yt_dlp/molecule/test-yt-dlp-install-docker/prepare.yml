@@ -1,0 +1,21 @@
+---
+- name: Prepare
+  hosts:
+    - all
+  gather_facts: false
+
+  tasks:
+
+    - name: "Check if yt-dlp is installed"
+      ansible.builtin.command:
+        cmd: >
+          which yt-dlp
+      register: ytdlp_installed
+      ignore_errors: true
+
+    - name: "Assert yt-dlp is NOT installed"
+      ansible.builtin.assert:
+        that:
+          - ytdlp_installed.rc > 0
+        fail_msg: "yt-dlp IS installed...bad :-("
+        success_msg: "yt-dlp is not installed...good!"

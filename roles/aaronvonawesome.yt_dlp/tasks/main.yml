@@ -1,0 +1,51 @@
+---
+# ============================================================
+#                       Role: yt_dlp
+# ============================================================
+
+- name: "Block: Install yt_dlp Ansible Role"
+  become: true
+  vars:
+    _yt_dlp_var_lts_codename: "{{ yt_dlp_var_lts_codename }}"
+  block:
+
+    - name: "Add yt-dlp apt key"
+      ansible.builtin.get_url:
+        url: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xb90e9186f0e836fb"
+        dest: "/etc/apt/trusted.gpg.d/yt-dlp.asc"
+        mode: "0644"
+        force: true
+      changed_when: false
+
+    - name: "Add yt-dlp repo to sources list"
+      ansible.builtin.apt_repository:
+        repo: >
+          deb
+          https://ppa.launchpadcontent.net/tomtomtom/yt-dlp/ubuntu
+          {{ _yt_dlp_var_lts_codename }}
+          main
+        filename: yt-dlp
+        update_cache: true
+        mode: "0644"
+      register: add_ytdlp_repo_result
+      until: add_ytdlp_repo_result is succeeded
+      retries: 3
+      delay: 60
+      ignore_errors: true
+
+    - name: "Install yt-dlp Package"
+      ansible.builtin.apt:
+        name: yt-dlp
+        state: latest
+        update_cache: true
+
+
+  rescue:
+
+    - name: "ERROR: Failed to install yt-dlp"
+      ansible.builtin.debug:
+        msg: "ERROR: Failed to install yt-dlp"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

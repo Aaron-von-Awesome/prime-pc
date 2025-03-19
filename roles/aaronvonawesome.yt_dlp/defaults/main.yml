@@ -1,0 +1,4 @@
+---
+# defaults file for ansible-role-yt-dlp
+
+yt_dlp_var_lts_codename: "noble"

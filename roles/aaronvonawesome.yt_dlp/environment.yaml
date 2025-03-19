@@ -1,0 +1,11 @@
+---
+name: molecule-env
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - pip
+  - pip:
+      - molecule==24.12.0
+      - molecule-plugins[docker]==23.5.3
+      - molecule-plugins[vagrant]==23.5.3

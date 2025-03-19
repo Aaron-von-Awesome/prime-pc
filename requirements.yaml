@@ -42,6 +42,11 @@ roles:
     src: "https://codeberg.org/aaronvonawesome/ansible-role-conda.git"
     version: "main"
 
+  - name: "aaronvonawesome.yt_dlp"
+    scm: git
+    src: "https://codeberg.org/aaronvonawesome/ansible-role-yt-dlp.git"
+    version: "main"
+
   - name: "pluggero.lazygit"
 
 
