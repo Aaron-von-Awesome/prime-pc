@@ -17,6 +17,7 @@
           - cargo
           - composer
           - default-jdk
+          - jq
           - libxml2-utils
           - meld
           - php
