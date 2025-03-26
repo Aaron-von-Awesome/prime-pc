@@ -116,7 +116,7 @@
       become_user: "{{ item.username }}"
       ansible.builtin.blockinfile:
         path: ~/.bashrc
-        marker: "# <-- {mark} ANSIBLE MANAGED BLOCK -->"
+        marker: "# <-- {mark} ANSIBLE MANAGED Dockly BLOCK -->"
         block: |
           # Dockly
           alias dockly='docker run --rm -it --name=dockly --volume /var/run/docker.sock:/var/run/docker.sock:ro lirantal/dockly'
