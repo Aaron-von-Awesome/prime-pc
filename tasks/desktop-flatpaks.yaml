@@ -24,12 +24,12 @@
         - com.github.zocker_160.SyncThingy
         - com.jgraph.drawio.desktop
         - com.tutanota.Tutanota
+        - com.uploadedlobster.peek
         - com.usebottles.bottles
         - io.freetubeapp.FreeTube
         - io.github.flattool.Warehouse
         - io.github.input_leap.input-leap
         - io.github.Pithos
-        - io.github.seadve.Kooha
         - md.obsidian.Obsidian
         - org.gabmus.whatip
         - org.gnome.gitlab.cheywood.Buffer
@@ -44,7 +44,6 @@
         state: absent
         method: system
       loop:
-        - com.uploadedlobster.peek
         - org.onlyoffice.desktopeditors
 
   rescue:
