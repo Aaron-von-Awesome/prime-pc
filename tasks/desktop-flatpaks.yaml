@@ -44,6 +44,7 @@
         method: system
       loop:
         - org.onlyoffice.desktopeditors
+        - io.github.seadve.Kooha
 
   rescue:
 
