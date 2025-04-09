@@ -33,6 +33,7 @@
         - md.obsidian.Obsidian
         - org.gabmus.whatip
         - org.gnome.gitlab.cheywood.Buffer
+        - org.inkscape.Inkscape
         - org.keepassxc.KeePassXC
         - org.kiwix.desktop
         - us.zoom.Zoom
