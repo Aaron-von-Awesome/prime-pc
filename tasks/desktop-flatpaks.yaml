@@ -25,6 +25,7 @@
         - com.jgraph.drawio.desktop
         - com.tutanota.Tutanota
         - com.usebottles.bottles
+        - eu.betterbird.Betterbird
         - io.freetubeapp.FreeTube
         - io.github.flattool.Warehouse
         - io.github.input_leap.input-leap
