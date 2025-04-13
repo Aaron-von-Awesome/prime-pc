@@ -1,5 +1,5 @@
 ---
 lazygit_install_method: "package"
-lazygit_version: "0.45.2"
+lazygit_version: "0.48.0"
 lazygit_reinstall_from_source: false
 lazygit_build_dir: "/tmp/"

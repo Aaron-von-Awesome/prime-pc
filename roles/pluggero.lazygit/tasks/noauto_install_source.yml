@@ -1,21 +1,9 @@
 ---
 - name: Ensure lazygit is installed
   block:
-    - name: Get installed lazygit version
-      ansible.builtin.command:
-        cmd: "lazygit --version"
-      ignore_errors: true
-      changed_when: false
-      failed_when: false
-      register: lazygit_version_cmd
-
-    - name: Extract only the version into a variable
-      ansible.builtin.set_fact:
-        lazygit_installed_version: "{{ lazygit_version_cmd.stdout | regex_replace('^.*?version=([\\d\\.]{6}),.*$', '\\1') }}"
-
-    - name: Debug installed lazygit version
-      ansible.builtin.debug:
-        var: lazygit_installed_version
+    - name: Import installed lazygit version check
+      ansible.builtin.include_tasks: noauto_check_installed_version.yml
+      when: lazygit_installed_version is not defined
 
     - name: Force install if the version numbers do not match
       ansible.builtin.set_fact:
