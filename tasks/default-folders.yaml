@@ -14,7 +14,7 @@
       ansible.builtin.file:
         path: "{{ item }}"
         state: directory
-        mode: "0755"
+        mode: "0775"
         owner: "{{ _var_username }}"
         group: "{{ _var_username }}"
         force: false
