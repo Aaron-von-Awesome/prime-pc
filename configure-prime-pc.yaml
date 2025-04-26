@@ -181,3 +181,9 @@
 
     - name: "-------> RUN: Browser Snaps Tasks"
       include_tasks: tasks/browser-snaps.yaml
+
+
+    # ======================     Gaming      =============================
+
+    - name: "-------> RUN: Gaming Flatpaks Tasks"
+      include_tasks: tasks/gaming-flatpaks.yaml

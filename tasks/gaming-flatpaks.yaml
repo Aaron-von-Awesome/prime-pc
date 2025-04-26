@@ -1,0 +1,26 @@
+---
+# ============================================================
+#                     gaming-flatpaks.yaml
+# ============================================================
+
+- name: "Block: gaming-flatpaks.yaml"
+  become: true
+  block:
+
+    - name: "Install Gaming flatpaks"
+      community.general.flatpak:
+        name: "{{ item }}"
+        state: present
+        method: system
+      loop:
+        - com.endlessnetwork.tankwarriors
+
+  rescue:
+
+    - name: "ERROR: gaming-flatpaks.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: gaming-flatpaks.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("
