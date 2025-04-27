@@ -12,6 +12,19 @@ None.
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
+```yaml
+lazygit_version: "x.x.x"
+```
+
+- The version of Lazygit to install.
+
+```yaml
+lazygit_install_method: "package"
+```
+
+- The installation method to use. Can only be `package`.
+- In that distributions where the lazygit is not available in the package manager, it will be installed from the source.
+
 ## Dependencies
 
 None.

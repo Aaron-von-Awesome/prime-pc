@@ -98,6 +98,10 @@ plugin_routing:
       redirect: community.google.gcp_storage_file
     hashi_vault:
       redirect: community.hashi_vault.hashi_vault
+    manifold:
+      deprecation:
+        removal_version: 11.0.0
+        warning_text: Company was acquired in 2021 and service was ceased afterwards.
     nios:
       redirect: infoblox.nios_modules.nios_lookup
     nios_next_ip:
@@ -964,6 +968,10 @@ plugin_routing:
       redirect: community.docker.docker_swarm
     kubevirt:
       redirect: community.kubevirt.kubevirt
+    stackpath_compute:
+      deprecation:
+        removal_version: 11.0.0
+        warning_text: The company and the service were sunset in June 2024.
   filter:
     path_join:
       # The ansible.builtin.path_join filter has been added in ansible-base 2.10.
