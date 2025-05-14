@@ -1,0 +1,13 @@
+---
+- name: Converge
+  hosts:
+    - all
+  become: true
+  gather_facts: false
+
+
+  tasks:
+
+    - name: "Converge - Scenario: Test OnlyKey App Install"
+      ansible.builtin.include_role:
+        name: "aaronvonawesome.onlykey_app"

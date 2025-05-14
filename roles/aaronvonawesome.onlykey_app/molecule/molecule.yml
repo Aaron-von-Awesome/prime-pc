@@ -1,0 +1,36 @@
+---
+driver:
+  name: vagrant
+platforms:
+  - name: molecule-test-instance
+    box: aaronvonawesome/linux-mint-22-cinnamon
+    memory: 4096
+    cpus: 2
+    provider_raw_config_args:
+      - "gui = ${SHOW_VAGRANT_VM_GUI:-false}"
+      - "name = 'molecule-test-instance'"
+      - "customize ['modifyvm', :id, '--graphicscontroller', 'vmsvga']"
+      - "customize ['modifyvm', :id, '--vram', '128']"
+      - "customize ['modifyvm', :id, '--accelerate3d', 'on']"
+      - "customize ['modifyvm', :id, '--accelerate2dvideo', 'on']"
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      remote_user: root
+  env:
+    ANSIBLE_CALLBACK_RESULT_FORMAT: "yaml"
+    ANSIBLE_FORCE_COLOR: true
+    ANSIBLE_LOG_PATH: "./ansible.log"
+    ANSIBLE_NOCOWS: true
+    ANSIBLE_PYTHON_INTERPRETER: "/usr/bin/python3"
+    ANSIBLE_VERBOSITY: 2
+  inventory:
+    hosts:
+      all:
+        hosts:
+          molecule-test-instance:

@@ -84,6 +84,8 @@
       vars:
         var_redshift_username: "{{ _username }}"
 
+    - name: "ROLE - Install OnlyKey App"
+      role: "aaronvonawesome.onlykey_app"
 
     # ======================     Development     ==============================
 

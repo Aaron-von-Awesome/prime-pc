@@ -1,0 +1,31 @@
+---
+- name: Verify
+  hosts:
+    - all
+  gather_facts: false
+
+  tasks:
+
+    - name: "Check if '/opt/OnlyKey/nw' exists"
+      ansible.builtin.stat:
+        path: "/opt/OnlyKey/nw"
+      register: _onlykey_file
+
+    - name: "Assert OnlyKey App is installed"
+      ansible.builtin.assert:
+        that:
+          - _onlykey_file.stat.exists
+        fail_msg: "OnlyKey App is NOT installed...bad :-("
+        success_msg: "OnlyKey is installed...good!"
+
+    - name: "Check if '/etc/udev/rules.d/49-onlykey.rules' exists"
+      ansible.builtin.stat:
+        path: "/etc/udev/rules.d/49-onlykey.rules"
+      register: _udev_file
+
+    - name: "Assert OnlyKey UDEV file exists"
+      ansible.builtin.assert:
+        that:
+          - _udev_file.stat.exists
+        fail_msg: "OnlyKey UDEV file does NOT exist...bad :-("
+        success_msg: "OnlyKey UDEV file does exist...good!"

@@ -1,0 +1,4 @@
+---
+# defaults file for ansible-role-onlykey-app
+
+onlykey_app_var_only_key_version: "5.5.0"

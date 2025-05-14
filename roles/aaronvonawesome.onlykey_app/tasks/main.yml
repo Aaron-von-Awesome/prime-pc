@@ -1,0 +1,58 @@
+---
+# ============================================================
+#                       Role: onlykey_app
+# ============================================================
+
+- name: "Block: Install onlykey_app Ansible Role"
+  become: true
+  vars:
+    _onlykey_app_var_only_key_version: "{{ onlykey_app_var_only_key_version }}"
+  block:
+
+
+    - name: Gather Installed Package Facts
+      ansible.builtin.package_facts:
+        manager: apt
+
+    # ============================================================
+
+    # In order to achieve idempotency, the checksum needs to be assessed ahead of time
+    #   since the "onlykey_app : udev_rules_changed" handlers
+    #   change the time stamp of the "49-onlykey.rules" file.
+    - name: "Get the '/etc/udev/rules.d/49-onlykey.rules' file checksum"
+      ansible.builtin.stat:
+        path: "/etc/udev/rules.d/49-onlykey.rules"
+        checksum: "sha1"
+        get_attributes: false
+        get_checksum: true
+        get_mime: false
+      register: _udev_file
+
+    - name: "Copy 49-onlykey.rules file"
+      ansible.builtin.copy:
+        src: "files/49-onlykey.rules"
+        dest: "/etc/udev/rules.d/49-onlykey.rules"
+        owner: root
+        group: root
+        mode: "0644"
+        checksum: "{{ __onlykey_app_var_rules_file_sha1_checksum }}"
+      notify: "onlykey_app : udev_rules_changed"
+      when: >
+        _udev_file.stat.checksum | default("0") != __onlykey_app_var_rules_file_sha1_checksum
+
+    - name: "Install OnlyKey {{ _onlykey_app_var_only_key_version }} DEB Package"
+      ansible.builtin.apt:
+        deb: "https://github.com/trustcrypto/OnlyKey-App/releases/download/v{{ _onlykey_app_var_only_key_version }}/OnlyKey_{{ _onlykey_app_var_only_key_version }}_amd64.deb"
+        install_recommends: true
+        only_upgrade: true
+      when: ansible_facts.packages.onlykey[0].version | default("0") != _onlykey_app_var_only_key_version
+
+  rescue:
+
+    - name: "ERROR: Failed to install onlykey_app"
+      ansible.builtin.debug:
+        msg: "ERROR: Failed to install onlykey_app"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

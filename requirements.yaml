@@ -47,6 +47,11 @@ roles:
     src: "https://codeberg.org/aaronvonawesome/ansible-role-yt-dlp.git"
     version: "main"
 
+  - name: "aaronvonawesome.onlykey_app"
+    scm: git
+    src: "https://codeberg.org/aaronvonawesome/ansible-role-onlykey-app.git"
+    version: "main"
+
   - name: "pluggero.lazygit"
 
 

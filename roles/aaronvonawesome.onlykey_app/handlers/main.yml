@@ -1,0 +1,16 @@
+---
+# handlers file for ansible-role-onlykey-app
+
+- name: "Run the command: udevadm control --reload-rules"
+  ansible.builtin.command:
+    cmd: udevadm control --reload-rules
+  register: _udevadm_control_results
+  changed_when: _udevadm_control_results.rc != 0
+  listen: "onlykey_app : udev_rules_changed"
+
+- name: "Run the command: udevadm trigger"
+  ansible.builtin.command:
+    cmd: udevadm trigger
+  register: _udevadm_trigger_results
+  changed_when: _udevadm_trigger_results.rc != 0
+  listen: "onlykey_app : udev_rules_changed"

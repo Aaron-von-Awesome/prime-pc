@@ -1,0 +1,19 @@
+---
+- name: Prepare
+  hosts:
+    - all
+  gather_facts: false
+
+  tasks:
+
+    - name: "Check if '/opt/OnlyKey/nw' exists"
+      ansible.builtin.stat:
+        path: "/opt/OnlyKey/nw"
+      register: _onlykey_file
+
+    - name: "Assert OnlyKey App is NOT installed"
+      ansible.builtin.assert:
+        that:
+          - not _onlykey_file.stat.exists
+        fail_msg: "OnlyKey App IS installed...bad :-("
+        success_msg: "OnlyKey is not installed...good!"
