@@ -16,6 +16,7 @@
         update_cache: true
       vars:
         packages:
+          - cheese
           - ffmpeg
           - shutter
           - tree
