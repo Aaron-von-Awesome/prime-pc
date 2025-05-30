@@ -92,6 +92,14 @@
         channel: latest/stable
         classic: true
 
+    # https://snapcraft.io/ttyd
+    - name: "Install Snap: ttyd"
+      community.general.snap:
+        name: ttyd
+        state: present
+        channel: latest/edge
+        classic: true
+
 
   rescue:
 
