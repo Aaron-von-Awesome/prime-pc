@@ -2,6 +2,7 @@
 
 ```yaml
 vault_node_version: ""
+vault_lazygit_version: ""
 vault_timezone: ""
 vault_username: ""
 vault_folder_list:
