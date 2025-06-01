@@ -13,7 +13,7 @@
     - name: "Install Snap: node {{_var_node_version }}"
       community.general.snap:
         name: node
-        state: present
+        state: absent
         channel: "{{ _var_node_version }}/stable"
         classic: true
 
