@@ -10,13 +10,6 @@
 
   block:
 
-    - name: "Install Snap: node {{_var_node_version }}"
-      community.general.snap:
-        name: node
-        state: absent
-        channel: "{{ _var_node_version }}/stable"
-        classic: true
-
     - name: "Install Snap: go"
       community.general.snap:
         name: go
@@ -98,6 +91,15 @@
         name: ttyd
         state: present
         channel: latest/edge
+        classic: true
+
+    # === Remove Snaps
+
+    - name: "Remove Snap: node {{_var_node_version }}"
+      community.general.snap:
+        name: node
+        state: absent
+        channel: "{{ _var_node_version }}/stable"
         classic: true
 
 
