@@ -77,6 +77,8 @@ files:
   $callbacks/opentelemetry.py:
     keywords: opentelemetry observability
     maintainers: v1v
+  $callbacks/print_task.py:
+    maintainers: demonpig
   $callbacks/say.py:
     keywords: brew cask darwin homebrew macosx macports osx
     labels: macos say
@@ -210,6 +212,8 @@ files:
     maintainers: resmo
   $filters/to_months.yml:
     maintainers: resmo
+  $filters/to_prettytable.py:
+    maintainers: tgadiev
   $filters/to_seconds.yml:
     maintainers: resmo
   $filters/to_time_unit.yml:
@@ -385,6 +389,8 @@ files:
   $module_utils/pipx.py:
     labels: pipx
     maintainers: russoz
+  $module_utils/pkg_req.py:
+    maintainers: russoz
   $module_utils/python_runner.py:
     maintainers: russoz
   $module_utils/puppet.py:
@@ -419,6 +425,8 @@ files:
   $module_utils/wdc_redfish_utils.py:
     labels: wdc_redfish_utils
     maintainers: $team_wdc
+  $module_utils/xdg_mime.py:
+    maintainers: mhalano
   $module_utils/xenserver.py:
     labels: xenserver
     maintainers: bvitnik
@@ -1237,9 +1245,9 @@ files:
   $modules/scaleway_compute_private_network.py:
     maintainers: pastral
   $modules/scaleway_container.py:
-     maintainers: Lunik
+    maintainers: Lunik
   $modules/scaleway_container_info.py:
-     maintainers: Lunik
+    maintainers: Lunik
   $modules/scaleway_container_namespace.py:
     maintainers: Lunik
   $modules/scaleway_container_namespace_info.py:
@@ -1447,6 +1455,8 @@ files:
     maintainers: dinoocch the-maldridge
   $modules/xcc_:
     maintainers: panyy3 renxulei
+  $modules/xdg_mime.py:
+    maintainers: mhalano
   $modules/xenserver_:
     maintainers: bvitnik
   $modules/xenserver_facts.py:
