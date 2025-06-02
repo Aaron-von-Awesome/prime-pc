@@ -6,7 +6,6 @@
   gather_facts: false
   vars:
     _username: "{{ username }}"
-    _molecule_version: "{{ molecule_version }}"
 
 
   tasks:
@@ -18,5 +17,4 @@
     - name: "-------> RUN: Ansible Add-ons Pack Tasks"
       include_tasks: ../../tasks/ansible-addons-pack.yaml
       vars:
-        var_molecule_version: "{{ _molecule_version }}"
         var_username: "{{ _username }}"

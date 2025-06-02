@@ -14,14 +14,12 @@
 
     - name: "Set Specific Configuration variables for \"{{ _var_hostname }}\""
       set_fact:
-        configuration_variable_1: "<value>"
-
+        _fact_should_install_proton_mail_bridge: true
       when: _var_hostname == "hostname_1"
 
     - name: "Set Specific Configuration variables for \"{{ _var_hostname }}\""
       set_fact:
-        configuration_variable_1: "<value>"
-
+        _fact_should_install_proton_mail_bridge: false
       when: _var_hostname == "hostname_n"
 
   rescue:

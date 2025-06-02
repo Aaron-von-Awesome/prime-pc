@@ -21,6 +21,7 @@
     _node_version: "{{ vault_node_version }}"
     _should_install_ansible_community_docker_collection_compatibility: true
     _should_install_virtualbox: true
+    _should_install_proton_mail_bridge: "{{ _fact_should_install_proton_mail_bridge | default(false) | bool }}"
     _timezone: "{{ vault_timezone }}"
     _username: "{{ vault_username }}"
 
@@ -49,10 +50,13 @@
       ansible.builtin.debug:
         msg: "The ACTUAL \"hostname\": {{ ansible_facts.hostname }}"
 
+    - name: "-------> RUN: Pre-task Configuration Tasks on a per-host basis"
+      ansible.builtin.include_tasks: tasks/configuration-tasks.yaml
+      vars:
+        var_hostname: "{{ ansible_facts.hostname }}"
+
     - name: "-------> RUN: Enable snaps Tasks"
-      include_tasks: tasks/enable-snaps.yaml
-
-
+      ansible.builtin.include_tasks: tasks/enable-snaps.yaml
 
 
   # ---------------------------------------------------------------------------
@@ -82,6 +86,12 @@
     - name: "ROLE - Install OnlyKey App"
       role: "aaronvonawesome.onlykey_app"
 
+    - name: "ROLE - Install Proton Suite"
+      role: "aaronvonawesome.proton_suite"
+      vars:
+        var_proton_suite_should_install_proton_mail_bridge: "{{ _should_install_proton_mail_bridge }}"
+
+
     # ======================     Development     ==============================
 
     - name: "ROLE - Install Helix"
@@ -110,41 +120,41 @@
   tasks:
 
     - name: "-------> RUN: Setup Default Folders"
-      include_tasks: tasks/default-folders.yaml
+      ansible.builtin.include_tasks: tasks/default-folders.yaml
       vars:
         var_username: "{{ _username }}"
         var_folder_list: "{{ _folder_list }}"
 
     - name: "-------> RUN: Base Packages Tasks"
-      include_tasks: tasks/base-packages.yaml
+      ansible.builtin.include_tasks: tasks/base-packages.yaml
 
 
     # ======================     Desktop     ==================================
 
     - name: "-------> RUN: Desktop Packages Tasks"
-      include_tasks: tasks/desktop-packages.yaml
+      ansible.builtin.include_tasks: tasks/desktop-packages.yaml
       vars:
         var_lts_codename: "{{ _lts_codename }}"
 
     - name: "-------> RUN: Desktop Flatpaks Tasks"
-      include_tasks: tasks/desktop-flatpaks.yaml
+      ansible.builtin.include_tasks: tasks/desktop-flatpaks.yaml
 
 
     # ======================     Development     ==============================
 
     - name: "-------> RUN: Development Packages Tasks"
-      include_tasks: tasks/development-packages.yaml
+      ansible.builtin.include_tasks: tasks/development-packages.yaml
 
     - name: "-------> RUN: Development Flatpaks Tasks"
-      include_tasks: tasks/development-flatpaks.yaml
+      ansible.builtin.include_tasks: tasks/development-flatpaks.yaml
 
     - name: "-------> RUN: Development Snaps Tasks"
-      include_tasks: tasks/development-snaps.yaml
+      ansible.builtin.include_tasks: tasks/development-snaps.yaml
       vars:
         var_node_version: "{{ _node_version }}"
 
     - name: "-------> RUN: Ansible Add-ons Pack Tasks"
-      include_tasks: tasks/ansible-addons-pack.yaml
+      ansible.builtin.include_tasks: tasks/ansible-addons-pack.yaml
       vars:
         var_username: "{{ _username }}"
 
@@ -159,28 +169,28 @@
     # ======================     Communication     ============================
 
     - name: "-------> RUN: Communication Flatpaks Tasks"
-      include_tasks: tasks/communication-flatpaks.yaml
+      ansible.builtin.include_tasks: tasks/communication-flatpaks.yaml
 
 
     # ======================     LLM-Related      =============================
 
     - name: "-------> RUN: AI/LLM Flatpaks Tasks"
-      include_tasks: tasks/ai-llm-flatpaks.yaml
+      ansible.builtin.include_tasks: tasks/ai-llm-flatpaks.yaml
 
 
     # ======================     Browsers     =================================
 
     - name: "-------> RUN: Browser Packages Tasks"
-      include_tasks: tasks/browser-packages.yaml
+      ansible.builtin.include_tasks: tasks/browser-packages.yaml
 
     - name: "-------> RUN: Browser Flatpaks Tasks"
-      include_tasks: tasks/browser-flatpaks.yaml
+      ansible.builtin.include_tasks: tasks/browser-flatpaks.yaml
 
     - name: "-------> RUN: Browser Snaps Tasks"
-      include_tasks: tasks/browser-snaps.yaml
+      ansible.builtin.include_tasks: tasks/browser-snaps.yaml
 
 
     # ======================     Gaming      =============================
 
     - name: "-------> RUN: Gaming Flatpaks Tasks"
-      include_tasks: tasks/gaming-flatpaks.yaml
+      ansible.builtin.include_tasks: tasks/gaming-flatpaks.yaml

@@ -1,0 +1,32 @@
+---
+- name: "Block: Install Proton Bridge"
+  become: true
+  block:
+
+    - name: "Fetch GitHub's latest release via API (to get full filename)"
+      ansible.builtin.uri:
+        url: "https://api.github.com/repos/ProtonMail/proton-bridge/releases/latest"
+        method: GET
+        return_content: true
+      register: _github_release_api
+
+    - name: "Extract the DEB filename from the API response"
+      ansible.builtin.set_fact:
+        _fact_proton_bridge_deb_filename: "{{ (_github_release_api.json.assets |
+          selectattr('name', 'match', '^protonmail-bridge_.*_amd64.deb$')).0.name }}"
+
+    - name: "Install Proton Bridge DEB Package (Latest Version)"
+      ansible.builtin.apt:
+        deb: "https://github.com/ProtonMail/proton-bridge/releases/download/{{ _github_release_api.json.tag_name }}/{{ _fact_proton_bridge_deb_filename }}"
+        install_recommends: true
+        only_upgrade: true
+
+  rescue:
+
+    - name: "ERROR: Failed to install Proton Bridge"
+      ansible.builtin.debug:
+        msg: "ERROR: Failed to install Proton Bridge"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

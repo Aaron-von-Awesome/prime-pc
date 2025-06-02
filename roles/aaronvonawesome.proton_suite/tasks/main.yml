@@ -1,0 +1,33 @@
+---
+# ============================================================
+#                       Role: proton_suite
+# ============================================================
+
+- name: "Block: Install proton_suite Ansible Role"
+  become: true
+  vars:
+    _var_proton_suite_should_install_proton_mail_bridge: "{{ var_proton_suite_should_install_proton_mail_bridge | bool }}"
+  block:
+
+    - name: Gather Installed Package Facts
+      ansible.builtin.package_facts:
+        manager: apt
+
+    # ============================================================
+
+    - name: "-------> Install Proton Mail Bridge Tasks"
+      ansible.builtin.include_tasks: ./proton-mail-bridge.yaml
+      when: >
+        ansible_facts.packages['protonmail-bridge'][0].version is not defined
+        and
+        _var_proton_suite_should_install_proton_mail_bridge
+
+  rescue:
+
+    - name: "ERROR: Failed to install proton_suite"
+      ansible.builtin.debug:
+        msg: "ERROR: Failed to install proton_suite"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

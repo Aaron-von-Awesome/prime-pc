@@ -1,5 +1,12 @@
 ---
-lazygit_install_method: "package"
-lazygit_version: "0.49.0"
-lazygit_reinstall_from_source: false
-lazygit_build_dir: "/tmp"
+lazygit_version: "0.50.0"
+lazygit_install_method: "dynamic"
+lazygit_force_install: false
+
+lazygit_download_base_url: "https://github.com/jesseduffield/lazygit/releases/download/v{{ lazygit_version }}"
+lazygit_archive_name: "lazygit_{{ lazygit_version }}_Linux_x86_64.tar.gz"
+lazygit_download_url: "{{ lazygit_download_base_url }}/{{ lazygit_archive_name }}"
+lazygit_download_dir: "/tmp"
+
+lazygit_install_dir: "/opt"
+lazygit_install_path: "{{ lazygit_install_dir }}/lazygit-{{ lazygit_version }}"

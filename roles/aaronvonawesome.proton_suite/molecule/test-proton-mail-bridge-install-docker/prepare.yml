@@ -1,0 +1,21 @@
+---
+- name: Prepare
+  hosts:
+    - all
+  gather_facts: false
+
+  tasks:
+
+    - name: "Check if Proton Mail Bridge is installed"
+      ansible.builtin.command:
+        cmd: >
+          which protonmail-bridge
+      register: _proton_mail_bridge_installed
+      ignore_errors: true
+
+    - name: "Assert Proton Mail Bridge is NOT installed"
+      ansible.builtin.assert:
+        that:
+          - _proton_mail_bridge_installed.rc > 0
+        fail_msg: "Proton Mail Bridge IS installed...bad :-("
+        success_msg: "Proton Mail Bridge is not installed...good!"

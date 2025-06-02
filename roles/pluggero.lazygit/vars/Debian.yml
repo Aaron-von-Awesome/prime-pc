@@ -1,2 +1,6 @@
 ---
+lazygit_dep_pkgs:
+  - git
+  - unzip
+
 lazygit_distro_pkgs: []

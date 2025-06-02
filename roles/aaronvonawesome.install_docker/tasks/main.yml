@@ -123,6 +123,18 @@
       loop: "{{ _var_user_list }}"
       when: _var_user_list is defined and _var_user_list | length > 0
 
+    - name: "Install Bash Alias for using Oxker for User: {{ item.username }}"
+      become: true
+      become_user: "{{ item.username }}"
+      ansible.builtin.blockinfile:
+        path: ~/.bashrc
+        marker: "# <-- {mark} ANSIBLE MANAGED Oxker BLOCK -->"
+        block: |
+          # Oxker
+          alias oxker='docker run --rm -it --name=oxker --volume /var/run/docker.sock:/var/run/docker.sock:ro mrjackwills/oxker'
+      loop: "{{ _var_user_list }}"
+      when: _var_user_list is defined and _var_user_list | length > 0
+
     - name: "Install PIP Packages for Ansible community.docker collection"
       block:
 

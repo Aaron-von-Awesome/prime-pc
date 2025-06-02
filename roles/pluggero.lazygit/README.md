@@ -19,11 +19,17 @@ lazygit_version: "x.x.x"
 - The version of Lazygit to install.
 
 ```yaml
-lazygit_install_method: "package"
+lazygit_install_method: "dynamic"
 ```
 
-- The installation method to use. Can only be `package`.
-- In that distributions where the lazygit is not available in the package manager, it will be installed from the source.
+The method used to install lazygit can be defined in the variable `lazygit_install_method`.
+The following methods are available:
+
+- `source`: Installs lazygit from source
+- `package`: Installs lazygit from the package manager of the distribution
+  - **NOTE**: This method installs the latest version available in the package manager and not the version defined in `lazygit_version`.
+  - In that distributions where the lazygit is not available in the package manager, it will be installed from the source.
+- `dynamic`: Installs lazygit from package manager if available in the correct version, otherwise installs from source
 
 ## Dependencies
 

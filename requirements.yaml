@@ -47,6 +47,11 @@ roles:
     src: "https://codeberg.org/aaronvonawesome/ansible-role-onlykey-app.git"
     version: "main"
 
+  - name: "aaronvonawesome.proton_suite"
+    scm: git
+    src: "https://codeberg.org/aaronvonawesome/ansible-role-proton-suite.git"
+    version: "main"
+
   - name: "pluggero.lazygit"
 
 

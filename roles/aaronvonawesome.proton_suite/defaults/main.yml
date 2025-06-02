@@ -1,0 +1,3 @@
+---
+# defaults file for ansible-role-proton-suite
+var_proton_suite_should_install_proton_mail_bridge: false

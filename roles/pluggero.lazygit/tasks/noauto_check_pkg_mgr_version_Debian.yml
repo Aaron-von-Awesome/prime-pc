@@ -1,0 +1,30 @@
+---
+- name: Ensure we are using apt
+  ansible.builtin.fail:
+    msg: "This role only supports {{ ansible_os_family }} systems that use apt as a package manager."
+  when: ansible_pkg_mgr != "apt"
+
+- name: Install lazygit dependencies via apt
+  when: lazygit_distro_pkgs is defined and lazygit_distro_pkgs | length > 0
+  block:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+      become: true
+
+    - name: Get lazygit version from package manager
+      ansible.builtin.command:
+        cmd: "apt show {{ lazygit_distro_pkgs[0] }}"
+      changed_when: false
+      failed_when: false
+      ignore_errors: true
+      register: lazygit_pkg_mgr_version_cmd
+
+    - name: Extract only the version into a variable
+      ansible.builtin.set_fact:
+        lazygit_pkg_mgr_version: "{{ (lazygit_pkg_mgr_version_cmd.stdout | regex_search('Version:\\ ([\\d\\.]+)', '\\1', multiline=True))[0] }}"
+
+    - name: Debug lazygit version from package manager
+      ansible.builtin.debug:
+        var: lazygit_pkg_mgr_version
