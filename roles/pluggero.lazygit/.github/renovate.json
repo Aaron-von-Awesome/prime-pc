@@ -1,7 +1,7 @@
 {
   "extends": ["config:best-practices", ":disableRateLimiting"],
   "enabledManagers": ["github-actions", "pip_requirements", "regex"],
-  "reviewers": ["pluggero"],
+  "assignees": ["pluggero"],
   "customManagers": [
     {
       "customType": "regex",

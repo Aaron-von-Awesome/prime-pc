@@ -1,0 +1,24 @@
+---
+- name: Uninstall lazygit from source
+  block:
+    - name: Find existing lazygit folder in {{ lazygit_install_dir }}
+      ansible.builtin.find:
+        paths: "{{ lazygit_install_dir }}"
+        patterns: "lazygit-*"
+        file_type: directory
+      register: lazygit_install_folder
+
+    - name: Remove existing lazygit installation folder
+      ansible.builtin.file:
+        path: "{{ folder.path }}"
+        state: absent
+      loop: "{{ lazygit_install_folder.files }}"
+      loop_control:
+        loop_var: folder
+      become: true
+
+    - name: Remove lazygit symlink
+      ansible.builtin.file:
+        path: "/usr/local/bin/lazygit"
+        state: absent
+      become: true

@@ -15,6 +15,10 @@
     - name: Install lazygit from source
       when: lazygit_installed_version is not defined or lazygit_force_install
       block:
+        - name: Uninstall current lazygit installation
+          ansible.builtin.include_tasks: noauto_uninstall.yml
+          when: lazygit_installed_version is defined and lazygit_installed_version != ""
+
         - name: Download lazygit
           ansible.builtin.get_url:
             url: "{{ lazygit_download_url }}"
