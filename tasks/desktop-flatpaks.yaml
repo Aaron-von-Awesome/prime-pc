@@ -7,6 +7,16 @@
   become: true
   block:
 
+    - name: "Remove Desktop flatpaks"
+      community.general.flatpak:
+        name: "{{ item }}"
+        state: absent
+        method: system
+      loop:
+        - io.github.input_leap.input-leap
+        - io.github.seadve.Kooha
+        - org.onlyoffice.desktopeditors
+
     - name: "Install Desktop flatpaks"
       community.general.flatpak:
         name: "{{ item }}"
@@ -28,24 +38,15 @@
         - eu.betterbird.Betterbird
         - io.freetubeapp.FreeTube
         - io.github.flattool.Warehouse
-        - io.github.input_leap.input-leap
         - io.github.Pithos
         - md.obsidian.Obsidian
+        - org.deskflow.deskflow
         - org.gabmus.whatip
         - org.gnome.gitlab.cheywood.Buffer
         - org.inkscape.Inkscape
         - org.keepassxc.KeePassXC
         - org.kiwix.desktop
         - us.zoom.Zoom
-
-    - name: "Remove Desktop flatpaks"
-      community.general.flatpak:
-        name: "{{ item }}"
-        state: absent
-        method: system
-      loop:
-        - org.onlyoffice.desktopeditors
-        - io.github.seadve.Kooha
 
   rescue:
 
