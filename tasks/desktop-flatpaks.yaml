@@ -13,6 +13,7 @@
         state: absent
         method: system
       loop:
+        - com.tutanota.Tutanota
         - io.github.input_leap.input-leap
         - io.github.seadve.Kooha
         - org.onlyoffice.desktopeditors
@@ -33,7 +34,6 @@
         - com.github.xournalpp.xournalpp
         - com.github.zocker_160.SyncThingy
         - com.jgraph.drawio.desktop
-        - com.tutanota.Tutanota
         - com.usebottles.bottles
         - eu.betterbird.Betterbird
         - io.freetubeapp.FreeTube
