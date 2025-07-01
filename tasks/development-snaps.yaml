@@ -100,7 +100,6 @@
         name: node
         state: absent
         channel: "{{ _var_node_version }}/stable"
-        classic: true
 
 
   rescue:
