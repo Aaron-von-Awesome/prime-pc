@@ -13,6 +13,7 @@
         state: present
         method: system
       loop:
+        - app.zen_browser.zen
         - io.gitlab.librewolf-community
 
   rescue:
