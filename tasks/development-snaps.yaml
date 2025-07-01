@@ -99,7 +99,6 @@
       community.general.snap:
         name: node
         state: absent
-        channel: "{{ _var_node_version }}/stable"
 
 
   rescue:
