@@ -93,14 +93,6 @@
         channel: latest/edge
         classic: true
 
-    # ======= Remove Snaps
-    #
-    - name: "Remove Snap: node"
-      community.general.snap:
-        name: node
-        state: absent
-
-
   rescue:
 
     - name: "ERROR: development-snaps.yaml"

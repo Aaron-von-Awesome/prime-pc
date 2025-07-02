@@ -20,6 +20,8 @@
           - jq
           - libxml2-utils
           - meld
+          - node
+          - npm
           - php
           - python3-graphviz
           - python3-libxml2
