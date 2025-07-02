@@ -13,6 +13,7 @@
         state: present
         method: system
       loop:
+        - io.github.ungoogled_software.ungoogled_chromium
         - io.gitlab.librewolf-community
 
     - name: "Remove Browser Pack flatpaks"
