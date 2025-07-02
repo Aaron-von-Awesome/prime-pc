@@ -13,8 +13,15 @@
         state: present
         method: system
       loop:
-        - app.zen_browser.zen
         - io.gitlab.librewolf-community
+
+    - name: "Remove Browser Pack flatpaks"
+      community.general.flatpak:
+        name: "{{ item }}"
+        state: absent
+        method: system
+      loop:
+        - app.zen_browser.zen
 
   rescue:
 
