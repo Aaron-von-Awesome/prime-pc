@@ -5,8 +5,6 @@
 
 - name: "Block: development-snaps.yaml"
   become: true
-  vars:
-    _var_node_version: "{{ var_node_version }}"
 
   block:
 

@@ -18,7 +18,6 @@
     _folder_list: "{{ vault_folder_list }}"
     _lts_codename: "noble"
     _lazygit_version: "{{ vault_lazygit_version }}"
-    _node_version: "{{ vault_node_version }}"
     _should_install_ansible_community_docker_collection_compatibility: true
     _should_install_virtualbox: true
     _should_install_proton_mail_bridge: "{{ _fact_should_install_proton_mail_bridge | default(false) | bool }}"
@@ -150,8 +149,6 @@
 
     - name: "-------> RUN: Development Snaps Tasks"
       ansible.builtin.include_tasks: tasks/development-snaps.yaml
-      vars:
-        var_node_version: "{{ _node_version }}"
 
     - name: "-------> RUN: Ansible Add-ons Pack Tasks"
       ansible.builtin.include_tasks: tasks/ansible-addons-pack.yaml

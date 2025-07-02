@@ -1,0 +1,29 @@
+---
+- name: "Converge - Scenario: Test Development Software Installation Tasks"
+  hosts:
+    - all
+  become: true
+  gather_facts: false
+  vars:
+    _lts_codename: "noble"
+    _username: "{{ username }}"
+
+  tasks:
+
+    - name: "Run: apt-get update"
+      apt:
+        update_cache: true
+
+    - name: "-------> RUN: Development Packages Tasks"
+      ansible.builtin.include_tasks: ../../tasks/development-packages.yaml
+
+    - name: "-------> RUN: Development Flatpaks Tasks"
+      ansible.builtin.include_tasks: ../../tasks/development-flatpaks.yaml
+
+    - name: "-------> RUN: Development Snaps Tasks"
+      ansible.builtin.include_tasks: ../../tasks/development-snaps.yaml
+
+    - name: "-------> RUN: Ansible Add-ons Pack Tasks"
+      ansible.builtin.include_tasks: ../../tasks/ansible-addons-pack.yaml
+      vars:
+        var_username: "{{ _username }}"

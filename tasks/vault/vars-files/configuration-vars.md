@@ -1,7 +1,6 @@
 # Variables in File
 
 ```yaml
-vault_node_version: ""
 vault_lazygit_version: ""
 vault_timezone: ""
 vault_username: ""
