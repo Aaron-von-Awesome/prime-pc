@@ -12,6 +12,7 @@
   hosts:
     - all
   become: true
+  gather_facts: true
   vars_files:
     - "./tasks/vault/vars-files/configuration-vars.yaml"
   vars:
@@ -159,7 +160,6 @@
       ansible.builtin.include_role:
         name: "pluggero.lazygit"
       vars:
-        ansible_user: "{{ _username }}"
         lazygit_version: "{{ _lazygit_version }}"
 
 

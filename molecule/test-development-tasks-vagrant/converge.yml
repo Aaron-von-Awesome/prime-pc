@@ -3,10 +3,12 @@
   hosts:
     - all
   become: true
-  gather_facts: false
+  gather_facts: true
+  vars_files:
+    - "../../tasks/vault/vars-files/configuration-vars.yaml"
   vars:
-    _lts_codename: "noble"
     _username: "{{ username }}"
+    _lazygit_version: "{{ vault_lazygit_version }}"
 
   tasks:
 
@@ -27,3 +29,9 @@
       ansible.builtin.include_tasks: ../../tasks/ansible-addons-pack.yaml
       vars:
         var_username: "{{ _username }}"
+
+    - name: "Install lazygit"
+      ansible.builtin.include_role:
+        name: "pluggero.lazygit"
+      vars:
+        lazygit_version: "{{ _lazygit_version }}"
