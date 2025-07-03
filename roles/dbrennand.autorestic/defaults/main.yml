@@ -1,0 +1,30 @@
+---
+# defaults file for autorestic
+autorestic_version: 1.8.3
+autorestic_restic_version: 0.18.0
+autorestic_install_directory:
+  path: /opt/autorestic/bin
+autorestic_restic_install_directory:
+  path: /opt/restic/bin
+autorestic_config:
+  version: 2
+  locations:
+    home:
+      from: /home/me
+      to: remote
+      # Every Monday
+      cron: "0 0 * * MON"
+  backends:
+    remote:
+      type: b2
+      path: "myBucket:backup/home"
+      env:
+        B2_ACCOUNT_ID: ID
+        B2_ACCOUNT_KEY: Key
+autorestic_config_template: autorestic.yml.j2
+autorestic_config_file: ~/.autorestic.yml
+autorestic_info: false
+autorestic_check: false
+autorestic_cron: false
+autorestic_cron_verbose: false
+autorestic_state: present

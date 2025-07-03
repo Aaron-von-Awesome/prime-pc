@@ -1,0 +1,14 @@
+{
+    "image": "ghcr.io/ansible/community-ansible-dev-tools:v25.5.0",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "redhat.ansible",
+                "streetsidesoftware.code-spell-checker",
+                "github.copilot",
+                "yzhang.markdown-all-in-one"
+            ]
+        }
+    },
+    "postCreateCommand": "ansible-galaxy install -r requirements.yml"
+}

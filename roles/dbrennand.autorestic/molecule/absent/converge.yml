@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: molecule
+  tasks:
+    - name: Include dbrennand.autorestic autorestic_state absent
+      ansible.builtin.include_role:
+        name: dbrennand.autorestic
+      vars:
+        autorestic_state: absent

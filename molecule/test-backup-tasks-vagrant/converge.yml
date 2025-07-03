@@ -1,0 +1,16 @@
+---
+- name: "Converge - Scenario: Test Backup Software Installation Tasks"
+  hosts:
+    - all
+  become: true
+  gather_facts: true
+
+  tasks:
+
+    - name: "Run: apt-get update"
+      apt:
+        update_cache: true
+
+    - name: "Install autorestic"
+      ansible.builtin.include_role:
+        name: "dbrennand.autorestic"

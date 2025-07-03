@@ -54,6 +54,8 @@ roles:
 
   - name: "pluggero.lazygit"
 
+  - name: "dbrennand.autorestic"
+
 
 collections:
 

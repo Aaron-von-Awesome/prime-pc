@@ -191,3 +191,9 @@
 
     - name: "-------> RUN: Gaming Flatpaks Tasks"
       ansible.builtin.include_tasks: tasks/gaming-flatpaks.yaml
+
+    # ======================     Backup      =============================
+
+    - name: "Install autorestic"
+      ansible.builtin.include_role:
+        name: "dbrennand.autorestic"
