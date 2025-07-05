@@ -1,0 +1,25 @@
+---
+# ============================================================
+#                     base-snaps.yaml
+# ============================================================
+
+- name: "Block: base-snaps.yaml"
+  become: true
+  block:
+
+    - name: "Install Snap: Terminal Multiplexer - Zellij"
+      community.general.snap:
+        name: zellij
+        state: present
+        channel: latest/stable
+        classic: true
+
+  rescue:
+
+    - name: "ERROR: base-snaps.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: base-snaps.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("
