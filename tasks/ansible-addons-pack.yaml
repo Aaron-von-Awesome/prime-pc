@@ -38,7 +38,7 @@
         - name: "Update .bashrc file for user {{ _var_username }}"
           ansible.builtin.blockinfile:
             path: ~/.bashrc
-            marker: "# <-- {mark} ANSIBLE MANAGED BLOCK -->"
+            marker: "# <-- {mark} ANSIBLE MANAGED Conda BLOCK -->"
             block: |
               # Conda
               source /opt/conda/etc/profile.d/conda.sh
