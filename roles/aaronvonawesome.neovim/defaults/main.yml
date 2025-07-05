@@ -2,3 +2,5 @@
 # defaults file for ansible-role-neovim
 
 var_lts_codename: "noble"
+var_neovim_username: ""
+var_neovim_should_replace_vim_command: false

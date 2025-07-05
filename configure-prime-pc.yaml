@@ -17,11 +17,12 @@
     - "./tasks/vault/vars-files/configuration-vars.yaml"
   vars:
     _folder_list: "{{ vault_folder_list }}"
-    _lts_codename: "noble"
     _lazygit_version: "{{ vault_lazygit_version }}"
+    _lts_codename: "noble"
     _should_install_ansible_community_docker_collection_compatibility: true
-    _should_install_virtualbox: true
     _should_install_proton_mail_bridge: "{{ _fact_should_install_proton_mail_bridge | default(false) | bool }}"
+    _should_install_virtualbox: true
+    _should_replace_vim_command: true
     _timezone: "{{ vault_timezone }}"
     _username: "{{ vault_username }}"
 
@@ -103,6 +104,8 @@
       role: "aaronvonawesome.neovim"
       vars:
         var_lts_codename: "{{ _lts_codename }}"
+        var_neovim_username: "{{ _username }}"
+        var_neovim_should_replace_vim_command: "{{ _should_replace_vim_command }}"
 
     - name: "ROLE - Install Virtualbox + Vagrant"
       role: "aaronvonawesome.vagrant"

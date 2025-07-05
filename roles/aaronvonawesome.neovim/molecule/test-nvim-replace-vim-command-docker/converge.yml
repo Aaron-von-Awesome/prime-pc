@@ -1,0 +1,21 @@
+---
+- name: Converge
+  hosts:
+    - all
+  become: true
+  gather_facts: false
+  vars:
+    _lts_codename: "{{ lts_codename }}"
+    _neovim_username: "root"
+    _should_replace_vim_command: true
+
+
+  tasks:
+
+    - name: "Converge - Scenario: Test nvim Replace vim Command"
+      ansible.builtin.include_role:
+        name: "aaronvonawesome.neovim"
+      vars:
+        var_lts_codename: "{{ _lts_codename }}"
+        var_neovim_username: "{{ _neovim_username }}"
+        var_neovim_should_replace_vim_command: "{{ _should_replace_vim_command }}"

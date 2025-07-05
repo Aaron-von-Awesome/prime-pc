@@ -7,6 +7,8 @@
   become: true
   vars:
     _var_lts_codename: "{{ var_lts_codename }}"
+    _var_neovim_username: "{{ var_neovim_username }}"
+    _var_neovim_should_replace_vim_command: "{{ var_neovim_should_replace_vim_command | default(false) | bool }}"
   block:
 
     - name: "Add Neovim apt key"
@@ -60,6 +62,30 @@
         cmd: |
           luarocks install jsregexp
       changed_when: false
+
+
+    - name: "Replace 'vim' command with 'nvim' Command for user {{ _var_neovim_username }}"
+      become: true
+      become_user: "{{ _var_neovim_username }}"
+      when: >
+        _var_neovim_should_replace_vim_command
+        and
+        _var_neovim_username | length > 0
+      block:
+
+        - name: "Backup .bashrc file for user {{ _var_neovim_username }}"
+          ansible.builtin.command:
+            cmd: cp ~/.bashrc ~/.bashrc.backup
+          changed_when: false
+
+        - name: "Update .bashrc file for user {{ _var_neovim_username }}"
+          ansible.builtin.blockinfile:
+            path: ~/.bashrc
+            marker: "# <-- {mark} ANSIBLE MANAGED Neovim Alias BLOCK -->"
+            block: |
+              # Replace vim with neovim command
+              alias vim='nvim'
+              alias vi='nvim'
 
 
   rescue:

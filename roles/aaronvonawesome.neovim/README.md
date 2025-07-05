@@ -14,6 +14,18 @@ This Ansible Role will install [Neovim](https://neovim.io/) using the [Neovim Pe
 
 Set the codename for the version (or base version) of Ubuntu you will be using.
 
+### var_neovim_username
+
+***default:*** ""
+
+Only needed if you set `var_neovim_should_replace_vim_command` to `true`.  This User's `.bashrc` file will have alias set so `vim` and `vi` will run `nvim` command.
+
+### var_neovim_should_replace_vim_command
+
+***default:*** false
+
+When set to `true`, aliases for `vim` and `vi` will be create to run the `nvim` command.  You will need to specify a User in the `var_neovim_username` variable as well.
+
 ## Dependencies
 
 - N/A

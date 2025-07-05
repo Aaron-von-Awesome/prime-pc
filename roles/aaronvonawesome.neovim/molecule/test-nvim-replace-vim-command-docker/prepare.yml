@@ -1,0 +1,36 @@
+---
+- name: Prepare
+  hosts:
+    - all
+  become: true
+  gather_facts: false
+
+  tasks:
+
+    - name: "Check if Vim is installed"
+      ansible.builtin.command:
+        cmd: >
+          which vim
+      register: _vim_installed
+      ignore_errors: true
+
+    - name: "Assert Vim is NOT installed"
+      ansible.builtin.assert:
+        that:
+          - _vim_installed.rc > 0
+        fail_msg: "Vim IS installed...bad :-("
+        success_msg: "Vim is not installed...good!"
+
+    - name: "Check if Vi is installed"
+      ansible.builtin.command:
+        cmd: >
+          which vi
+      register: _vi_installed
+      ignore_errors: true
+
+    - name: "Assert Vi is NOT installed"
+      ansible.builtin.assert:
+        that:
+          - _vi_installed.rc > 0
+        fail_msg: "Vi IS installed...bad :-("
+        success_msg: "Vi is not installed...good!"
