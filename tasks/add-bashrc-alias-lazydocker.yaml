@@ -1,0 +1,34 @@
+---
+# ============================================================
+#                 add-bashrc-alias-lazydocker.yaml
+# ============================================================
+
+- name: "Block: add-bashrc-alias-lazydocker.yaml"
+  become: true
+  become_user: "{{ var_lazydocker_user }}"
+  vars:
+    _var_lazydocker_user: "{{ var_lazydocker_user }}"
+  block:
+
+    - name: "Backup .bashrc file for user {{ _var_lazydocker_user }}"
+      ansible.builtin.command:
+        cmd: cp ~/.bashrc ~/.bashrc.backup
+      changed_when: false
+
+    - name: "Update .bashrc file for user {{ _var_lazydocker_user }}"
+      ansible.builtin.blockinfile:
+        path: ~/.bashrc
+        marker: "# <-- {mark} ANSIBLE MANAGED lazydocker BLOCK -->"
+        block: |
+          # lazydocker
+          alias lzd='docker run --rm -it --name=lazydocker --volume /var/run/docker.sock:/var/run/docker.sock lazyteam/lazydocker'
+
+  rescue:
+
+    - name: "ERROR: add-bashrc-alias-lazydocker.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: add-bashrc-alias-lazydocker.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

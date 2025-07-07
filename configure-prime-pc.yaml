@@ -202,3 +202,12 @@
     - name: "Install autorestic"
       ansible.builtin.include_role:
         name: "dbrennand.autorestic"
+
+
+    # ======================     Bash Aliases    =============================
+
+    - name: "-------> RUN: Lazydocker Alias Tasks"
+      ansible.builtin.include_tasks: tasks/add-bashrc-alias-lazydocker.yaml
+      vars:
+        var_lazydocker_user: "{{ _username }}"
+
