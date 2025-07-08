@@ -176,6 +176,8 @@
         - name: "Install nerdfonts"
           ansible.builtin.include_role:
             name: "pluggero.nerdfonts"
+          vars:
+            nerdfonts_font: "0xProto"
 
 
     # ======================     Communication     ============================
