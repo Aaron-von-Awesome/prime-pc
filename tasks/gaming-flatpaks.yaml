@@ -14,7 +14,7 @@
         method: system
       loop:
         - com.endlessnetwork.tankwarriors
-        - net.minetest.Minetest
+        - org.luanti.luanti
 
   rescue:
 
