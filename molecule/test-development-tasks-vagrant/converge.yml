@@ -35,3 +35,7 @@
         name: "pluggero.lazygit"
       vars:
         lazygit_version: "{{ _lazygit_version }}"
+
+    - name: "Install nerdfonts"
+      ansible.builtin.include_role:
+        name: "pluggero.nerdfonts"

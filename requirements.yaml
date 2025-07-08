@@ -53,6 +53,7 @@ roles:
     version: "main"
 
   - name: "pluggero.lazygit"
+  - name: "pluggero.nerdfonts"
 
   - name: "dbrennand.autorestic"
 

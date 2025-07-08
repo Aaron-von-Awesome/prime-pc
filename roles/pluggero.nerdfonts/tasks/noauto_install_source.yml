@@ -1,0 +1,83 @@
+---
+- name: Ensure nerdfonts are installed
+  block:
+    - name: Check if installation directory exists
+      ansible.builtin.stat:
+        path: "{{ nerdfonts_install_dir }}"
+      register: nerdfonts_dir
+
+    - name: Check if selected nerdfont (non-mono) is installed
+      ansible.builtin.find:
+        paths: "{{ nerdfonts_install_dir }}"
+        patterns: "{{ nerdfonts_font }}*Regular.ttf"
+        file_type: file
+        recurse: true
+      register: nerdfonts_selected
+      become: true
+      when:
+        - nerdfonts_dir.stat.exists
+
+    - name: Force install if no matches were found
+      ansible.builtin.set_fact:
+        nerdfonts_force_install: true
+      when:
+        - nerdfonts_selected.matched is defined
+        - nerdfonts_selected.matched == 0
+
+    - name: Install nerdfonts from source
+      when: nerdfonts_selected.matched is not defined or nerdfonts_force_install
+      block:
+        - name: Ensure the installation folder exists
+          ansible.builtin.file:
+            path: "{{ nerdfonts_install_dir }}"
+            state: directory
+            mode: "0755"
+            owner: root
+            group: root
+          become: true
+
+        - name: Download specific font files
+          ansible.builtin.get_url:
+            url: "https://github.com/ryanoasis/nerd-fonts/releases/download/v{{ nerdfonts_version }}/{{ nerdfonts_font }}.tar.xz"
+            dest: "{{ nerdfonts_tmp_dir }}/{{ nerdfonts_font }}.tar.xz"
+            mode: "0600"
+            owner: "{{ ansible_user }}"
+            group: "{{ ansible_user }}"
+
+        - name: Create folder for font files
+          ansible.builtin.file:
+            path: "{{ nerdfonts_tmp_dir }}/{{ nerdfonts_font }}"
+            state: directory
+            mode: "0755"
+            owner: root
+            group: root
+          become: true
+
+        - name: Extract font files
+          ansible.builtin.unarchive:
+            src: "{{ nerdfonts_tmp_dir }}/{{ nerdfonts_font }}.tar.xz"
+            dest: "{{ nerdfonts_tmp_dir }}/{{ nerdfonts_font }}"
+            remote_src: true
+          become: true
+
+        - name: Copy files to nerdfonts folder
+          ansible.builtin.copy:
+            src: "{{ nerdfonts_tmp_dir }}/{{ nerdfonts_font }}/"
+            dest: "{{ nerdfonts_install_dir }}"
+            owner: root
+            group: root
+            mode: "0755"
+            remote_src: true
+          become: true
+          notify: "Update Font Cache"
+
+        - name: Remove temporary font files
+          ansible.builtin.file:
+            path: "{{ nerdfonts_tmp_dir }}/{{ nerdfonts_font }}"
+            state: absent
+          become: true
+
+        - name: Remove font archive
+          ansible.builtin.file:
+            path: "{{ nerdfonts_tmp_dir }}/{{ nerdfonts_font }}.tar.xz"
+            state: absent
