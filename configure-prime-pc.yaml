@@ -164,6 +164,8 @@
     - name: "BLOCK: Pluggero Roles"
       become: true
       become_user: "{{ _username }}"
+      vars:
+        ansible_user: "{{ _username }}"
       block:
 
         - name: "Install lazygit"
