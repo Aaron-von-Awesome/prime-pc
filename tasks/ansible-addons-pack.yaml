@@ -42,7 +42,6 @@
             block: |
               # Conda
               source /opt/conda/etc/profile.d/conda.sh
-          register: bashrc_file
 
 
   rescue:
