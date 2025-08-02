@@ -103,6 +103,19 @@
           block:
 
             # -------------------------------------------------------------------------------------------
+            #                         cloudflare.ini
+            # -------------------------------------------------------------------------------------------
+            - name: "Copy SWAG/LetsEncrypt Configuration file to: '{{ _var_lube_logger_docker_compose_directory }}/cloudflare.ini'"
+              ansible.builtin.template:
+                src: "files/cloudflare-ini.j2"
+                dest: "{{ _var_lube_logger_docker_compose_directory }}/cloudflare.ini"
+                owner: "{{ _var_lube_logger_container_username }}"
+                group: "{{ _var_lube_logger_container_username }}"
+                mode: "0755"
+                force: true
+              notify: "lube_logger : reload services"
+
+            # -------------------------------------------------------------------------------------------
             #                         lubelogger.subdomain.conf
             # -------------------------------------------------------------------------------------------
             - name: "Copy Sub-domain Configuration file to: '{{ _var_lube_logger_docker_compose_directory }}/lubelogger.subdomain.conf'"
