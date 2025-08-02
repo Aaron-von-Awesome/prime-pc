@@ -19,8 +19,17 @@
     _folder_list: "{{ vault_folder_list }}"
     _lazygit_version: "{{ vault_lazygit_version }}"
     _lts_codename: "noble"
+    _lube_logger_postgres_password: "{{ vault_lube_logger_postgres_password }}"
+    _lube_logger_postgres_user: "{{ vault_lube_logger_postgres_user }}"
+    _lube_logger_postgres_version: "{{ vault_lube_logger_postgres_version }}"
+    _lube_logger_swag_cloudflare_api_token: "{{ vault_lube_logger_cloudflare_api_token }}"
+    _lube_logger_swag_email_address: "{{ vault_lube_logger_email_address }}"
+    _lube_logger_swag_tld: "{{ vault_lube_logger_tld }}"
+    _lube_logger_version: "{{ vault_lube_logger_version }}"
+    _should_deploy_swag_with_lube_logger: true
     _should_install_ansible_community_docker_collection_compatibility: true
-    _should_install_proton_mail_bridge: "{{ _fact_should_install_proton_mail_bridge | default(false) | bool }}"
+    _should_install_lube_logger: "{{ _fact_should_install_lube_logger | bool | default(false) }}"
+    _should_install_proton_mail_bridge: "{{ _fact_should_install_proton_mail_bridge | bool | default(false) }}"
     _should_install_virtualbox: true
     _should_replace_vim_command: true
     _timezone: "{{ vault_timezone }}"
@@ -112,6 +121,24 @@
       vars:
         var_vagrant_username: "{{ _username }}"
         var_vagrant_should_install_virtualbox: "{{ _should_install_virtualbox }}"
+
+    # ======================     Applications     ==============================
+
+    - name: "ROLE - Install Lube Logger"
+      ansible.builtin.include_role:
+        name: "aaronvonawesome.lube_logger"
+      vars:
+        var_lube_logger_container_image_version: "{{ _lube_logger_version }}"
+        var_lube_logger_container_username: "{{ _username }}"
+        var_lube_logger_postgres_container_image_version: "{{ _lube_logger_postgres_version }}"
+        var_lube_logger_postgres_password: "{{ _lube_logger_postgres_password }}"
+        var_lube_logger_postgres_user: "{{ _lube_logger_postgres_user }}"
+        var_lube_logger_state: "present"
+        var_lube_logger_swag_cloudflare_api_token: "{{ _lube_logger_swag_cloudflare_api_token }}"
+        var_lube_logger_swag_email_address: "{{ _lube_logger_swag_email_address }}"
+        var_lube_logger_swag_tld: "{{ _lube_logger_swag_tld }}"
+        var_should_deploy_with_swag_container: "{{ _should_deploy_swag_with_lube_logger }}"
+      when: _should_install_lube_logger
 
 
 

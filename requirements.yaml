@@ -52,6 +52,11 @@ roles:
     src: "https://codeberg.org/aaronvonawesome/ansible-role-proton-suite.git"
     version: "main"
 
+  - name: "aaronvonawesome.lube_logger"
+    scm: git
+    src: "https://codeberg.org/aaronvonawesome/ansible-role-lube-logger.git"
+    version: "main"
+
   - name: "pluggero.lazygit"
   - name: "pluggero.nerdfonts"
 
