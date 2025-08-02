@@ -125,8 +125,7 @@
     # ======================     Applications     ==============================
 
     - name: "ROLE - Install Lube Logger"
-      ansible.builtin.include_role:
-        name: "aaronvonawesome.lube_logger"
+      role: "aaronvonawesome.lube_logger"
       vars:
         var_lube_logger_container_image_version: "{{ _lube_logger_version }}"
         var_lube_logger_container_username: "{{ _username }}"
