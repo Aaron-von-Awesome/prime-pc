@@ -28,8 +28,8 @@
     _lube_logger_version: "{{ vault_lube_logger_version }}"
     _should_deploy_swag_with_lube_logger: true
     _should_install_ansible_community_docker_collection_compatibility: true
-    _should_install_lube_logger: "{{ _fact_should_install_lube_logger | bool | default(false) }}"
-    _should_install_proton_mail_bridge: "{{ _fact_should_install_proton_mail_bridge | bool | default(false) }}"
+    _should_install_lube_logger: "{{ _fact_should_install_lube_logger | default(false) | bool }}"
+    _should_install_proton_mail_bridge: "{{ _fact_should_install_proton_mail_bridge | default(false) | bool }}"
     _should_install_virtualbox: true
     _should_replace_vim_command: true
     _timezone: "{{ vault_timezone }}"
