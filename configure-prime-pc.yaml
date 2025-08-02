@@ -129,6 +129,7 @@
       vars:
         var_lube_logger_container_username: "{{ _username }}"
         var_lube_logger_state: "absent"
+        var_should_deploy_with_swag_container: "{{ _should_deploy_swag_with_lube_logger }}"
         # var_lube_logger_container_image_version: "{{ _lube_logger_version }}"
         # var_lube_logger_postgres_container_image_version: "{{ _lube_logger_postgres_version }}"
         # var_lube_logger_postgres_password: "{{ _lube_logger_postgres_password }}"
@@ -136,7 +137,6 @@
         # var_lube_logger_swag_cloudflare_api_token: "{{ _lube_logger_swag_cloudflare_api_token }}"
         # var_lube_logger_swag_email_address: "{{ _lube_logger_swag_email_address }}"
         # var_lube_logger_swag_tld: "{{ _lube_logger_swag_tld }}"
-        # var_should_deploy_with_swag_container: "{{ _should_deploy_swag_with_lube_logger }}"
       when: _should_install_lube_logger
 
 
