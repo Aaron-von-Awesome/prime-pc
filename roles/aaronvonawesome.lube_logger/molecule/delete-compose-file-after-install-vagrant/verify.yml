@@ -1,0 +1,21 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  vars:
+    _lube_logger_docker_compose_directory: "{{ lube_logger_docker_compose_directory }}"
+    _lube_logger_docker_compose_output_filename: "{{ lube_logger_docker_compose_output_filename }}"
+
+  tasks:
+
+    - name: "Check if \"{{ _lube_logger_docker_compose_directory }}/{{ _lube_logger_docker_compose_output_filename }}\" exists"
+      ansible.builtin.stat:
+        path: "{{ _lube_logger_docker_compose_directory }}/{{ _lube_logger_docker_compose_output_filename }}"
+      register: file_stat
+
+    - name: "Assert that the file does not exist"
+      ansible.builtin.assert:
+        that:
+          - file_stat.stat.exists == false
+        fail_msg: "The file \"{{ _lube_logger_docker_compose_directory }}/{{ _lube_logger_docker_compose_output_filename }}\" exists when it should not."
+        success_msg: "Excellent! The LubeLogger Compose file does NOT exist! :-)"

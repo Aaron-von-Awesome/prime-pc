@@ -1,0 +1,27 @@
+---
+# ##############################################################################################
+# #                                                                                            #
+# #                       EXAMPLE - LubeLogger - Docker Compose Network File                   #
+# #                                                                                            #
+# ##############################################################################################
+
+name: "lube_log"
+
+
+networks:
+
+  lubelog-net:
+    external: false
+
+
+services:
+
+  lubelog:
+    networks:
+      - lubelog-net
+    ports:
+      - "9001:8080"
+
+  lubelogpostgres:
+    networks:
+      - lubelog-net

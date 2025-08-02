@@ -1,0 +1,17 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: false
+  vars:
+    _username: "{{ username }}"
+    _should_delete_docker_compose_file: true
+
+
+  tasks:
+
+    - name: "Scenario: Delete Compose File after Installation"
+      ansible.builtin.include_role:
+        name: "aaronvonawesome.lube_logger"
+      vars:
+        var_lube_logger_container_username: "{{ _username }}"
+        var_should_delete_docker_compose_file: "{{ _should_delete_docker_compose_file }}"

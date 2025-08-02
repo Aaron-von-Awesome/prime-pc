@@ -1,0 +1,35 @@
+---
+driver:
+  name: vagrant
+scenario:
+  test_sequence:
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - verify
+    - cleanup
+    - destroy
+platforms:
+  - name: molecule-test-instance
+    box: aaronvonawesome/docker-on-linux-mint
+    memory: 4096
+    cpus: 2
+    provider_raw_config_args:
+      - "gui = ${SHOW_VAGRANT_VM_GUI:-false}"
+      - "name = 'molecule-test-instance'"
+      - "customize ['modifyvm', :id, '--graphicscontroller', 'vmsvga']"
+      - "customize ['modifyvm', :id, '--vram', '128']"
+      - "customize ['modifyvm', :id, '--accelerate3d', 'on']"
+      - "customize ['modifyvm', :id, '--accelerate2dvideo', 'on']"
+provisioner:
+  inventory:
+    hosts:
+      all:
+        hosts:
+          molecule-test-instance:
+    host_vars:
+      molecule-test-instance:
+        lube_logger_docker_compose_directory: "/home/vagrant/Container-Apps/LubeLogger"
+        username: "vagrant"

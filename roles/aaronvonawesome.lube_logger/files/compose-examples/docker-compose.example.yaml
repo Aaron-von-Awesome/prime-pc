@@ -1,0 +1,78 @@
+---
+# ##############################################################################################
+# #                                                                                            #
+# #                       EXAMPLE - LubeLogger - Docker Compose File                           #
+# #                                                                                            #
+# ##############################################################################################
+#
+# Use the LubeLogger Configurator to configure your environment variables
+# https://lubelogger.com/configure
+
+name: "lube_log"
+
+
+volumes:
+
+  lubelog-data:
+    driver: local
+  lubelog-keys:
+    driver: local
+  lubelog-postgres:
+    driver: local
+
+
+services:
+
+  lubelog:
+    image: "ghcr.io/hargata/lubelogger:v1.4.8"
+    container_name: "lubelog-ui"
+    environment:
+      EnableAuth: false  # true/false(default: false) - Allows users to configure whether if authentication is enabled via environment variable.
+      LANG: en_US.UTF-8  # <- Same as above. Note that some languages don't have UTF-8 encodings.
+      LC_ALL: en_US.UTF-8  # <- Locale and Language Settings, this will affect how numbers, currencies, and dates are formatted.
+      LOGGING__LOGLEVEL__DEFAULT: Error
+      LUBELOGGER_ALLOWED_FILE_EXTENSIONS: "*"  # - Allowed file extensions for document uploads, use '*' to allow all file types.
+      LUBELOGGER_CUSTOM_WIDGETS: false  # true/false(default: false) - Allow Custom Widgets to be configured
+      LUBELOGGER_INVARIANT_API: false  # true/false(default: false) - whether API response should be invariant
+      LUBELOGGER_OPEN_REGISTRATION: false  # true/false(default: false) - Allow users to generate their own registration token
+      POSTGRES_CONNECTION: "Host=lubelogpostgres:5432;Username=lubelogger;Password=changemeplease;Database=lubelogdb;"
+      # LUBELOGGER_DOMAIN: ""  # - URL to Instance of LubeLogger used to generate email links
+      # LUBELOGGER_LOGO_URL: ""  # - Custom Logo URL.
+      # LUBELOGGER_MOTD: ""  # - Message of The Day displayed in Login page if configured.
+      # LUBELOGGER_WEBHOOK: ""  # - WebHook URL
+      # MailConfig__EmailFrom: ""
+      # MailConfig__EmailServer: ""  # <- Email SMTP settings used only for configuring multiple users(to send their registration token and forgot password tokens)
+      # MailConfig__Password: ""
+      # MailConfig__Port: 587
+      # MailConfig__Username: ""
+      # UserNameHash: ""  # - SHA256 Hash of the root username.
+      # UserPasswordHash: ""  # - SHA256 Hash of the root password.
+    volumes:
+      - lubelog-data:/App/data/
+      - lubelog-keys:/root/.aspnet/DataProtection-Keys/
+    restart: unless-stopped
+    logging:
+      driver: "local"
+      options:
+        max-size: "1m"
+        max-file: "3"
+    depends_on:
+      - lubelogpostgres
+
+  lubelogpostgres:
+    image: "postgres:17"
+    container_name: "lubelog-db"
+    environment:
+      POSTGRES_DB: "lubelogdb"
+      POSTGRES_PASSWORD: "changemeplease"
+      POSTGRES_USER: "lubelogger"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - lubelog-postgres:/var/lib/postgresql/data/
+    restart: unless-stopped
+    logging:
+      driver: "local"
+      options:
+        max-size: "1m"
+        max-file: "3"

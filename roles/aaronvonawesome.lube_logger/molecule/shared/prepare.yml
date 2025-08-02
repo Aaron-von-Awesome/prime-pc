@@ -1,0 +1,13 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  vars:
+    _username: "{{ username }}"
+
+  tasks:
+
+    - name: "Create Users"
+      ansible.builtin.user:
+        name: "{{ _username }}"
+        create_home: true

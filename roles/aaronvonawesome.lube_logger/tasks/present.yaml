@@ -1,0 +1,151 @@
+---
+# ============================================================
+#                     present.yaml
+# ============================================================
+
+- name: "Present Block: Install 'lube_logger' Ansible Role"
+  become: true
+  vars:
+    _var_lube_logger_container_image_version: "{{ var_lube_logger_container_image_version }}"
+    _var_lube_logger_container_name: "{{ var_lube_logger_container_name }}"
+    _var_lube_logger_container_port: "{{ var_lube_logger_container_port }}"
+    _var_lube_logger_container_username: "{{ var_lube_logger_container_username }}"
+    _var_lube_logger_docker_compose_directory: "{{ var_lube_logger_docker_compose_directory }}"
+    _var_lube_logger_docker_compose_input_filename: "{{ var_lube_logger_docker_compose_input_filename }}"
+    _var_lube_logger_docker_compose_output_filename: "{{ var_lube_logger_docker_compose_output_filename }}"
+    _var_lube_logger_postgres_container_image_version: "{{ var_lube_logger_postgres_container_image_version }}"
+    _var_lube_logger_postgres_container_name: "{{ var_lube_logger_postgres_container_name }}"
+    _var_lube_logger_postgres_db: "{{ var_lube_logger_postgres_db }}"
+    _var_lube_logger_postgres_password: "{{ var_lube_logger_postgres_password }}"
+    _var_lube_logger_postgres_user: "{{ var_lube_logger_postgres_user }}"
+    _var_lube_logger_project_name: "{{ var_lube_logger_project_name }}"
+    _var_lube_logger_swag_cloudflare_api_token: "{{ var_lube_logger_swag_cloudflare_api_token }}"
+    _var_lube_logger_swag_cloudflare_ini_input_filename: "{{ var_lube_logger_swag_cloudflare_ini_input_filename }}"
+    _var_lube_logger_swag_container_image_version: "{{ var_lube_logger_swag_container_image_version }}"
+    _var_lube_logger_swag_container_name: "{{ var_lube_logger_swag_container_name }}"
+    _var_lube_logger_swag_email_address: "{{ var_lube_logger_swag_email_address }}"
+    _var_lube_logger_swag_tld: "{{ var_lube_logger_swag_tld }}"
+    _var_lube_logger_swag_timezome: "{{ var_lube_logger_swag_timezome }}"
+    _var_should_delete_docker_compose_file: "{{ var_should_delete_docker_compose_file }}"
+    _var_should_deploy_with_swag_container: "{{ var_should_deploy_with_swag_container }}"
+
+  block:
+
+
+    - name: "Create LubeLogger folder and Docker Compose file for user {{ _var_lube_logger_container_username }}"
+      become: true
+      become_user: "{{ _var_lube_logger_container_username }}"
+      block:
+
+        - name: "Create LubeLogger Folder for '{{ _var_lube_logger_container_username }}'"
+          ansible.builtin.file:
+            path: "{{ _var_lube_logger_docker_compose_directory }}"
+            state: directory
+            owner: "{{ _var_lube_logger_container_username }}"
+            group: "{{ _var_lube_logger_container_username }}"
+            mode: "0755"
+            force: false
+
+        # -------------------------------------------------------------------------------------------
+        #                              docker-compose.yaml
+        # -------------------------------------------------------------------------------------------
+        - name: "Copy Compose file to: '{{ _var_lube_logger_docker_compose_directory }}/{{ _var_lube_logger_docker_compose_output_filename }}'"
+          ansible.builtin.template:
+            src: "{{ lookup('first_found', file_paths) }}"
+            dest: "{{ _var_lube_logger_docker_compose_directory }}/{{ _var_lube_logger_docker_compose_output_filename }}"
+            owner: "{{ _var_lube_logger_container_username }}"
+            group: "{{ _var_lube_logger_container_username }}"
+            mode: "0755"
+            force: true
+          vars:
+            file_paths:
+              - "{{ _var_lube_logger_docker_compose_input_filename }}"
+              - "{{ playbook_dir }}/files/{{ _var_lube_logger_docker_compose_input_filename }}"
+              - "{{ role_path }}/files/{{ _var_lube_logger_docker_compose_input_filename }}"
+          notify: "lube_logger : reload services"
+
+        # -------------------------------------------------------------------------------------------
+        #                              init.sql
+        # -------------------------------------------------------------------------------------------
+        - name: "Copy init.sql file to: '{{ _var_lube_logger_docker_compose_directory }}/init.sql'"
+          ansible.builtin.copy:
+            src: "files/init.sql"
+            dest: "{{ _var_lube_logger_docker_compose_directory }}/init.sql"
+            owner: "{{ _var_lube_logger_container_username }}"
+            group: "{{ _var_lube_logger_container_username }}"
+            mode: "0755"
+            force: true
+
+        # -------------------------------------------------------------------------------------------
+        #                       Docker Compose for Default Network or SWAG
+        # -------------------------------------------------------------------------------------------
+        - name: "Copy Compose Network file to: '{{ _var_lube_logger_docker_compose_directory }}/{{ __network_configuration_docker_compose_output_filename }}'"
+          ansible.builtin.template:
+            src: "{{ lookup('first_found', file_paths) }}"
+            dest: "{{ _var_lube_logger_docker_compose_directory }}/{{ __network_configuration_docker_compose_output_filename }}"
+            owner: "{{ _var_lube_logger_container_username }}"
+            group: "{{ _var_lube_logger_container_username }}"
+            mode: "0755"
+            force: true
+          vars:
+            file_paths:
+              - "{{ __network_configuration_docker_compose_input_filename }}"
+              - "{{ playbook_dir }}/files/{{ __network_configuration_docker_compose_input_filename }}"
+              - "{{ role_path }}/files/{{ __network_configuration_docker_compose_input_filename }}"
+          notify: "lube_logger : reload services"
+
+
+        - name: "Block: Copy additional SWAG configuration files"
+          become: true
+          become_user: "{{ _var_lube_logger_container_username }}"
+          when: >
+            _var_should_deploy_with_swag_container | bool
+          block:
+
+            # -------------------------------------------------------------------------------------------
+            #                         lubelogger.subdomain.conf
+            # -------------------------------------------------------------------------------------------
+            - name: "Copy Sub-domain Configuration file to: '{{ _var_lube_logger_docker_compose_directory }}/lubelogger.subdomain.conf'"
+              ansible.builtin.copy:
+                src: "files/lubelogger.subdomain.conf"
+                dest: "{{ _var_lube_logger_docker_compose_directory }}/lubelogger.subdomain.conf"
+                owner: "{{ _var_lube_logger_container_username }}"
+                group: "{{ _var_lube_logger_container_username }}"
+                mode: "0755"
+                force: true
+              notify: "lube_logger : reload services"
+
+            # -------------------------------------------------------------------------------------------
+            #                         remove-ipv6-listen.sh
+            # -------------------------------------------------------------------------------------------
+            - name: "Copy remove-ipv6-listen.sh file to: '{{ _var_lube_logger_docker_compose_directory }}/remove-ipv6-listen.sh'"
+              ansible.builtin.copy:
+                src: "files/remove-ipv6-listen.sh"
+                dest: "{{ _var_lube_logger_docker_compose_directory }}/remove-ipv6-listen.sh"
+                owner: "{{ _var_lube_logger_container_username }}"
+                group: "{{ _var_lube_logger_container_username }}"
+                mode: "0755"
+                force: true
+              notify: "lube_logger : reload services"
+
+
+      rescue:
+
+        - name: "Did not set up LubeLogger docker-compose.yaml for user '{{ _var_lube_logger_container_username }}'"
+          ansible.builtin.debug:
+            msg: "Does user '{{ _var_lube_logger_container_username }}' exist on the target machine?"
+
+        - name: "Error detected! Stopping Playbook :-("
+          ansible.builtin.fail:
+            msg: "Error detected! Stopping Playbook :-("
+
+
+  rescue:
+
+    - name: "ERROR: 'lube_logger' Ansible Role"
+      ansible.builtin.debug:
+        msg: "ERROR: 'lube_logger' Ansible Role"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

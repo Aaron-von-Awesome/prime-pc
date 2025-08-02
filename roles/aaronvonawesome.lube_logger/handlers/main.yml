@@ -1,0 +1,8 @@
+---
+# handlers file for ansible-role-lube-logger
+
+- name: "Handler: Reload Lube Logger Docker Services"
+  ansible.builtin.include_tasks: reload-lubelogger-services.yaml
+  listen: "lube_logger : reload services"
+  when: >
+    not var_should_test_docker_compose_copy_only | bool

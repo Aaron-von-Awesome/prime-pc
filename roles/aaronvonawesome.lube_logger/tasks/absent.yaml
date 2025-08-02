@@ -1,0 +1,52 @@
+---
+# ============================================================
+#                     absent.yaml
+# ============================================================
+
+- name: "Absent Block: Remove 'lube_logger' Ansible Role"
+  become: true
+  become_user: "{{ var_lube_logger_container_username }}"
+  vars:
+    _var_lube_logger_docker_compose_directory: "{{ var_lube_logger_docker_compose_directory }}"
+    _var_lube_logger_docker_compose_output_filename: "{{ var_lube_logger_docker_compose_output_filename }}"
+    _var_lube_logger_project_name: "{{ var_lube_logger_project_name }}"
+
+  block:
+
+
+    - name: "Check if '{{ _var_lube_logger_docker_compose_directory }}' directory exists"
+      ansible.builtin.stat:
+        path: "{{ _var_lube_logger_docker_compose_directory }}"
+      changed_when: false
+      register: _lube_logger_directory
+
+    - name: "Block: Remove Lube Logger Docker elements and configuration files"
+      when: >
+        _lube_logger_directory.stat.exists
+      block:
+
+        - name: "Stop LubeLogger Container Services (docker compose down)"
+          community.docker.docker_compose_v2:
+            project_src: "{{ _var_lube_logger_docker_compose_directory }}"
+            files:
+              - "{{ _var_lube_logger_docker_compose_output_filename }}"
+              - "{{ __network_configuration_docker_compose_output_filename }}"
+            remove_images: "all"
+            remove_volumes: true
+            state: absent
+
+        - name: "Remove LubeLogger Docker Compose Files"
+          ansible.builtin.file:
+            path: "{{ _var_lube_logger_docker_compose_directory }}"
+            state: absent
+
+
+  rescue:
+
+    - name: "ERROR: Removing 'lube_logger' Ansible Role was unsuccessful"
+      ansible.builtin.debug:
+        msg: "ERROR: Removing 'lube_logger' Ansible Role was unsuccessful"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

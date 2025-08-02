@@ -43,8 +43,8 @@ options:
   state:
     description:
       - State of the authorization permission.
-      - On V(present), the authorization permission will be created (or updated if it exists already).
-      - On V(absent), the authorization permission will be removed if it exists.
+      - On V(present), the authorization permission is created (or updated if it exists already).
+      - On V(absent), the authorization permission is removed if it exists.
     choices: ['present', 'absent']
     default: 'present'
     type: str
@@ -253,8 +253,8 @@ def main():
     module = AnsibleModule(argument_spec=argument_spec,
                            supports_check_mode=True,
                            required_one_of=(
-                               [['token', 'auth_realm', 'auth_username', 'auth_password']]),
-                           required_together=([['auth_realm', 'auth_username', 'auth_password']]),
+                               [['token', 'auth_realm', 'auth_username', 'auth_password', 'auth_client_id', 'auth_client_secret']]),
+                           required_together=([['auth_username', 'auth_password']]),
                            required_by={'refresh_token': 'auth_realm'},
                            )
 

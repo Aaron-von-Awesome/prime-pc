@@ -1,0 +1,36 @@
+---
+scenario:
+  test_sequence:
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - verify
+    - cleanup
+    - destroy
+lint: |
+  set -e
+  yamllint .
+  ansible-lint
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      remote_user: root
+  env:
+    ANSIBLE_CONFIG: "../ansible.cfg"
+    ANSIBLE_VERBOSITY: 1
+  inventory:
+    hosts:
+      all:
+        hosts:
+          molecule-test-instance:
+    host_vars:
+      molecule-test-instance:
+        ansible_python_interpreter: "/usr/bin/python3"
+        lube_logger_compose_with_default_network_output_filename: "compose-with-default-network.yaml"
+        lube_logger_docker_compose_directory: "/home/grimlock/Container-Apps/LubeLogger"
+        lube_logger_docker_compose_output_filename: "docker-compose.yaml"
+        username: "grimlock"

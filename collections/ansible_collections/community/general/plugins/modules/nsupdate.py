@@ -63,8 +63,8 @@ options:
     type: str
   zone:
     description:
-      - DNS record will be modified on this O(zone).
-      - When omitted DNS will be queried to attempt finding the correct zone.
+      - DNS record is modified on this O(zone).
+      - When omitted, DNS is queried to attempt finding the correct zone.
     type: str
   record:
     description:
@@ -144,10 +144,6 @@ EXAMPLES = r"""
 """
 
 RETURN = r"""
-changed:
-  description: If module has modified record.
-  returned: success
-  type: str
 record:
   description: DNS record.
   returned: success

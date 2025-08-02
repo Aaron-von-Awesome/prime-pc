@@ -1,0 +1,20 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: false
+  vars:
+    _lube_logger_docker_compose_input_filename: "docker-compose.yaml"
+    _lube_logger_docker_compose_network_input_filename: "docker-compose.network.yaml"
+    _username: "{{ username }}"
+
+
+  tasks:
+
+    - name: "Scenario: Use a custom Docker Compose File"
+      ansible.builtin.include_role:
+        name: "aaronvonawesome.lube_logger"
+      vars:
+        var_lube_logger_container_username: "{{ _username }}"
+        var_lube_logger_docker_compose_input_filename: "{{ _lube_logger_docker_compose_input_filename }}"
+        var_lube_logger_compose_with_default_network_input_filename: "{{ _lube_logger_docker_compose_network_input_filename }}"
+        var_should_test_docker_compose_copy_only: true

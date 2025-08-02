@@ -1,0 +1,22 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: false
+  vars:
+    _username: "{{ username }}"
+    _container_apps_directory: "{{ container_apps_directory }}"
+
+  tasks:
+
+    - name: "Scenario: REMOVE LubeLogger with default settings"
+      ansible.builtin.include_role:
+        name: "aaronvonawesome.lube_logger"
+      vars:
+        var_lube_logger_container_username: "{{ _username }}"
+        var_lube_logger_state: "absent"
+
+    - name: "Create dummy file for Verify stage"
+      ansible.builtin.file:
+        path: "{{ _container_apps_directory }}/foo.yaml"
+        state: touch
+      changed_when: false

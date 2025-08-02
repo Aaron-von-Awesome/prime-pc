@@ -1,0 +1,72 @@
+---
+# ##############################################################################################
+# #                                                                                            #
+# #                       EXAMPLE - LubeLogger - Docker Compose SWAG File                      #
+# #                                                                                            #
+# ##############################################################################################
+
+name: "lube_log"
+
+
+volumes:
+
+  lubelog-swag:
+    driver: local
+
+
+networks:
+
+  lubelog-swag-net:
+    external: false
+    ipam:
+      config:
+        - subnet: 192.168.55.0/24
+  lubelog-db-net:
+    external: false
+    ipam:
+      config:
+        - subnet: 192.168.56.0/24
+
+
+services:
+
+  lubelogswag:
+    image: "linuxserver/swag:amd64-latest"
+    container_name: "lubelog-swag"
+    cap_add:
+      - NET_ADMIN
+    environment:
+      TZ: "America/Detroit"
+      URL: "<yourdomain.com>"
+      SUBDOMAINS: "lubelogger"
+      VALIDATION: dns
+      DNSPLUGIN: cloudflare
+      EMAIL: "<emailaddress@somedomain.com>"
+      ONLY_SUBDOMAINS: true
+      STAGING: false  # optional
+      # MAXMINDDB_LICENSE_KEY: ""
+    networks:
+      lubelog-swag-net:
+        ipv4_address: 192.168.55.4
+    ports:
+      - "9001:443"
+    restart: unless-stopped
+    volumes:
+      - "./cloudflare.ini:/config/dns-conf/cloudflare.ini"
+      - "./lubelogger.subdomain.conf:/config/nginx/proxy-confs/lubelogger.subdomain.conf"
+      - "./remove-ipv6-listen.sh:/custom-cont-init.d/remove-ipv6-listen.sh:ro"
+      - lubelog-swag:/config/
+    depends_on:
+      - lubelog
+
+  lubelog:
+    networks:
+      lubelog-swag-net:
+        ipv4_address: 192.168.55.5
+      lubelog-db-net:
+        ipv4_address: 192.168.56.5
+
+  lubelogpostgres:
+    networks:
+      lubelog-db-net:
+        ipv4_address: 192.168.56.6

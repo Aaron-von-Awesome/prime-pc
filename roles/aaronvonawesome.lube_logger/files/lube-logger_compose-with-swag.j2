@@ -1,0 +1,77 @@
+---
+# ##############################################################################################
+# #                                                                                            #
+# #                                  compose-with-swag.yaml                                    #
+# #                                                                                            #
+# ##############################################################################################
+
+name: "{{ _var_lube_logger_project_name }}"
+
+
+volumes:
+
+  lubelog-swag:
+    driver: local
+
+
+networks:
+
+  lubelog-swag-net:
+    external: false
+    ipam:
+      config:
+        - subnet: 192.168.55.0/24
+  lubelog-db-net:
+    external: false
+    ipam:
+      config:
+        - subnet: 192.168.56.0/24
+
+
+services:
+
+  lubelogswag:
+    image: "linuxserver/swag:{{ _var_lube_logger_swag_container_image_version }}"
+    container_name: "{{ _var_lube_logger_swag_container_name }}"
+    cap_add:
+      - NET_ADMIN
+    environment:
+      TZ: "{{ _var_lube_logger_swag_timezome }}"
+      URL: "{{ _var_lube_logger_swag_tld }}"
+      SUBDOMAINS: "lubelogger"
+      VALIDATION: dns
+      DNSPLUGIN: cloudflare
+      EMAIL: "{{ _var_lube_logger_swag_email_address }}"
+      ONLY_SUBDOMAINS: true
+      STAGING: false  # optional
+      # MAXMINDDB_LICENSE_KEY: ""
+    networks:
+      lubelog-swag-net:
+        ipv4_address: 192.168.55.4
+    ports:
+      - "{{ _var_lube_logger_container_port }}:443"
+    restart: unless-stopped
+    volumes:
+      - lubelog-swag:/config/
+      # - type: bind
+      #   source: "./swag-config/"
+      #   target: "/config/"
+      #   bind:
+      #     create_host_path: true
+      - "./cloudflare.ini:/config/dns-conf/cloudflare.ini"
+      - "./lubelogger.subdomain.conf:/config/nginx/proxy-confs/lubelogger.subdomain.conf"
+      - "./remove-ipv6-listen.sh:/custom-cont-init.d/remove-ipv6-listen.sh:ro"
+    depends_on:
+      - lubelog
+
+  lubelog:
+    networks:
+      lubelog-swag-net:
+        ipv4_address: 192.168.55.5
+      lubelog-db-net:
+        ipv4_address: 192.168.56.5
+
+  lubelogpostgres:
+    networks:
+      lubelog-db-net:
+        ipv4_address: 192.168.56.6

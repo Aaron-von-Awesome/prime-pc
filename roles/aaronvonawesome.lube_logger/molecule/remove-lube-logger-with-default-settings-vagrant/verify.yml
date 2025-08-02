@@ -1,0 +1,35 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  vars:
+    _container_apps_directory: "{{ container_apps_directory }}"
+    _lube_logger_docker_compose_directory: "{{ lube_logger_docker_compose_directory }}"
+
+  tasks:
+
+    - name: "Check if '{{ _container_apps_directory }}/foo.yaml' exists"
+      ansible.builtin.stat:
+        path: "{{ _container_apps_directory }}/foo.yaml"
+      register: _foo_file
+
+    - name: "Assert foo.yaml exists"
+      ansible.builtin.assert:
+        that:
+          - _foo_file.stat.exists
+        fail_msg: "foo.yaml file does NOT exist...bad :-("
+        success_msg: "foo.yaml file does exist...good!"
+
+    - name: "Check if '{{ _lube_logger_docker_compose_directory }}' directory exists"
+      ansible.builtin.stat:
+        path: "{{ _lube_logger_docker_compose_directory }}"
+      register: _lube_logger_directory
+
+    - name: "Assert '{{ _lube_logger_docker_compose_directory }}' does not exist"
+      ansible.builtin.assert:
+        that:
+          - _lube_logger_directory.stat.exists == false
+        fail_msg: >
+          "{{ _lube_logger_docker_compose_directory }}" directory exists...bad :-(
+        success_msg: >
+          "{{ _lube_logger_docker_compose_directory }}" directory does NOT exist...good!

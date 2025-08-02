@@ -1,0 +1,27 @@
+---
+# ##############################################################################################
+# #                                                                                            #
+# #                          Custom LubeLogger Docker Compose Network File                     #
+# #                                                                                            #
+# ##############################################################################################
+
+name: "lube_log_custom_file"
+
+
+networks:
+
+  lubelog-net:
+    external: false
+
+
+services:
+
+  lubelog:
+    networks:
+      - lubelog-net
+    ports:
+      - "8080:8080"
+
+  lubelogpostgres:
+    networks:
+      - lubelog-net

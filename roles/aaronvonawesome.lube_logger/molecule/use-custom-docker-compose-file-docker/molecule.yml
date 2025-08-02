@@ -1,0 +1,20 @@
+---
+driver:
+  name: docker
+platforms:
+  - name: molecule-test-instance
+    image: docker.io/linuxmintd/mint22.1-amd64
+    pre_build_image: true
+provisioner:
+  playbooks:
+    prepare: ../shared/prepare.yml
+    verify: ../shared/verify.yml
+  inventory:
+    hosts:
+      all:
+        hosts:
+          molecule-test-instance:
+    host_vars:
+      molecule-test-instance:
+        lube_logger_compose_with_default_network_input_filename: "docker-compose.network.yaml"
+        should_deploy_with_swag_container: false

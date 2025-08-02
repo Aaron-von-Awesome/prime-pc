@@ -1,0 +1,24 @@
+---
+# ============================================================
+#                     Role: lube_logger
+# ============================================================
+
+
+# ------------------------------------------------------------
+#                       present
+# ------------------------------------------------------------
+
+- name: "Install Lube Logger Docker Services"
+  ansible.builtin.include_tasks: present.yaml
+  when: >
+    var_lube_logger_state == "present"
+
+
+# ------------------------------------------------------------
+#                       absent
+# ------------------------------------------------------------
+#
+- name: "Remove Lube Logger Docker Services and Configuration Files"
+  ansible.builtin.include_tasks: absent.yaml
+  when: >
+    var_lube_logger_state == "absent"

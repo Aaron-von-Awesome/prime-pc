@@ -1,0 +1,64 @@
+---
+- name: "BLOCK: Reload LubeLogger Docker Services"
+  become: true
+  become_user: "{{ var_lube_logger_container_username }}"
+  vars:
+    _var_lube_logger_container_name: "{{ var_lube_logger_container_name }}"
+    _var_lube_logger_docker_compose_directory: "{{ var_lube_logger_docker_compose_directory }}"
+    _var_lube_logger_docker_compose_output_filename: "{{ var_lube_logger_docker_compose_output_filename }}"
+    _var_should_delete_docker_compose_file: "{{ var_should_delete_docker_compose_file }}"
+
+  block:
+
+    - name: "Stop LubeLogger Container Services (docker compose down)"
+      community.docker.docker_compose_v2:
+        project_src: "{{ _var_lube_logger_docker_compose_directory }}"
+        files:
+          - "{{ _var_lube_logger_docker_compose_output_filename }}"
+          - "{{ __network_configuration_docker_compose_output_filename }}"
+        state: absent
+
+    - name: "Start LubeLogger Container Services"
+      community.docker.docker_compose_v2:
+        project_src: "{{ _var_lube_logger_docker_compose_directory }}"
+        files:
+          - "{{ _var_lube_logger_docker_compose_output_filename }}"
+          - "{{ __network_configuration_docker_compose_output_filename }}"
+        remove_orphans: true
+        wait: true
+        wait_timeout: 60
+        state: present
+
+    - name: "Remove LubeLogger Docker Compose Files"
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "{{ _var_lube_logger_docker_compose_directory }}/{{ _var_lube_logger_docker_compose_output_filename }}"
+        - "{{ _var_lube_logger_docker_compose_directory }}/{{ __network_configuration_docker_compose_output_filename }}"
+      when: >
+        _var_should_delete_docker_compose_file | bool
+
+    - name: "Get info on LubeLogger Compose Container in order to verify Service is running"
+      no_log: true
+      community.docker.docker_container_info:
+        name: "{{ _var_lube_logger_container_name }}"
+      register: _lube_logger_container_results
+
+    - name: "Check if LubeLogger service is running"
+      no_log: true
+      ansible.builtin.assert:
+        that:
+          - "_lube_logger_container_results.container.State.Running == True"
+        success_msg: "LubeLogger service is running."
+        fail_msg: "LubeLogger service is not running!"
+
+  rescue:
+
+    - name: "ERROR: Could not load/reload Containers"
+      ansible.builtin.debug:
+        msg: "ERROR: Could not load/reload Containers"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

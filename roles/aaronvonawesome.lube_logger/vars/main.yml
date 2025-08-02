@@ -1,0 +1,5 @@
+---
+# vars file for ansible-role-lube-logger
+
+__network_configuration_docker_compose_input_filename: "{{ var_lube_logger_compose_with_swag_input_filename if var_should_deploy_with_swag_container | bool else var_lube_logger_compose_with_default_network_input_filename }}"
+__network_configuration_docker_compose_output_filename: "{{ var_lube_logger_compose_with_swag_output_filename if var_should_deploy_with_swag_container | bool else var_lube_logger_compose_with_default_network_output_filename }}"

@@ -1,0 +1,27 @@
+---
+# ##############################################################################################
+# #                                                                                            #
+# #                              compose-with-default-network.yaml                             #
+# #                                                                                            #
+# ##############################################################################################
+
+name: "{{ _var_lube_logger_project_name }}"
+
+
+networks:
+
+  lubelog-net:
+    external: false
+
+
+services:
+
+  lubelog:
+    networks:
+      - lubelog-net
+    ports:
+      - "{{ _var_lube_logger_container_port }}:8080"
+
+  lubelogpostgres:
+    networks:
+      - lubelog-net

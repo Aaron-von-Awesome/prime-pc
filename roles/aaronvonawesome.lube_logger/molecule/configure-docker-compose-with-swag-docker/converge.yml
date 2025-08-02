@@ -1,0 +1,17 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: false
+  vars:
+    _username: "{{ username }}"
+
+
+  tasks:
+
+    - name: "Scenario: Configure Docker Compose with SWAG Container"
+      ansible.builtin.include_role:
+        name: "aaronvonawesome.lube_logger"
+      vars:
+        var_lube_logger_container_username: "{{ _username }}"
+        var_should_test_docker_compose_copy_only: true
+        var_should_deploy_with_swag_container: true
