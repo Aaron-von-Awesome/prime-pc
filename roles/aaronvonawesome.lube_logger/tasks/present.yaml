@@ -37,6 +37,20 @@
       become_user: "{{ _var_lube_logger_container_username }}"
       block:
 
+        - name: "Get '{{ _var_lube_logger_container_username }}' UID and GID"
+          ansible.builtin.getent:
+            database: passwd
+            key: "{{ _var_lube_logger_container_username }}"
+
+        - name: "Set the UID and GID"
+          ansible.builtin.set_fact:
+            __user_uid: "{{ ansible_facts.getent_passwd[_var_lube_logger_container_username][1] }}"
+            __user_gid: "{{ ansible_facts.getent_passwd[_var_lube_logger_container_username][2] }}"
+
+        - name: "Display '{{ _var_lube_logger_container_username }}' UID and GID"
+          ansible.builtin.debug:
+            msg: "UID: {{ __user_uid }}  ++  GID: {{ __user_gid }}"
+
         - name: "Create LubeLogger Folder for '{{ _var_lube_logger_container_username }}'"
           ansible.builtin.file:
             path: "{{ _var_lube_logger_docker_compose_directory }}"
