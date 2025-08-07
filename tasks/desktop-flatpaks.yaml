@@ -36,6 +36,7 @@
         - com.jgraph.drawio.desktop
         - com.usebottles.bottles
         - eu.betterbird.Betterbird
+        - io.ente.auth
         - io.freetubeapp.FreeTube
         - io.github.flattool.Warehouse
         - io.github.Pithos
