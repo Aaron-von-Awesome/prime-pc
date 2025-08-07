@@ -13,6 +13,7 @@
         state: absent
         method: system
       loop:
+        - com.belmoussaoui.Authenticator
         - com.tutanota.Tutanota
         - io.github.input_leap.input-leap
         - io.github.seadve.Kooha
@@ -24,7 +25,6 @@
         state: present
         method: system
       loop:
-        - com.belmoussaoui.Authenticator
         - com.bitwarden.desktop
         - com.github.johnfactotum.Foliate
         - com.github.junrrein.PDFSlicer
