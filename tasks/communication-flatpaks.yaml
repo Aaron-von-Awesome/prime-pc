@@ -16,6 +16,7 @@
         - chat.delta.desktop
         - im.dino.Dino
         - im.riot.Riot
+        - io.github.qtox.qTox
         - network.loki.Session
         - org.briarproject.Briar
         - org.gajim.Gajim
