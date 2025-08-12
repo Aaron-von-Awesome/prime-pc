@@ -235,6 +235,13 @@
     - name: "-------> RUN: Gaming Flatpaks Tasks"
       ansible.builtin.include_tasks: tasks/gaming-flatpaks.yaml
 
+
+    # ======================     Utilities      =============================
+
+    - name: "-------> RUN: Utility Snaps Tasks"
+      ansible.builtin.include_tasks: tasks/utility-snaps.yaml
+
+
     # ======================     Backup      =============================
 
     - name: "Install autorestic"

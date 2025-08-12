@@ -1,0 +1,30 @@
+---
+# ============================================================
+#                utility-snaps.yaml
+# ============================================================
+
+- name: "Block: utility-snaps.yaml"
+  become: true
+  block:
+
+    - name: "Install Snap: cariddi"
+      community.general.snap:
+        name: cariddi
+        state: present
+        channel: latest/stable
+
+    - name: "Install Snap: trippy"
+      community.general.snap:
+        name: trippy
+        state: present
+        channel: latest/stable
+
+  rescue:
+
+    - name: "ERROR: utility-snaps.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: utility-snaps.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("
