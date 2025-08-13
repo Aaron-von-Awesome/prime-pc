@@ -7,6 +7,14 @@
   become: true
   block:
 
+    - name: "Remove Communication flatpaks"
+      community.general.flatpak:
+        name: "{{ item }}"
+        state: absent
+        method: system
+      loop:
+        - io.github.qtox.qTox
+
     - name: "Install Communication flatpaks"
       community.general.flatpak:
         name: "{{ item }}"
@@ -16,7 +24,6 @@
         - chat.delta.desktop
         - im.dino.Dino
         - im.riot.Riot
-        - io.github.qtox.qTox
         - network.loki.Session
         - org.briarproject.Briar
         - org.gajim.Gajim
