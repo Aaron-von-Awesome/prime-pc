@@ -24,7 +24,7 @@ _state_map = {
 
 
 def fmt_resource_type(value):
-    return [value[k] for k in ['resource_standard', 'resource_provider', 'resource_name'] if value.get(k) is not None]
+    return [":".join(value[k] for k in ['resource_standard', 'resource_provider', 'resource_name'] if value.get(k) is not None)]
 
 
 def fmt_resource_operation(value):
@@ -67,6 +67,8 @@ def pacemaker_runner(module, **kwargs):
             wait=cmd_runner_fmt.as_opt_eq_val("--wait"),
             config=cmd_runner_fmt.as_fixed("config"),
             force=cmd_runner_fmt.as_bool("--force"),
+            version=cmd_runner_fmt.as_fixed("--version"),
+            output_format=cmd_runner_fmt.as_opt_eq_val("--output-format"),
         ),
         **kwargs
     )

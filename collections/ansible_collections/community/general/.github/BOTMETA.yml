@@ -254,6 +254,8 @@ files:
     maintainers: ddelnano shinuza
   $lookups/:
     labels: lookups
+  $lookups/binary_file.py:
+    maintainers: felixfontein
   $lookups/bitwarden_secrets_manager.py:
     maintainers: jantari
   $lookups/bitwarden.py:
@@ -903,6 +905,8 @@ files:
     maintainers: abulimov
   $modules/lvm_pv.py:
     maintainers: klention
+  $modules/lvm_pv_move_data.py:
+    maintainers: klention
   $modules/lvg_rename.py:
     maintainers: lszomor
   $modules/lvol.py:
@@ -1058,6 +1062,8 @@ files:
     maintainers: fraff
   $modules/pacemaker_cluster.py:
     maintainers: matbu munchtoast
+  $modules/pacemaker_info.py:
+    maintainers: munchtoast
   $modules/pacemaker_resource.py:
     maintainers: munchtoast
   $modules/packet_:

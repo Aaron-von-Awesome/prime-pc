@@ -2,6 +2,13 @@
 
 ```yaml
 vault_lazygit_version: ""
+vault_lube_logger_cloudflare_api_token: ""
+vault_lube_logger_email_address: ""
+vault_lube_logger_postgres_password: ""
+vault_lube_logger_postgres_user: ""
+vault_lube_logger_postgres_version: ""
+vault_lube_logger_tld: ""
+vault_lube_logger_version: ""
 vault_timezone: ""
 vault_username: ""
 vault_folder_list:

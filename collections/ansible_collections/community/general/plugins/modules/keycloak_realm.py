@@ -141,6 +141,14 @@ options:
     aliases:
       - bruteForceProtected
     type: bool
+  brute_force_strategy:
+    description:
+      - The realm brute force strategy.
+    aliases:
+      - bruteForceStrategy
+    choices: ['LINEAR', 'MULTIPLE']
+    type: str
+    version_added: 11.2.0
   client_authentication_flow:
     description:
       - The realm client authentication flow.
@@ -302,6 +310,13 @@ options:
     aliases:
       - maxFailureWaitSeconds
     type: int
+  max_temporary_lockouts:
+    description:
+      - The realm max temporary lockouts.
+    aliases:
+      - maxTemporaryLockouts
+    type: int
+    version_added: 11.2.0
   minimum_quick_login_wait_seconds:
     description:
       - The realm minimum quick login wait in seconds.
@@ -510,6 +525,48 @@ options:
     aliases:
       - waitIncrementSeconds
     type: int
+  client_session_idle_timeout:
+    description:
+      - All Clients will inherit from this setting, time a session is allowed to be idle before it expires.
+    aliases:
+      - clientSessionIdleTimeout
+    type: int
+    version_added: 11.2.0
+  client_session_max_lifespan:
+    description:
+      - All Clients will inherit from this setting, max time before a session is expired.
+    aliases:
+      - clientSessionMaxLifespan
+    type: int
+    version_added: 11.2.0
+  client_offline_session_idle_timeout:
+    description:
+      - All Clients will inherit from this setting, time an offline session is allowed to be idle before it expires.
+    aliases:
+      - clientOfflineSessionIdleTimeout
+    type: int
+    version_added: 11.2.0
+  client_offline_session_max_lifespan:
+    description:
+      - All Clients will inherit from this setting, max time before an offline session is expired regardless of activity.
+    aliases:
+      - clientOfflineSessionMaxLifespan
+    type: int
+    version_added: 11.2.0
+  oauth2_device_code_lifespan:
+    description:
+      - Max time before the device code and user code are expired.
+    aliases:
+      - oauth2DeviceCodeLifespan
+    type: int
+    version_added: 11.2.0
+  oauth2_device_polling_interval:
+    description:
+      - The minimum amount of time in seconds that the client should wait between polling requests to the token endpoint.
+    aliases:
+      - oauth2DevicePollingInterval
+    type: int
+    version_added: 11.2.0
 
 extends_documentation_fragment:
   - community.general.keycloak
@@ -650,6 +707,7 @@ def main():
         browser_flow=dict(type='str', aliases=['browserFlow']),
         browser_security_headers=dict(type='dict', aliases=['browserSecurityHeaders']),
         brute_force_protected=dict(type='bool', aliases=['bruteForceProtected']),
+        brute_force_strategy=dict(type='str', choices=['LINEAR', 'MULTIPLE'], aliases=['bruteForceStrategy']),
         client_authentication_flow=dict(type='str', aliases=['clientAuthenticationFlow']),
         client_scope_mappings=dict(type='dict', aliases=['clientScopeMappings']),
         default_default_client_scopes=dict(type='list', elements='str', aliases=['defaultDefaultClientScopes']),
@@ -676,6 +734,7 @@ def main():
         login_with_email_allowed=dict(type='bool', aliases=['loginWithEmailAllowed']),
         max_delta_time_seconds=dict(type='int', aliases=['maxDeltaTimeSeconds']),
         max_failure_wait_seconds=dict(type='int', aliases=['maxFailureWaitSeconds']),
+        max_temporary_lockouts=dict(type='int', aliases=['maxTemporaryLockouts']),
         minimum_quick_login_wait_seconds=dict(type='int', aliases=['minimumQuickLoginWaitSeconds']),
         not_before=dict(type='int', aliases=['notBefore']),
         offline_session_idle_timeout=dict(type='int', aliases=['offlineSessionIdleTimeout']),
@@ -710,6 +769,12 @@ def main():
         user_managed_access_allowed=dict(type='bool', aliases=['userManagedAccessAllowed']),
         verify_email=dict(type='bool', aliases=['verifyEmail']),
         wait_increment_seconds=dict(type='int', aliases=['waitIncrementSeconds']),
+        client_session_idle_timeout=dict(type='int', aliases=['clientSessionIdleTimeout']),
+        client_session_max_lifespan=dict(type='int', aliases=['clientSessionMaxLifespan']),
+        client_offline_session_idle_timeout=dict(type='int', aliases=['clientOfflineSessionIdleTimeout']),
+        client_offline_session_max_lifespan=dict(type='int', aliases=['clientOfflineSessionMaxLifespan']),
+        oauth2_device_code_lifespan=dict(type='int', aliases=['oauth2DeviceCodeLifespan']),
+        oauth2_device_polling_interval=dict(type='int', aliases=['oauth2DevicePollingInterval']),
     )
 
     argument_spec.update(meta_args)
