@@ -6,7 +6,6 @@
 - name: "Block: desktop-flatpaks.yaml"
   become: true
   block:
-
     - name: "Remove Desktop flatpaks"
       community.general.flatpak:
         name: "{{ item }}"
@@ -15,6 +14,7 @@
       loop:
         - com.belmoussaoui.Authenticator
         - com.tutanota.Tutanota
+        - com.uploadedlobster.peek
         - io.github.input_leap.input-leap
         - io.github.seadve.Kooha
         - org.onlyoffice.desktopeditors
@@ -50,7 +50,6 @@
         - us.zoom.Zoom
 
   rescue:
-
     - name: "ERROR: desktop-flatpaks.yaml"
       ansible.builtin.debug:
         msg: "ERROR: desktop-flatpaks.yaml"
