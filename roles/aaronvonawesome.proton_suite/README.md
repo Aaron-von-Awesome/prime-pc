@@ -43,7 +43,7 @@ Set to `true` in order to install Proton Mail Bridge DEB package.
 
 ## License
 
-BSD
+AGPL-3.0-or-later
 
 ## Author Information
 

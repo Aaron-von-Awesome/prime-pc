@@ -69,7 +69,7 @@ Be sure to run your Playbook with `gather_facts: true`.
 
 ## License
 
-Apache 2.0
+AGPL-3.0-or-later
 
 ## Author Information
 

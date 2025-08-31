@@ -33,7 +33,7 @@ This Ansible Role that will install the [OnlyKey App](https://github.com/trustcr
 
 ## License
 
-BSD
+AGPL-3.0-or-later
 
 ## Author Information
 

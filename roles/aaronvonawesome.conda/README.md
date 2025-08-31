@@ -33,7 +33,7 @@ This Ansible Role will install [conda](https://conda.io) using the [Conda Debian
 
 ## License
 
-BSD
+AGPL-3.0-or-later
 
 ## Author Information
 

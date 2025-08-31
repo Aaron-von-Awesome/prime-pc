@@ -231,7 +231,7 @@ Set to `true` to test the output of the generated Docker Compose files in a Mole
 
 ## License
 
-Apache 2.0
+AGPL-3.0-or-later
 
 ## Author Information
 

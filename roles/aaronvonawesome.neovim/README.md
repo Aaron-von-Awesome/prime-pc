@@ -53,7 +53,7 @@ When set to `true`, aliases for `vim` and `vi` will be create to run the `nvim` 
 
 ## License
 
-BSD
+AGPL-3.0-or-later
 
 ## Author Information
 

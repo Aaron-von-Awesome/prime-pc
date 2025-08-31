@@ -41,7 +41,7 @@ Set the codename for the version (or base version) of Ubuntu you will be using.
 
 ## License
 
-BSD
+AGPL-3.0-or-later
 
 ## Author Information
 

@@ -47,7 +47,7 @@ Set to `true` if you would like to also install Virtualbox.
 
 ## License
 
-BSD
+AGPL-3.0-or-later
 
 ## Author Information
 

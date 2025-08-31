@@ -30,7 +30,7 @@ Including an example of how to use your role (for instance, with variables passe
 License
 -------
 
-Apache 2.0
+AGPL-3.0-or-later
 
 Author Information
 ------------------
