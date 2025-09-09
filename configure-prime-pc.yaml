@@ -17,7 +17,6 @@
     - "./tasks/vault/vars-files/configuration-vars.yaml"
   vars:
     _folder_list: "{{ vault_folder_list }}"
-    _lazygit_version: "{{ vault_lazygit_version }}"
     _lts_codename: "noble"
     _lube_logger_postgres_password: "{{ vault_lube_logger_postgres_password }}"
     _lube_logger_postgres_user: "{{ vault_lube_logger_postgres_user }}"
@@ -25,7 +24,6 @@
     _lube_logger_swag_cloudflare_api_token: "{{ vault_lube_logger_cloudflare_api_token }}"
     _lube_logger_swag_email_address: "{{ vault_lube_logger_email_address }}"
     _lube_logger_swag_tld: "{{ vault_lube_logger_tld }}"
-    _lube_logger_version: "{{ vault_lube_logger_version }}"
     _should_deploy_swag_with_lube_logger: true
     _should_install_ansible_community_docker_collection_compatibility: true
     _should_install_lube_logger: "{{ _fact_should_install_lube_logger | default(false) | bool }}"
@@ -127,7 +125,6 @@
     - name: "ROLE - Install Lube Logger"
       role: "aaronvonawesome.lube_logger"
       vars:
-        var_lube_logger_container_image_version: "{{ _lube_logger_version }}"
         var_lube_logger_container_username: "{{ _username }}"
         var_lube_logger_postgres_container_image_version: "{{ _lube_logger_postgres_version }}"
         var_lube_logger_postgres_password: "{{ _lube_logger_postgres_password }}"
@@ -196,8 +193,6 @@
         - name: "Install lazygit"
           ansible.builtin.include_role:
             name: "pluggero.lazygit"
-          vars:
-            lazygit_version: "{{ _lazygit_version }}"
 
         - name: "Install nerdfonts"
           ansible.builtin.include_role:

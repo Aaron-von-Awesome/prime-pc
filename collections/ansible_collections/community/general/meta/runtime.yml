@@ -46,6 +46,36 @@ action_groups:
     - keycloak_user_federation
     - keycloak_user_rolemapping
     - keycloak_userprofile
+  scaleway:
+    - scaleway_compute
+    - scaleway_compute_private_network
+    - scaleway_container
+    - scaleway_container_info
+    - scaleway_container_namespace
+    - scaleway_container_namespace_info
+    - scaleway_container_registry
+    - scaleway_container_registry_info
+    - scaleway_database_backup
+    - scaleway_function
+    - scaleway_function_info
+    - scaleway_function_namespace
+    - scaleway_function_namespace_info
+    - scaleway_image_info
+    - scaleway_ip
+    - scaleway_ip_info
+    - scaleway_lb
+    - scaleway_organization_info
+    - scaleway_private_network
+    - scaleway_security_group
+    - scaleway_security_group_info
+    - scaleway_security_group_rule
+    - scaleway_server_info
+    - scaleway_snapshot_info
+    - scaleway_sshkey
+    - scaleway_user_data
+    - scaleway_volume
+    - scaleway_volume_info
+
 plugin_routing:
   callback:
     actionable:
@@ -89,6 +119,12 @@ plugin_routing:
       redirect: community.google.gcp_storage_file
     hashi_vault:
       redirect: community.hashi_vault.hashi_vault
+    hiera:
+      deprecation:
+        removal_version: 13.0.0
+        warning_text: >-
+          Hiera has been deprecated a long time ago.
+          If you disagree with this deprecation, please create an issue in the community.general repository.
     manifold:
       tombstone:
         removal_version: 11.0.0
@@ -447,6 +483,10 @@ plugin_routing:
       redirect: infoblox.nios_modules.nios_txt_record
     nios_zone:
       redirect: infoblox.nios_modules.nios_zone
+    oci_vcn:
+      deprecation:
+        removal_version: 13.0.0
+        warning_text: Use oracle.oci.oci_network_vcn instead.
     ome_device_info:
       redirect: dellemc.openmanage.ome_device_info
     one_image_facts:
@@ -1008,6 +1048,30 @@ plugin_routing:
       redirect: community.kubevirt.kubevirt_vm_options
     nios:
       redirect: infoblox.nios_modules.nios
+    oracle:
+      deprecation:
+        removal_version: 13.0.0
+        warning_text: Code is unmaintained here and official Oracle collection is available for a number of years.
+    oracle_creatable_resource:
+      deprecation:
+        removal_version: 13.0.0
+        warning_text: Code is unmaintained here and official Oracle collection is available for a number of years.
+    oracle_display_name_option:
+      deprecation:
+        removal_version: 13.0.0
+        warning_text: Code is unmaintained here and official Oracle collection is available for a number of years.
+    oracle_name_option:
+      deprecation:
+        removal_version: 13.0.0
+        warning_text: Code is unmaintained here and official Oracle collection is available for a number of years.
+    oracle_tags:
+      deprecation:
+        removal_version: 13.0.0
+        warning_text: Code is unmaintained here and official Oracle collection is available for a number of years.
+    oracle_wait_options:
+      deprecation:
+        removal_version: 13.0.0
+        warning_text: Code is unmaintained here and official Oracle collection is available for a number of years.
     postgresql:
       redirect: community.postgresql.postgresql
     proxmox:
@@ -1041,6 +1105,10 @@ plugin_routing:
       redirect: community.kubevirt.kubevirt
     net_tools.nios.api:
       redirect: infoblox.nios_modules.api
+    oci_utils:
+      deprecation:
+        removal_version: 13.0.0
+        warning_text: Code is unmaintained here and official Oracle collection is available for a number of years.
     postgresql:
       redirect: community.postgresql.postgresql
     proxmox:

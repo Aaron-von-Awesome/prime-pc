@@ -8,7 +8,6 @@
     - "../../tasks/vault/vars-files/configuration-vars.yaml"
   vars:
     _username: "{{ username }}"
-    _lazygit_version: "{{ vault_lazygit_version }}"
 
   tasks:
 
@@ -33,8 +32,6 @@
     - name: "Install lazygit"
       ansible.builtin.include_role:
         name: "pluggero.lazygit"
-      vars:
-        lazygit_version: "{{ _lazygit_version }}"
 
     - name: "Install nerdfonts"
       ansible.builtin.include_role:

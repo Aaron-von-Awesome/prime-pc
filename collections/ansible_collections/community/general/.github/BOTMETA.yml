@@ -209,6 +209,8 @@ files:
     maintainers: resmo
   $filters/to_months.yml:
     maintainers: resmo
+  $filters/to_nice_yaml.yml:
+    maintainers: felixfontein
   $filters/to_prettytable.py:
     maintainers: tgadiev
   $filters/to_seconds.yml:
@@ -217,6 +219,10 @@ files:
     maintainers: resmo
   $filters/to_weeks.yml:
     maintainers: resmo
+  $filters/to_yaml.py:
+    maintainers: felixfontein
+  $filters/to_yaml.yml:
+    maintainers: felixfontein
   $filters/to_years.yml:
     maintainers: resmo
   $filters/unicode_normalize.py:
@@ -287,7 +293,7 @@ files:
     maintainers: dagwieers
   $lookups/flattened.py: {}
   $lookups/github_app_access_token.py:
-    maintainers: weisheng-p
+    maintainers: weisheng-p blavoie
   $lookups/hiera.py:
     maintainers: jparrill
   $lookups/keyring.py: {}
@@ -549,6 +555,10 @@ files:
   $modules/django_command.py:
     maintainers: russoz
   $modules/django_createcachetable.py:
+    maintainers: russoz
+  $modules/django_dumpdata.py:
+    maintainers: russoz
+  $modules/django_loaddata.py:
     maintainers: russoz
   $modules/django_manage.py:
     ignore: scottanderson42 tastychutney
@@ -1065,6 +1075,8 @@ files:
   $modules/pacemaker_info.py:
     maintainers: munchtoast
   $modules/pacemaker_resource.py:
+    maintainers: munchtoast
+  $modules/pacemaker_stonith.py:
     maintainers: munchtoast
   $modules/packet_:
     maintainers: nurfet-becirevic t0mk

@@ -1,6 +1,19 @@
 {
   "extends": ["config:best-practices", ":disableRateLimiting"],
-  "enabledManagers": ["github-actions", "pip_requirements", "regex"],
+  "automerge": false,
+  "automergeType": "pr",
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions", "pip_requirements"],
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "matchManagers": ["custom.regex", "ansible-galaxy"],
+      "automerge": false
+    }
+  ],
+  "enabledManagers": ["github-actions", "pip_requirements", "regex", "ansible-galaxy"],
   "assignees": ["pluggero"],
   "customManagers": [
     {
@@ -10,12 +23,6 @@
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "jesseduffield/lazygit",
       "versioningTemplate": "semver"
-    }
-  ],
-  "packageRules": [
-    {
-      "matchPackageNames": ["jesseduffield/lazygit"],
-      "groupName": "Update Lazygit version"
     }
   ]
 }
