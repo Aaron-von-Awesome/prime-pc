@@ -6,3 +6,4 @@ local_*
 *.retry
 *.secret
 secret_*
+ansible-navigator.log
