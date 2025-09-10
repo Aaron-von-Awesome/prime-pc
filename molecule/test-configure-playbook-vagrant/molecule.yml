@@ -2,7 +2,3 @@
 provisioner:
   playbooks:
     prepare: ../shared/prepare.yml
-  inventory:
-    group_vars:
-      all:
-        username: "localhost"

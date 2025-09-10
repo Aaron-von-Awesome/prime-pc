@@ -52,7 +52,7 @@
 
     - name: "Display the \"hostname\" as defined in the Inventory File"
       ansible.builtin.debug:
-        msg: "Inventery File Host: {{ ansible_hostname }}"
+        msg: "Inventory File Host: {{ ansible_hostname }}"
 
     - name: "Display the ACTUAL \"hostname\""
       ansible.builtin.debug:
@@ -184,21 +184,15 @@
       vars:
         var_username: "{{ _username }}"
 
-    - name: "BLOCK: Pluggero Roles"
-      become: true
+    - name: "Install lazygit"
+      ansible.builtin.include_role:
+        name: "pluggero.lazygit"
+
+    - name: "Install nerdfonts"
+      ansible.builtin.include_role:
+        name: "pluggero.nerdfonts"
       vars:
-        ansible_user: "{{ _username }}"
-      block:
-
-        - name: "Install lazygit"
-          ansible.builtin.include_role:
-            name: "pluggero.lazygit"
-
-        - name: "Install nerdfonts"
-          ansible.builtin.include_role:
-            name: "pluggero.nerdfonts"
-          vars:
-            nerdfonts_font: "0xProto"
+        nerdfonts_font: "0xProto"
 
 
     # ======================     Communication     ============================
