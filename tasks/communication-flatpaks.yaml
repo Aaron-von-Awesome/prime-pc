@@ -22,6 +22,7 @@
         method: system
       loop:
         - chat.delta.desktop
+        - dev.geopjr.Tuba
         - im.dino.Dino
         - im.riot.Riot
         - network.loki.Session
