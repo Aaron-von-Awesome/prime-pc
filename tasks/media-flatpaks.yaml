@@ -1,0 +1,33 @@
+---
+# ============================================================
+#                     media-flatpaks.yaml
+# ============================================================
+
+- name: "Block: media-flatpaks.yaml"
+  become: true
+  block:
+
+#     - name: "Remove Media flatpaks"
+#       community.general.flatpak:
+#         name: "{{ item }}"
+#         state: absent
+#         method: system
+#       loop:
+#         - xxxxxxxxxxx
+
+    - name: "Install Media flatpaks"
+      community.general.flatpak:
+        name: "{{ item }}"
+        state: present
+        method: system
+      loop:
+        - org.bunkus.mkvtoolnix-gui
+
+  rescue:
+    - name: "ERROR: media-flatpaks.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: media-flatpaks.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

@@ -238,6 +238,12 @@
         name: "dbrennand.autorestic"
 
 
+    # ======================     Media      =============================
+
+    - name: "-------> RUN: Media Flatpak Tasks"
+      ansible.builtin.include_tasks: tasks/media-flatpaks.yaml
+
+
     # ======================     Bash Aliases    =============================
 
     - name: "-------> RUN: Lazydocker Alias Tasks"
