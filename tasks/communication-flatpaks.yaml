@@ -14,6 +14,7 @@
         method: system
       loop:
         - io.github.qtox.qTox
+        - network.loki.Session
 
     - name: "Install Communication flatpaks"
       community.general.flatpak:
@@ -25,7 +26,6 @@
         - dev.geopjr.Tuba
         - im.dino.Dino
         - im.riot.Riot
-        - network.loki.Session
         - org.briarproject.Briar
         - org.gajim.Gajim
         - org.signal.Signal
