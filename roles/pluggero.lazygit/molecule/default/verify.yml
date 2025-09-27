@@ -2,8 +2,13 @@
 - name: Verify
   hosts: all
   gather_facts: false
+
   vars_files:
     - ../../defaults/main.yml
+
+  vars:
+    ansible_user: ansible
+    ansible_become_password: ansible
 
   tasks:
     - name: Check installed version

@@ -14,6 +14,9 @@
 
     - name: Remove lazygit if it is installed
       ansible.builtin.apt:
-        name: "{{ lazygit_distro_pkgs }}"
+        name: "{{ package }}"
         state: absent
+      loop: "{{ lazygit_distro_pkgs }}"
+      loop_control:
+        loop_var: package
       become: true

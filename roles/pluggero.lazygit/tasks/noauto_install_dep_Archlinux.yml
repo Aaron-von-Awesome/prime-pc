@@ -14,6 +14,9 @@
 
     - name: Ensure lazygit dependencies are installed
       community.general.pacman:
-        name: "{{ lazygit_dep_pkgs }}"
+        name: "{{ package }}"
         state: present
+      loop: "{{ lazygit_dep_pkgs }}"
+      loop_control:
+        loop_var: package
       become: true
