@@ -241,7 +241,7 @@
 
     # ======================     Media      =============================
 
-    - name: "-------> RUN: Media Flatpak Tasks"
+    - name: "-------> RUN: Media Flatpaks Tasks"
       ansible.builtin.include_tasks: tasks/media-flatpaks.yaml
 
 
