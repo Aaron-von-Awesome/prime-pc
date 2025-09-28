@@ -22,6 +22,7 @@
           {{ _lts_codename }}
           main
         filename: "helix"
+        state: absent
 
     - name: "Remove key for Helix PPA"
       ansible.builtin.apt_key:
