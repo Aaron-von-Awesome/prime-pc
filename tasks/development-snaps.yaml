@@ -5,8 +5,14 @@
 
 - name: "Block: development-snaps.yaml"
   become: true
-
   block:
+
+    - name: "Install Snap: helix"
+      community.general.snap:
+        name: helix
+        state: present
+        channel: latest/stable
+        classic: true
 
     - name: "Install Snap: go"
       community.general.snap:

@@ -1,5 +1,0 @@
----
-# defaults file for ansible-role-helix
-
-var_helix_state: "present"
-var_lts_codename: "noble"

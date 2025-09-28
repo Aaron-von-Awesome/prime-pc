@@ -12,11 +12,6 @@ roles:
     src: "https://codeberg.org/aaronvonawesome/ansible-role-install-docker.git"
     version: "main"
 
-  - name: "aaronvonawesome.helix"
-    scm: git
-    src: "https://codeberg.org/aaronvonawesome/ansible-role-helix.git"
-    version: "main"
-
   - name: "aaronvonawesome.neovim"
     scm: git
     src: "https://codeberg.org/aaronvonawesome/ansible-role-neovim.git"

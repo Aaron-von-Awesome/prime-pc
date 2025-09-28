@@ -1,8 +1,0 @@
-# ---> Ansible
-ansible.log
-local_*
-*.pyc
-**/__pycache__/**
-*.retry
-*.secret
-secret_*

@@ -102,12 +102,6 @@
 
     # ======================     Development     ==============================
 
-    - name: "ROLE - Install Helix"
-      role: "aaronvonawesome.helix"
-      vars:
-        var_helix_state: "absent"
-        var_lts_codename: "{{ _lts_codename }}"
-
     - name: "ROLE - Install Neovim"
       role: "aaronvonawesome.neovim"
       vars:
