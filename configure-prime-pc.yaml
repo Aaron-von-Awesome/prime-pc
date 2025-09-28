@@ -179,15 +179,21 @@
       vars:
         var_username: "{{ _username }}"
 
-    - name: "Install lazygit"
-      ansible.builtin.include_role:
-        name: "pluggero.lazygit"
 
-    - name: "Install nerdfonts"
-      ansible.builtin.include_role:
-        name: "pluggero.nerdfonts"
+    - name: "BLOCK: Pluggero Roles"
       vars:
-        nerdfonts_font: "0xProto"
+        ansible_user: "{{ _username }}"
+      block:
+
+        - name: "Install lazygit"
+          ansible.builtin.include_role:
+            name: "pluggero.lazygit"
+
+        - name: "Install nerdfonts"
+          ansible.builtin.include_role:
+            name: "pluggero.nerdfonts"
+          vars:
+            nerdfonts_font: "0xProto"
 
 
     # ======================     Communication     ============================
