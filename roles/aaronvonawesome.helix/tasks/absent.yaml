@@ -1,0 +1,44 @@
+---
+# ============================================================
+#                     absent.yaml
+# ============================================================
+
+- name: "Absent Block: Remove 'helix' Ansible Role"
+  become: true
+  vars:
+    _var_lts_codename: "{{ var_lts_codename }}"
+  block:
+
+    - name: "Remove Helix"
+      ansible.builtin.apt:
+        name: "helix"
+        state: absent
+
+    - name: "Remove Helix Editor repo from sources list"
+      ansible.builtin.apt_repository:
+        repo: >
+          deb
+          https://ppa.launchpadcontent.net/maveonair/helix-editor/ubuntu
+          {{ _lts_codename }}
+          main
+        filename: "helix"
+
+    - name: "Remove key for Helix PPA"
+      ansible.builtin.apt_key:
+        id: 27642B9FD7F1A161FC2524E3355A4FA515D7C855
+        state: absent
+
+    - name: "Remove Helix Editor apt key file"
+      ansible.builtin.file:
+        path: "/etc/apt/trusted.gpg.d/helix.asc"
+        state: absent
+
+  rescue:
+
+    - name: "ERROR: Removing 'helix' Ansible Role was unsuccessful"
+      ansible.builtin.debug:
+        msg: "ERROR: Removing 'helix' Ansible Role was unsuccessful"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

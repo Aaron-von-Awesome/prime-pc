@@ -1,0 +1,15 @@
+---
+driver:
+  name: vagrant
+platforms:
+  - name: molecule-test-instance
+    box: aaronvonawesome/linux-mint-22-cinnamon
+    memory: 4096
+    cpus: 2
+    provider_raw_config_args:
+      - "gui = ${SHOW_VAGRANT_VM_GUI:-false}"
+      - "name = 'molecule-test-instance'"
+      - "customize ['modifyvm', :id, '--graphicscontroller', 'vmsvga']"
+      - "customize ['modifyvm', :id, '--vram', '128']"
+      - "customize ['modifyvm', :id, '--accelerate3d', 'on']"
+      - "customize ['modifyvm', :id, '--accelerate2dvideo', 'on']"

@@ -1,5 +1,5 @@
 ---
-- name: "Converge - Scenario: Test Helix Install"
+- name: "Converge - Scenario: Test Helix Removal"
   hosts:
     - all
   become: true
@@ -10,8 +10,9 @@
 
   tasks:
 
-    - name: "Install Helix Editor"
+    - name: "Remove Helix Editor and PPA"
       ansible.builtin.include_role:
         name: "aaronvonawesome.helix"
       vars:
+        var_helix_state: "absent"
         var_lts_codename: "{{ _lts_codename }}"

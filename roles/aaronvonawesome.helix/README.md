@@ -1,3 +1,7 @@
+> ⚠️ Attention
+>
+> The Helix Editor PPA is on longer maintained as [noted here](https://github.com/helix-editor/helix/issues/11914#issuecomment-2422440519).  You can install Helix Editor on Ubuntu-based sysetm [using the Snap Package](https://snapcraft.io/helix).
+
 # Role Name: helix
 
 This Ansible Role will install [Helix editor](https://helix-editor.com/) using the [Helix editor Personal Package Archive (PPA)](https://launchpad.net/~maveonair/+archive/ubuntu/helix-editor).
@@ -7,6 +11,13 @@ This Ansible Role will install [Helix editor](https://helix-editor.com/) using t
 - Ubuntu-based system.
 
 ## Role Variables
+
+### var_helix_state
+
+***default:*** present
+
+- Set to `present` to install Helix Editor.
+- Set to `absent` to remove Helix Editor.
 
 ### var_lts_codename
 

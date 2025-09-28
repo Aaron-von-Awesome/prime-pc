@@ -1,5 +1,5 @@
 ---
-- name: Verify
+- name: "Verify (Shared)"
   hosts:
     - all
   become: true
