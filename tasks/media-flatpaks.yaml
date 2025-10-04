@@ -21,6 +21,7 @@
         state: present
         method: system
       loop:
+        - io.ente.photos
         - org.bunkus.mkvtoolnix-gui
 
   rescue:
