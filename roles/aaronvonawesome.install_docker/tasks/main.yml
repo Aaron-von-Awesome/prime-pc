@@ -87,6 +87,15 @@
         enabled: true
         masked: false
 
+    - name: "Run install Docker Model Runner (DMR)"
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: latest
+        update_cache: true
+      vars:
+        packages:
+          - docker-model-plugin
+
     - name: "Ensure group \"docker\" exists"
       ansible.builtin.group:
         name: docker
@@ -102,7 +111,7 @@
       loop: "{{ _var_user_list }}"
       when: _var_user_list is defined and _var_user_list | length > 0
 
-    - name: "Backup .bashrc file for user: {{ item.username }}"
+    - name: "Backup .bashrc file"
       become: true
       become_user: "{{ item.username }}"
       ansible.builtin.command:
@@ -111,7 +120,7 @@
       loop: "{{ _var_user_list }}"
       when: _var_user_list is defined and _var_user_list | length > 0
 
-    - name: "Install Bash Alias for using Dockly for User: {{ item.username }}"
+    - name: "Install Bash Alias for using Dockly"
       become: true
       become_user: "{{ item.username }}"
       ansible.builtin.blockinfile:
@@ -123,7 +132,7 @@
       loop: "{{ _var_user_list }}"
       when: _var_user_list is defined and _var_user_list | length > 0
 
-    - name: "Install Bash Alias for using Oxker for User: {{ item.username }}"
+    - name: "Install Bash Alias for using Oxker"
       become: true
       become_user: "{{ item.username }}"
       ansible.builtin.blockinfile:

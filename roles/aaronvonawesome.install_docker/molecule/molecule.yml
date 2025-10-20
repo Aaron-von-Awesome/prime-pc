@@ -30,8 +30,6 @@ provisioner:
       all:
         hosts:
           molecule-test-instance:
-    host_vars:
-      molecule-test-instance:
-        lts_codename: "noble"
-        user_list:
-          - username: "vagrant"
+            lts_codename: "noble"
+            user_list:
+              - username: "vagrant"
