@@ -244,6 +244,9 @@
     - name: "-------> RUN: Media Flatpaks Tasks"
       ansible.builtin.include_tasks: tasks/media-flatpaks.yaml
 
+    - name: "-------> RUN: Media Snaps Tasks"
+      ansible.builtin.include_tasks: tasks/media-snaps.yaml
+
 
     # ======================     Bash Aliases    =============================
 

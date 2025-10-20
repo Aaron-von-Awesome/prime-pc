@@ -1,0 +1,24 @@
+---
+# ============================================================
+#                     media-snaps.yaml
+# ============================================================
+
+- name: "Block: media-snaps.yaml"
+  become: true
+  block:
+
+    - name: "Install freeshow Snap Package"
+      community.general.snap:
+        name: freeshow
+        state: present
+        channel: latest/stable
+
+  rescue:
+
+    - name: "ERROR: media-snaps.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: media-snaps.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("
