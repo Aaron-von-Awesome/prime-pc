@@ -10,7 +10,7 @@
     - name: "Install freeshow Snap Package"
       community.general.snap:
         name: freeshow
-        state: present
+        state: absent
         channel: latest/stable
 
   rescue:
