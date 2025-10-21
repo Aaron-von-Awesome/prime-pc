@@ -1,0 +1,23 @@
+---
+- name: "Converge - Scenario: Test Media Installation Tasks"
+  hosts:
+    - all
+  become: true
+  gather_facts: false
+
+
+  tasks:
+
+    # - name: "Run: apt-get update"
+    #   apt:
+    #     update_cache: true
+
+    # - name: "-------> RUN: Media Packages Tasks"
+    #   include_tasks: ../../tasks/media-packages.yaml
+
+    - name: "-------> RUN: Media Flatpaks Tasks"
+      ansible.builtin.include_tasks: ../../tasks/media-flatpaks.yaml
+
+    - name: "-------> RUN: Media Snaps Tasks"
+      ansible.builtin.include_tasks: ../../tasks/media-snaps.yaml
+

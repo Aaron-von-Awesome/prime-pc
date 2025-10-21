@@ -7,11 +7,14 @@
   become: true
   block:
 
-    - name: "Install freeshow Snap Package"
+    - name: "Remove freeshow Snap Package"
       community.general.snap:
         name: freeshow
-        state: present
-        channel: latest/beta
+        state: absent
+        channel: "{{ item }}"
+      loop:
+        - "latest/beta"
+        - "latest/stable"
 
   rescue:
 
