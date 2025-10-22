@@ -13,8 +13,8 @@
         state: absent
         channel: "{{ item }}"
       loop:
-        - "latest/beta"
-        - "latest/stable"
+        - latest/beta
+        - latest/stable
 
   rescue:
 
