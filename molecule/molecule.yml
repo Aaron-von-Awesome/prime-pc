@@ -11,7 +11,7 @@ platforms:
     memory: 4096
     cpus: 2
     provider_raw_config_args:
-      - "gui = ${SHOW_VAGRANT_VM_GUI:-false}"
+      - "gui = ${SHOW_VAGRANT_VM_GUI:-true}"
       - "name = 'molecule-test-instance'"
       - "customize ['modifyvm', :id, '--graphicscontroller', 'vmsvga']"
       - "customize ['modifyvm', :id, '--vram', '128']"
