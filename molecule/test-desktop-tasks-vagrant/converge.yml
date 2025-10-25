@@ -10,7 +10,7 @@
   tasks:
 
     - name: "Run: apt-get update"
-      apt:
+      ansible.builtin.apt:
         update_cache: true
 
     - name: "-------> RUN: Desktop Packages Tasks"

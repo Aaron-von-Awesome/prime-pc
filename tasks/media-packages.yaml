@@ -1,0 +1,36 @@
+---
+# ============================================================
+#                     media-packages.yaml
+# ============================================================
+
+- name: "Block: media-packages.yaml"
+  become: true
+  vars:
+    _var_freeshow_version: "{{ var_freeshow_version }}"
+  block:
+
+    # - name: "Install Media APT packages"
+    #   ansible.builtin.apt:
+    #     name: "{{ packages }}"
+    #     state: latest
+    #     update_cache: true
+    #   vars:
+    #     packages:
+    #       - xyz
+
+    - name: Install Freeshow DEB Package
+      apt:
+        deb:
+          https://github.com/ChurchApps/FreeShow/releases/download/v{{ _var_freeshow_version }}/FreeShow-{{ _var_freeshow_version }}-amd64.deb
+        install_recommends: true
+        only_upgrade: true
+
+  rescue:
+
+    - name: "ERROR: media-packages.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: media-packages.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

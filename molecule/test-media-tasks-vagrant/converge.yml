@@ -4,16 +4,22 @@
     - all
   become: true
   gather_facts: false
+  vars_files:
+    - "../../tasks/vault/vars-files/configuration-vars.yaml"
+  vars:
+    _freeshow_version: "{{ vault_freeshow_version }}"
 
 
   tasks:
 
-    # - name: "Run: apt-get update"
-    #   apt:
-    #     update_cache: true
+    - name: "Run: apt-get update"
+      ansible.builtin.apt:
+        update_cache: true
 
-    # - name: "-------> RUN: Media Packages Tasks"
-    #   include_tasks: ../../tasks/media-packages.yaml
+    - name: "-------> RUN: Media Packages Tasks"
+      ansible.builtin.include_tasks: ../../tasks/media-packages.yaml
+      vars:
+        var_freeshow_version: "{{ _freeshow_version }}"
 
     - name: "-------> RUN: Media Flatpaks Tasks"
       ansible.builtin.include_tasks: ../../tasks/media-flatpaks.yaml
