@@ -16,13 +16,6 @@
         state: latest
         update_cache: true
 
-    - name: "Remove \"ansible-lint\""
-      ansible.builtin.apt:
-        name: ansible-lint
-        state: absent
-        autoremove: true
-        purge: true
-
     - name: "Install conda"
       ansible.builtin.include_role:
         name: "aaronvonawesome.conda"
