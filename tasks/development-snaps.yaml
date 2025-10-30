@@ -7,10 +7,10 @@
   become: true
   block:
 
-    - name: "Install Snap: ansible-lint"
+    - name: "Remove Snap: durrendal-ansible-lint"
       community.general.snap:
         name: durrendal-ansible-lint
-        state: present
+        state: absent
         channel: latest/stable
 
     - name: "Install Snap: helix"
