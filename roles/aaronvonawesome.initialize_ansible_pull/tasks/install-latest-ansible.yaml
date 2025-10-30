@@ -22,6 +22,7 @@
             - virginia
             - wilma
             - xia
+            - zara
       when: >
         _varLtsCodename is undefined
         or
@@ -34,6 +35,8 @@
         _varLtsCodename == "wilma"
         or
         _varLtsCodename == "xia"
+        or
+        _varLtsCodename == "zara"
 
     - name: "Change LTS Codename value from Linux Mint 21 to jammy"
       ansible.builtin.set_fact:
@@ -67,8 +70,12 @@
 
     - name: "Add Ansible repo to sources list"
       ansible.builtin.apt_repository:
-        repo: "deb https://ppa.launchpadcontent.net/ansible/ansible/ubuntu {{ _varLtsCodename }} main "
-        filename: ansible
+        repo: >
+          deb
+          https://ppa.launchpadcontent.net/ansible/ansible/ubuntu
+          {{ _varLtsCodename }}
+          main
+        filename: "ansible"
         update_cache: true
         mode: "0644"
       register: add_ansible_repo_result

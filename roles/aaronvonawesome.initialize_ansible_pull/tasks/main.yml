@@ -24,10 +24,18 @@
     _var_cron_weekday: "{{ var_cron_weekday }}"
   block:
 
+    - name: "Display the \"ansible_version\""
+      ansible.builtin.debug:
+        msg: "Ansible Version BEFORE upgrade: {{ ansible_version.full }}"
+
     - name: "-------> RUN: Install Latest Ansible"
       include_tasks: tasks/install-latest-ansible.yaml
       vars:
         varLtsCodename: "{{ _var_ansible_pull_lts_codename }}"
+
+    - name: "Display the \"ansible_version\""
+      ansible.builtin.debug:
+        msg: "Ansible Version AFTER upgrade: {{ ansible_version.full }}"
 
     - name: "Create system user \"{{ _var_ansible_pull_user }}\" for ansible-pull architecture"
       ansible.builtin.user:
