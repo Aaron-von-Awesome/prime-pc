@@ -7,8 +7,11 @@
   become: true
   vars:
     _var_username: "{{ var_username }}"
-
   block:
+
+    - name: "Current \"_var_username\" value"
+      ansible.builtin.debug:
+        msg: "_var_username => {{ _var_username }}"
 
     - name: "Install passlib for use with Ansible Vault encryption (Python crpyt module is being deprecated)"
       ansible.builtin.apt:
@@ -16,13 +19,18 @@
         state: latest
         update_cache: true
 
+    - name: "Install \"ansible-lint\" using the pip and venv module"
+      ansible.builtin.pip:
+        name: ansible-lint
+        virtualenv: "~/.venv/ansible-lint"
+        virtualenv_command: "python3 -m venv"
+        state: latest
+      become: true
+      become_user: "{{ _var_username }}"
+
     - name: "Install conda"
       ansible.builtin.include_role:
         name: "aaronvonawesome.conda"
-
-    - name: "Current \"_var_username\" value"
-      ansible.builtin.debug:
-        msg: "_var_username => {{ _var_username }}"
 
 
     - name: "Source Conda in the .bashrc file for user {{ _var_username }}"
@@ -42,6 +50,7 @@
             block: |
               # Conda
               source /opt/conda/etc/profile.d/conda.sh
+
 
   rescue:
 

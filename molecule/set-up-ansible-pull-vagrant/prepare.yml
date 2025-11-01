@@ -16,7 +16,6 @@
       vars:
         packages:
           - ansible
-          - ansible-lint
           - git
           - util-linux
 
