@@ -26,8 +26,6 @@
       block:
 
     - name: "Install or upgrade \"ansible-lint\" using pipx"
-      become: true
-      become_user: "{{ _var_username }}"
       ansible.builtin.command:
         cmd: "pipx install ansible-lint"
       register: _pipx_command_result
@@ -37,6 +35,8 @@
         'upgraded' in _pipx_command_result.stdout
       failed_when: >
         _pipx_command_result.rc != 0
+      become: true
+      become_user: "{{ _var_username }}"
 
     - name: "Install conda"
       ansible.builtin.include_role:
