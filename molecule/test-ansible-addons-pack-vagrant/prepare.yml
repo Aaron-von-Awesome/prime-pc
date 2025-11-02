@@ -19,5 +19,5 @@
       vars:
         packages:
           - ansible
+          - pipx
           - python3-pip
-          - python3-venv
