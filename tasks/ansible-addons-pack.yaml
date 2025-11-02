@@ -19,12 +19,6 @@
         state: latest
         update_cache: true
 
-
-    - name: "Install \"ansible-lint\" for user {{ _var_username }}"
-      become: true
-      become_user: "{{ _var_username }}"
-      block:
-
     - name: "Install or upgrade \"ansible-lint\" using pipx"
       ansible.builtin.command:
         cmd: "pipx install ansible-lint"
