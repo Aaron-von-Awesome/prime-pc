@@ -33,6 +33,7 @@
           - ruby-rubygems
           - sshfs
           - tree-sitter-cli
+          - yamllint
 
   rescue:
 
