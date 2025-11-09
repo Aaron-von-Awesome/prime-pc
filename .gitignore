@@ -7,3 +7,4 @@ local_*
 *.secret
 secret_*
 ansible-navigator.log
+.ansible

@@ -99,7 +99,6 @@ files:
   $callbacks/unixy.py:
     labels: unixy
     maintainers: akatch
-  $callbacks/yaml.py: {}
   $connections/:
     labels: connections
   $connections/chroot.py: {}
@@ -239,6 +238,9 @@ files:
     maintainers: vbotka
   $inventories/icinga2.py:
     maintainers: BongoEADGC6
+  $inventories/incus.py:
+    labels: incus
+    maintainers: stgraber
   $inventories/linode.py:
     keywords: linode dynamic inventory script
     labels: cloud linode
@@ -394,9 +396,6 @@ files:
   $module_utils/puppet.py:
     labels: puppet
     maintainers: russoz
-  $module_utils/pure.py:
-    labels: pure pure_storage
-    maintainers: $team_purestorage
   $module_utils/redfish_utils.py:
     labels: redfish_utils
     maintainers: $team_redfish
@@ -480,8 +479,6 @@ files:
     keywords: beadm dladm illumos ipadm nexenta omnios openindiana pfexec smartos solaris sunos zfs zpool
     labels: beadm solaris
     maintainers: $team_solaris
-  $modules/bearychat.py:
-    maintainers: tonyseek
   $modules/bigpanda.py:
     ignore: hkariti
   $modules/bitbucket_:
@@ -587,9 +584,6 @@ files:
   $modules/etcd3.py:
     ignore: vfauth
     maintainers: evrardjp
-  $modules/facter.py:
-    labels: facter
-    maintainers: $team_ansible_core gamethis
   $modules/facter_facts.py:
     labels: facter
     maintainers: russoz $team_ansible_core gamethis
@@ -813,6 +807,8 @@ files:
     maintainers: Slezhuk pertoft
   $modules/kdeconfig.py:
     maintainers: smeso
+  $modules/kea_command.py:
+    maintainers: mirabilos
   $modules/kernel_blacklist.py:
     maintainers: matze
   $modules/keycloak_:
@@ -867,6 +863,8 @@ files:
     maintainers: bratwurzt
   $modules/keycloak_realm_rolemapping.py:
     maintainers: agross mhuysamen Gaetan2907
+  $modules/keycloak_user_execute_actions_email.py:
+    maintainers: mariusbertram
   $modules/keyring.py:
     maintainers: ahussey-redhat
   $modules/keyring_info.py:
@@ -1610,7 +1608,6 @@ macros:
   team_networking: NilashishC Qalthos danielmellado ganeshrn justjais trishnaguha sganesh-infoblox privateip
   team_opennebula: ilicmilan meerkampdvv rsmontero xorel nilsding
   team_oracle: manojmeda mross22 nalsaber
-  team_purestorage: bannaych dnix101 genegr lionmax opslounge raekins sdodsley sile16
   team_redfish: mraineri tomasg2012 xmadsen renxulei rajeevkallur bhavya06 jyundt
   team_rhsm: cnsnyder ptoscano
   team_scaleway: remyleone abarbare
