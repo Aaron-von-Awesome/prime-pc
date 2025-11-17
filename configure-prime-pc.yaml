@@ -17,7 +17,6 @@
     - "./tasks/vault/vars-files/configuration-vars.yaml"
   vars:
     _folder_list: "{{ vault_folder_list }}"
-    _freeshow_version: "{{ vault_freeshow_version }}"
     _lts_codename: "noble"
     _lube_logger_postgres_password: "{{ vault_lube_logger_postgres_password }}"
     _lube_logger_postgres_user: "{{ vault_lube_logger_postgres_user }}"
@@ -244,8 +243,6 @@
 
     - name: "-------> RUN: Media Packages Tasks"
       ansible.builtin.include_tasks: tasks/media-packages.yaml
-      vars:
-        var_freeshow_version: "{{ _freeshow_version }}"
 
     - name: "-------> RUN: Media Flatpaks Tasks"
       ansible.builtin.include_tasks: tasks/media-flatpaks.yaml

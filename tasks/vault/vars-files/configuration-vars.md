@@ -1,7 +1,6 @@
 # Variables in File
 
 ```yaml
-vault_freeshow_version: ""
 vault_lube_logger_cloudflare_api_token: ""
 vault_lube_logger_email_address: ""
 vault_lube_logger_postgres_password: ""

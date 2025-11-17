@@ -5,8 +5,6 @@
 
 - name: "Block: media-packages.yaml"
   become: true
-  vars:
-    _var_freeshow_version: "{{ var_freeshow_version }}"
   block:
 
     # - name: "Install Media APT packages"
@@ -18,12 +16,12 @@
     #     packages:
     #       - xyz
 
-    - name: Install Freeshow DEB Package
-      apt:
-        deb:
-          https://github.com/ChurchApps/FreeShow/releases/download/v{{ _var_freeshow_version }}/FreeShow-{{ _var_freeshow_version }}-amd64.deb
-        install_recommends: true
-        only_upgrade: true
+    - name: Remove Freeshow DEB Package
+      ansible.builtin.apt:
+        name: freeshow
+        state: absent
+        purge: true
+
 
   rescue:
 
