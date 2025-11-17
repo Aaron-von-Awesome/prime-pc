@@ -5,8 +5,6 @@
 
 - name: "Block: development-packages.yaml"
   become: true
-  vars:
-    _var_username: "{{ var_username }}"
   block:
 
     - name: "Install Development APT packages"
@@ -36,20 +34,6 @@
           - sshfs
           - tree-sitter-cli
           - yamllint
-
-    - name: "Install or upgrade \"uv\" using pipx"
-      ansible.builtin.command:
-        cmd: "pipx install uv"
-      register: _pipx_uv_command_result
-      changed_when: >
-        'successfully installed' in _pipx_uv_command_result.stdout
-        or
-        'upgraded' in _pipx_uv_command_result.stdout
-      failed_when: >
-        _pipx_uv_command_result.rc != 0
-      become: true
-      become_user: "{{ _var_username }}"
-
 
   rescue:
 
