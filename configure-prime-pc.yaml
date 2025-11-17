@@ -167,6 +167,8 @@
 
     - name: "-------> RUN: Development Packages Tasks"
       ansible.builtin.include_tasks: tasks/development-packages.yaml
+      vars:
+        var_username: "{{ _username }}"
 
     - name: "-------> RUN: Development Flatpaks Tasks"
       ansible.builtin.include_tasks: tasks/development-flatpaks.yaml
