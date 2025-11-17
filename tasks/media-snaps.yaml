@@ -7,15 +7,11 @@
   become: true
   block:
 
-    - name: "TODO: Add Media Snaps here"
-      ansible.builtin.debug:
-        msg: "TODO: Add Media Snaps here"
-
-  #  - name: "Install <some-snap> Snap Package"
-  #    community.general.snap:
-  #      name: <some-snap>
-  #      state: present
-  #      channel: latest/stable
+    - name: "Install freeshow Snap Package"
+      community.general.snap:
+        name: freeshow
+        state: present
+        channel: latest/stable
 
   rescue:
 
