@@ -97,6 +97,13 @@
         channel: latest/edge
         classic: true
 
+    - name: "Install Snap: astral-uv (uv)"
+      community.general.snap:
+        name: astral-uv
+        state: present
+        channel: latest/stable
+        classic: true
+
   rescue:
 
     - name: "ERROR: development-snaps.yaml"
