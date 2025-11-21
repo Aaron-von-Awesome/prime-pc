@@ -25,7 +25,7 @@ jobs:
       - name: Set up Python 3
         uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6
         with:
-          python-version: "3.x"
+          python-version: "3.13"
 
       - name: Install test dependencies
         run: pip3 install -r requirements.txt
@@ -35,7 +35,7 @@ jobs:
           yamllint .
 
       - name: Run ansible-lint
-        uses: ansible/ansible-lint@8861a737a10e4bea5f5875d55d2f664908e7425c # v25.9.0
+        uses: ansible/ansible-lint@43e758bad47344f1ce7b699c0020299f486a8026 # v25.11.0
         with:
           working_directory: "pluggero.lazygit"
 
@@ -58,7 +58,7 @@ jobs:
       - name: Set up Python 3
         uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6
         with:
-          python-version: "3.x"
+          python-version: "3.13"
 
       - name: Install test dependencies
         run: pip3 install -r requirements.txt
