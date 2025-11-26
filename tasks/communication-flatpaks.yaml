@@ -13,7 +13,6 @@
         state: absent
         method: system
       loop:
-        - dev.geopjr.Tuba
         - io.github.qtox.qTox
         - network.loki.Session
 
@@ -24,6 +23,7 @@
         method: system
       loop:
         - chat.delta.desktop
+        - dev.geopjr.Tuba
         - im.dino.Dino
         - im.riot.Riot
         - org.briarproject.Briar
