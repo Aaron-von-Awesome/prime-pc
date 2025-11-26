@@ -17,6 +17,7 @@
           - cargo
           - composer
           - default-jdk
+          - direnv
           - git-flow
           - jq
           - libxml2-utils
