@@ -1,0 +1,10 @@
+[project]
+name = "ansible-role-neovim"
+version = "1.4.0"
+description = "Ansible Role to install Neovim"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "molecule==25.11.1",
+    "molecule-plugins[docker,vagrant]==25.8.12"
+]

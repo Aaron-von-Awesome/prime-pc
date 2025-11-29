@@ -49,6 +49,7 @@
       vars:
         packages:
           - fd-find
+          - inotify-tools
           - lua5.4
           - luajit
           - luarocks
