@@ -21,21 +21,10 @@ ignore = [
     "B905",  # zip-without-explicit-strict - needs Python 3.10+
     "UP045",  # Use `X | None` for type annotations - needs Python 3.10+
     # To fix:
-    "E721",  # Type comparison
-    "UP014",  # Convert `xxx` from `NamedTuple` functional to class syntax
     "UP024",  # Replace aliased errors with `OSError`
-    "UP028",  # Replace `yield` over `for` loop with `yield from`
-    "UP030",  # Use implicit references for positional format fields
-    "UP031",  # Use format specifiers instead of percent format
     "UP041",  # Replace aliased errors with `TimeoutError`
-    "B007",  # unused-loop-control-variable
-    "B015",  # useless-comparison
     "B026",  # star-arg-unpacking-after-keyword-arg
-    "B904",  # raise-without-from-inside-except
     "SIM102",  # collapsible-if
-    "SIM103",  # needless-bool
-    "SIM110",  # reimplemented-builtin
-    "SIM112",  # uncapitalized-environment-variables
     "SIM114",  # if-with-same-arms
     "SIM115",  # open-file-with-context-handler
     "SIM116",  # if-else-block-instead-of-dict-lookup

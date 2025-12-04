@@ -6,7 +6,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # Contributing
 
-We follow [Ansible Code of Conduct](https://docs.ansible.com/ansible/latest/community/code_of_conduct.html) in all our contributions and interactions within this repository.
+We follow [Ansible Code of Conduct](https://docs.ansible.com/projects/ansible/latest/community/code_of_conduct.html) in all our contributions and interactions within this repository.
 
 If you are a committer, also refer to the [collection's committer guidelines](https://github.com/ansible-collections/community.general/blob/main/commit-rights.md).
 
@@ -20,27 +20,32 @@ so you can cooperate to create a better solution together.
 * If you are interested in starting with an easy issue, look for [issues with an `easyfix` label](https://github.com/ansible-collections/community.general/labels/easyfix).
 * Often issues that are waiting for contributors to pick up have [the `waiting_on_contributor` label](https://github.com/ansible-collections/community.general/labels/waiting_on_contributor).
 
-## Open pull requests
+## Review pull requests
 
 Look through currently [open pull requests](https://github.com/ansible-collections/community.general/pulls).
+
 You can help by reviewing them. Reviews help move pull requests to merge state. Some good pull requests cannot be merged only due to a lack of reviews. And it is always worth saying that good reviews are often more valuable than pull requests themselves.
-Note that reviewing does not only mean code review, but also offering comments on new interfaces added to existing plugins/modules, interfaces of new plugins/modules, improving language (not everyone is a native english speaker), or testing bugfixes and new features!
+Note that reviewing does not only mean code review, but also offering comments on new interfaces added to existing plugins/modules, interfaces of new plugins/modules, improving language (not everyone is a native English speaker), or testing bugfixes and new features!
 
 Also, consider taking up a valuable, reviewed, but abandoned pull request which you could politely ask the original authors to complete yourself.
 
+## Open pull requests
+
+Please read our ['Contributing to collections'](https://docs.ansible.com/projects/ansible/devel/dev_guide/developing_collections_contributing.html#contributing-to-a-collection-community-general) guide.
+
 * Try committing your changes with an informative but short commit message.
 * Do not squash your commits and force-push to your branch if not needed. Reviews of your pull request are much easier with individual commits to comprehend the pull request history. All commits of your pull request branch will be squashed into one commit by GitHub upon merge.
-* Do not add merge commits to your PR. The bot will complain and you will have to rebase ([instructions for rebasing](https://docs.ansible.com/ansible/latest/dev_guide/developing_rebasing.html)) to remove them before your PR can be merged. To avoid that git automatically does merges during pulls, you can configure it to do rebases instead by running `git config pull.rebase true` inside the repository checkout.
-* Make sure your PR includes a [changelog fragment](https://docs.ansible.com/ansible/devel/community/collection_development_process.html#creating-a-changelog-fragment).
+* Do not add merge commits to your PR. The bot will complain and you will have to rebase ([instructions for rebasing](https://docs.ansible.com/projects/ansible/latest/dev_guide/developing_rebasing.html)) to remove them before your PR can be merged. To avoid that git automatically does merges during pulls, you can configure it to do rebases instead by running `git config pull.rebase true` inside the repository checkout.
+* Make sure your PR includes a [changelog fragment](https://docs.ansible.com/projects/ansible/devel/community/collection_development_process.html#creating-a-changelog-fragment).
   * You must not include a fragment for new modules or new plugins. Also you shouldn't include one for docs-only changes. (If you're not sure, simply don't include one, we'll tell you whether one is needed or not :) )
   * Please always include a link to the pull request itself, and if the PR is about an issue, also a link to the issue. Also make sure the fragment ends with a period, and begins with a lower-case letter after `-`. (Again, if you don't do this, we'll add suggestions to fix it, so don't worry too much :) )
 * Note that we format the code with `ruff format`. If your change does not match the formatters expectations, CI will fail and your PR will not get merged. See below for how to format code with antsibull-nox.
 
-You can also read [our Quick-start development guide](https://github.com/ansible/community-docs/blob/main/create_pr_quick_start_guide.rst).
+You can also read the Ansible community's [Quick-start development guide](https://docs.ansible.com/projects/ansible/devel/community/create_pr_quick_start.html).
 
 ## Test pull requests
 
-If you want to test a PR locally, refer to [our testing guide](https://github.com/ansible/community-docs/blob/main/test_pr_locally_guide.rst) for instructions on how do it quickly.
+If you want to test a PR locally, refer to [our testing guide](https://docs.ansible.com/projects/ansible/devel/community/collection_contributors/collection_test_pr_locally.html) for instructions on how do it quickly.
 
 If you find any inconsistencies or places in this document which can be improved, feel free to raise an issue or pull request to fix it.
 
@@ -101,7 +106,7 @@ If you replace `-Re` with `-e`, then the virtual environments will be re-created
 Instead of using antsibull-nox, you can also run sanity and unit tests with ansible-test directly.
 This also allows you to run integration tests.
 
-You have to check out the repository into a specific path structure to be able to run `ansible-test`. The path to the git checkout must end with `.../ansible_collections/community/general`. Please see [our testing guide](https://github.com/ansible/community-docs/blob/main/test_pr_locally_guide.rst) for instructions on how to check out the repository into a correct path structure. The short version of these instructions is:
+You have to check out the repository into a specific path structure to be able to run `ansible-test`. The path to the git checkout must end with `.../ansible_collections/community/general`. Please see [our testing guide](https://docs.ansible.com/projects/ansible/devel/community/collection_contributors/collection_test_pr_locally.html) for instructions on how to check out the repository into a correct path structure. The short version of these instructions is:
 
 ```.bash
 mkdir -p ~/dev/ansible_collections/community
@@ -201,9 +206,9 @@ Creating new modules and plugins requires a bit more work than other Pull Reques
 
 3. When creating a new module or plugin, please make sure that you follow various guidelines:
 
-   - Follow [development conventions](https://docs.ansible.com/ansible/devel/dev_guide/developing_modules_best_practices.html);
-   - Follow [documentation standards](https://docs.ansible.com/ansible/devel/dev_guide/developing_modules_documenting.html) and
-     the [Ansible style guide](https://docs.ansible.com/ansible/devel/dev_guide/style_guide/index.html#style-guide);
+   - Follow [development conventions](https://docs.ansible.com/projects/ansible/devel/dev_guide/developing_modules_best_practices.html);
+   - Follow [documentation standards](https://docs.ansible.com/projects/ansible/devel/dev_guide/developing_modules_documenting.html) and
+     the [Ansible style guide](https://docs.ansible.com/projects/ansible/devel/dev_guide/style_guide/index.html#style-guide);
    - Make sure your modules and plugins are [GPL-3.0-or-later](https://www.gnu.org/licenses/gpl-3.0-standalone.html) licensed
      (new module_utils can also be [BSD-2-clause](https://opensource.org/licenses/BSD-2-Clause) licensed);
    - Make sure that new plugins and modules have tests (unit tests, integration tests, or both); it is preferable to have some tests

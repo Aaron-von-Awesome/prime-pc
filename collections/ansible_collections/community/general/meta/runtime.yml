@@ -398,6 +398,10 @@ plugin_routing:
       redirect: community.kubevirt.kubevirt_template
     kubevirt_vm:
       redirect: community.kubevirt.kubevirt_vm
+    layman:
+      deprecation:
+        removal_version: 14.0.0
+        warning_text: Gentoo deprecated C(layman) in mid-2023.
     ldap_attr:
       tombstone:
         removal_version: 3.0.0
@@ -833,6 +837,10 @@ plugin_routing:
       tombstone:
         removal_version: 3.0.0
         warning_text: Use purestorage.flashblade.purefb_info instead.
+    pushbullet:
+      deprecation:
+        removal_version: 13.0.0
+        warning_text: Module relies on Python package pushbullet.py which is not maintained and supports only up to Python 3.2.
     python_requirements_facts:
       tombstone:
         removal_version: 3.0.0
@@ -1029,12 +1037,20 @@ plugin_routing:
       tombstone:
         removal_version: 3.0.0
         warning_text: Use community.general.smartos_image_info instead.
+    spotinst_aws_elastigroup:
+      deprecation:
+        removal_version: 13.0.0
+        warning_text: Module relies on unsupported Python package. Use the module spot.cloud_modules.aws_elastigroup instead.
     stackdriver:
       tombstone:
         removal_version: 9.0.0
         warning_text: This module relied on HTTPS APIs that do not exist anymore,
           and any new development in the direction of providing an alternative should
           happen in the context of the google.cloud collection.
+    swupd:
+      deprecation:
+        removal_version: 15.0.0
+        warning_text: ClearLinux was made EOL in July 2025. If you think the module is still useful for another distribution, please create an issue in the community.general repository.
     typetalk:
       deprecation:
         removal_version: 13.0.0
@@ -1134,6 +1150,14 @@ plugin_routing:
         warning_text: This doc fragment was used by rax modules, that relied on the deprecated
           package pyrax.
   module_utils:
+    cloud:
+      deprecation:
+        removal_version: 13.0.0
+        warning_text: This code is not used by community.general. If you want to use it in another collection, please copy it over.
+    database:
+      deprecation:
+        removal_version: 13.0.0
+        warning_text: This code is not used by community.general. If you want to use it in another collection, please copy it over.
     dimensiondata:
       deprecation:
         removal_version: 13.0.0
@@ -1150,6 +1174,10 @@ plugin_routing:
       redirect: community.google.gcp
     hetzner:
       redirect: community.hrobot.robot
+    known_hosts:
+      deprecation:
+        removal_version: 13.0.0
+        warning_text: This code is not used by community.general. If you want to use it in another collection, please copy it over.
     kubevirt:
       redirect: community.kubevirt.kubevirt
     net_tools.nios.api:
@@ -1181,6 +1209,10 @@ plugin_routing:
       redirect: dellemc.openmanage.dellemc_idrac
     remote_management.dellemc.ome:
       redirect: dellemc.openmanage.ome
+    saslprep:
+      deprecation:
+        removal_version: 13.0.0
+        warning_text: This code is not used by community.general. If you want to use it in another collection, please copy it over.
   inventory:
     docker_machine:
       redirect: community.docker.docker_machine
