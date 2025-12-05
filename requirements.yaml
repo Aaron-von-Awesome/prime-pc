@@ -53,9 +53,19 @@ roles:
     version: "main"
 
   - name: "pluggero.lazygit"
+    scm: git
+    src: "https://github.com/pluggero/ansible-role-lazygit.git"
+    version: "main"
+
   - name: "pluggero.nerdfonts"
+    scm: git
+    src: "https://github.com/pluggero/ansible-role-nerdfonts.git"
+    version: "main"
 
   - name: "dbrennand.autorestic"
+    scm: git
+    src: "https://github.com/dbrennand/ansible-role-autorestic.git"
+    version: "main"
 
 
 collections:
