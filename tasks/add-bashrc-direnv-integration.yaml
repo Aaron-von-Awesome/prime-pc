@@ -1,0 +1,33 @@
+---
+# ============================================================
+#                 add-bashrc-direnv-integration.yaml
+# ============================================================
+
+- name: "Block: add-bashrc-direnv-integration.yaml"
+  become: true
+  become_user: "{{ var_direnv_user }}"
+  vars:
+    _var_direnv_user: "{{ var_direnv_user }}"
+
+  block:
+    - name: "Backup .bashrc file for user {{ _var_direnv_user }}"
+      ansible.builtin.command:
+        cmd: cp ~/.bashrc ~/.bashrc.backup
+      changed_when: false
+
+    - name: "Update .bashrc file for user {{ _var_direnv_user }}"
+      ansible.builtin.blockinfile:
+        path: ~/.bashrc
+        marker: "# <-- {mark} ANSIBLE MANAGED direnv BLOCK -->"
+        block: |
+          # direnv
+          eval "$(direnv hook bash)"
+
+  rescue:
+    - name: "ERROR: add-bashrc-direnv-integration.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: add-bashrc-direnv-integration.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

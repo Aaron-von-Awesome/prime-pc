@@ -3,7 +3,6 @@
 ### ***        Prime PC Configuration - Playbook         ***  ###
 #######################################################################
 
-
 # ==================================================================================
 # =====                     Play - Configure Prime PC                         ======
 # ==================================================================================
@@ -33,15 +32,11 @@
     _timezone: "{{ vault_timezone }}"
     _username: "{{ vault_username }}"
 
-
-
-
   # ---------------------------------------------------------------------------
   # ---------                          Pre-Tasks                     ----------
   # ---------------------------------------------------------------------------
 
   pre_tasks:
-
     - name: "Set Timezone"
       community.general.timezone:
         name: "{{ _timezone }}"
@@ -50,13 +45,13 @@
       ansible.builtin.debug:
         var: ansible_inventory_sources
 
-    - name: "Display the \"hostname\" as defined in the Inventory File"
+    - name: 'Display the "hostname" as defined in the Inventory File'
       ansible.builtin.debug:
         msg: "Inventory File Host: {{ ansible_hostname }}"
 
-    - name: "Display the ACTUAL \"hostname\""
+    - name: 'Display the ACTUAL "hostname"'
       ansible.builtin.debug:
-        msg: "The ACTUAL \"hostname\": {{ ansible_facts.hostname }}"
+        msg: 'The ACTUAL "hostname": {{ ansible_facts.hostname }}'
 
     - name: "-------> RUN: Pre-task Configuration Tasks on a per-host basis"
       ansible.builtin.include_tasks: tasks/configuration-tasks.yaml
@@ -66,13 +61,11 @@
     - name: "-------> RUN: Enable snaps Tasks"
       ansible.builtin.include_tasks: tasks/enable-snaps.yaml
 
-
   # ---------------------------------------------------------------------------
   # ---------                          Roles                         ----------
   # ---------------------------------------------------------------------------
 
   roles:
-
     - name: "ROLE - Install Docker"
       role: "aaronvonawesome.install_docker"
       vars:
@@ -82,7 +75,6 @@
           {{ _should_install_ansible_community_docker_collection_compatibility }}
         var_user_list:
           - username: "{{ _username }}"
-
 
     # ======================     Desktop     ==================================
 
@@ -98,7 +90,6 @@
       role: "aaronvonawesome.proton_suite"
       vars:
         var_proton_suite_should_install_proton_mail_bridge: "{{ _should_install_proton_mail_bridge }}"
-
 
     # ======================     Development     ==============================
 
@@ -131,15 +122,11 @@
         var_should_deploy_with_swag_container: "{{ _should_deploy_swag_with_lube_logger }}"
       when: _should_install_lube_logger
 
-
-
-
   # ---------------------------------------------------------------------------
   # ---------                          Tasks                         ----------
   # ---------------------------------------------------------------------------
 
   tasks:
-
     - name: "-------> RUN: Setup Default Folders"
       ansible.builtin.include_tasks: tasks/default-folders.yaml
       vars:
@@ -162,7 +149,6 @@
     - name: "-------> RUN: Desktop Flatpaks Tasks"
       ansible.builtin.include_tasks: tasks/desktop-flatpaks.yaml
 
-
     # ======================     Development     ==============================
 
     - name: "-------> RUN: Development Packages Tasks"
@@ -179,12 +165,10 @@
       vars:
         var_username: "{{ _username }}"
 
-
     - name: "BLOCK: Pluggero Roles"
       vars:
         ansible_user: "{{ _username }}"
       block:
-
         - name: "Install lazygit"
           ansible.builtin.include_role:
             name: "pluggero.lazygit"
@@ -195,18 +179,15 @@
           vars:
             nerdfonts_font: "0xProto"
 
-
     # ======================     Communication     ============================
 
     - name: "-------> RUN: Communication Flatpaks Tasks"
       ansible.builtin.include_tasks: tasks/communication-flatpaks.yaml
 
-
     # ======================     LLM-Related      =============================
 
     - name: "-------> RUN: AI/LLM Flatpaks Tasks"
       ansible.builtin.include_tasks: tasks/ai-llm-flatpaks.yaml
-
 
     # ======================     Browsers     =================================
 
@@ -219,25 +200,21 @@
     - name: "-------> RUN: Browser Snaps Tasks"
       ansible.builtin.include_tasks: tasks/browser-snaps.yaml
 
-
     # ======================     Gaming      =============================
 
     - name: "-------> RUN: Gaming Flatpaks Tasks"
       ansible.builtin.include_tasks: tasks/gaming-flatpaks.yaml
-
 
     # ======================     Utilities      =============================
 
     - name: "-------> RUN: Utility Snaps Tasks"
       ansible.builtin.include_tasks: tasks/utility-snaps.yaml
 
-
     # ======================     Backup      =============================
 
     - name: "Install autorestic"
       ansible.builtin.include_role:
         name: "dbrennand.autorestic"
-
 
     # ======================     Media      =============================
 
@@ -250,7 +227,6 @@
     - name: "-------> RUN: Media Snaps Tasks"
       ansible.builtin.include_tasks: tasks/media-snaps.yaml
 
-
     # ======================     Bash Aliases    =============================
 
     - name: "-------> RUN: Lazydocker Alias Tasks"
@@ -258,3 +234,7 @@
       vars:
         var_lazydocker_user: "{{ _username }}"
 
+    - name: "-------> RUN: direnv Integrattio Tasks"
+      ansible.builtin.include_tasks: tasks/add-bashrc-direnv-integration.yaml
+      vars:
+        var_direnv_user: "{{ _username }}"
