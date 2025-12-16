@@ -13,6 +13,7 @@
         method: system
       loop:
         - com.belmoussaoui.Authenticator
+        - com.hunterwittenborn.Celeste
         - com.tutanota.Tutanota
         - com.uploadedlobster.peek
         - io.github.input_leap.input-leap
@@ -33,7 +34,6 @@
         - com.github.tchx84.Flatseal
         - com.github.xournalpp.xournalpp
         - com.github.zocker_160.SyncThingy
-        - com.hunterwittenborn.Celeste
         - com.jgraph.drawio.desktop
         - com.usebottles.bottles
         - eu.betterbird.Betterbird
