@@ -1,0 +1,46 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+
+  vars:
+    ansible_user: ansible
+    ansible_become_password: ansible
+
+  tasks:
+    - name: Check if nerdfonts installation directory exists
+      ansible.builtin.stat:
+        path: /usr/local/share/fonts/nerdfonts
+      register: nerdfonts_dir
+
+    - name: Assert installation directory exists
+      ansible.builtin.assert:
+        that:
+          - nerdfonts_dir.stat.exists
+          - nerdfonts_dir.stat.isdir
+        fail_msg: "Nerdfonts installation directory does not exist"
+        success_msg: "Nerdfonts installation directory exists"
+
+    - name: Check if Hack font files are installed
+      ansible.builtin.find:
+        paths: /usr/local/share/fonts/nerdfonts
+        patterns: "Hack*Regular.ttf"
+        file_type: file
+        recurse: true
+      register: hack_fonts
+
+    - name: Assert Hack font files exist
+      ansible.builtin.assert:
+        that:
+          - hack_fonts.matched > 0
+        fail_msg: "No Hack font files found in installation directory"
+        success_msg: "Found {{ hack_fonts.matched }} Hack font file(s)"
+
+    - name: Verify directory permissions
+      ansible.builtin.assert:
+        that:
+          - nerdfonts_dir.stat.mode == '0755'
+          - nerdfonts_dir.stat.pw_name == 'root'
+          - nerdfonts_dir.stat.gr_name == 'root'
+        fail_msg: "Directory permissions or ownership incorrect"
+        success_msg: "Directory has correct permissions and ownership"
