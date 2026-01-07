@@ -41,6 +41,7 @@
         - io.freetubeapp.FreeTube
         - io.github.flattool.Warehouse
         - io.github.Pithos
+        - io.gitlab.azymohliad.WatchMate
         - md.obsidian.Obsidian
         - org.deskflow.deskflow
         - org.gabmus.whatip
