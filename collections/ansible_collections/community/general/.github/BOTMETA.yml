@@ -368,6 +368,8 @@ files:
   $module_utils/jenkins.py:
     labels: jenkins
     maintainers: russoz
+  $module_utils/_lxc.py:
+    maintainers: russoz
   $module_utils/manageiq.py:
     labels: manageiq
     maintainers: $team_manageiq
@@ -745,6 +747,8 @@ files:
     maintainers: obourdon hryamzik
   $modules/ip_netns.py:
     maintainers: bregman-arie
+  $modules/ip2location_info.py:
+    maintainers: ip2location
   $modules/ipa_:
     maintainers: $team_ipa
     ignore: fxfitz
@@ -1500,7 +1504,9 @@ files:
     maintainers: vbotka
   $tests/fqdn_valid.py:
     maintainers: vbotka
-#########################
+  $modules/sssd_info.py:
+    maintainers: a-gabidullin
+  #########################
   docs/docsite/rst/filter_guide.rst: {}
   docs/docsite/rst/filter_guide_abstract_informations.rst: {}
   docs/docsite/rst/filter_guide_abstract_informations_counting_elements_in_sequence.rst:
@@ -1569,7 +1575,7 @@ files:
     maintainers: russoz
   docs/docsite/rst/test_guide.rst:
     maintainers: felixfontein
-#########################
+  #########################
   tests/:
     labels: tests
   tests/integration:
