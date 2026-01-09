@@ -5,8 +5,9 @@
 
 - name: "Block: development-flatpaks.yaml"
   become: true
+  vars:
+    _var_username: "{{ var_username }}"
   block:
-
     - name: Install Development flatpaks
       community.general.flatpak:
         name: "{{ item }}"
@@ -14,9 +15,22 @@
         method: system
       loop:
         - com.github.Murmele.Gittyup
+        - org.wezfurlong.wezterm
+
+    - name: "Backup .bashrc file for user {{ _var_username }}"
+      ansible.builtin.command:
+        cmd: cp ~/.bashrc ~/.bashrc.backup
+      changed_when: false
+
+    - name: "Update .bashrc file for user {{ _var_username }}"
+      ansible.builtin.blockinfile:
+        path: ~/.bashrc
+        marker: "# <-- {mark} ANSIBLE MANAGED wezterm BLOCK -->"
+        block: |
+          # wezterm
+          alias wezterm='flatpak run org.wezfurlong.wezterm'
 
   rescue:
-
     - name: "ERROR: development-flatpaks.yaml"
       ansible.builtin.debug:
         msg: "ERROR: development-flatpaks.yaml"
