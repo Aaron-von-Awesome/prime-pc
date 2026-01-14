@@ -1,0 +1,32 @@
+---
+# ============================================================
+#                 add-bashrc-alias-opencode.yaml
+# ============================================================
+
+- name: "Block: add-bashrc-alias-opencode.yaml"
+  become: true
+  become_user: "{{ var_opencode_user }}"
+  vars:
+    _var_opencode_user: "{{ var_opencode_user }}"
+  block:
+    - name: "Backup .bashrc file for user {{ _var_opencode_user }}"
+      ansible.builtin.command:
+        cmd: cp ~/.bashrc ~/.bashrc.backup
+      changed_when: false
+
+    - name: "Update .bashrc file for user {{ _var_opencode_user }}"
+      ansible.builtin.blockinfile:
+        path: ~/.bashrc
+        marker: "# <-- {mark} ANSIBLE MANAGED opencode BLOCK -->"
+        block: |
+          # opencode
+          alias opencode='docker run -it --rm -u "$(id -u):$(id -g)" -e HOME=/home/awesome/opencode -e PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/awesome/opencode/.local/bin -v "$(pwd)":/workspace -v "$HOME/Container-Apps/OpenCode/config":/home/awesome/opencode -w /workspace ghcr.io/anomalyco/opencode'
+
+  rescue:
+    - name: "ERROR: add-bashrc-alias-opencode.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: add-bashrc-alias-opencode.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

@@ -236,7 +236,12 @@
       vars:
         var_lazydocker_user: "{{ _username }}"
 
-    - name: "-------> RUN: direnv Integrattio Tasks"
+    - name: "-------> RUN: direnv Integration Tasks"
       ansible.builtin.include_tasks: tasks/add-bashrc-direnv-integration.yaml
       vars:
         var_direnv_user: "{{ _username }}"
+
+    - name: "-------> RUN: OpenCode Alias Tasks"
+      ansible.builtin.include_tasks: tasks/add-bashrc-alias-opencode.yaml
+      vars:
+        var_opencode_user: "{{ _username }}"
