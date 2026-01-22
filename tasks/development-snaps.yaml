@@ -6,7 +6,42 @@
 - name: "Block: development-snaps.yaml"
   become: true
   block:
+    # ##########################################
+    # Remove LSP's
+    # ##########################################
+    - name: "Remove Snap: bash-language-server"
+      community.general.snap:
+        name: bash-language-server
+        state: absent
 
+    - name: "Remove Snap: yaml-language-server"
+      community.general.snap:
+        name: yaml-language-server
+        state: absent
+
+    - name: "Remove Snap: pylsp"
+      community.general.snap:
+        name: pylsp
+        state: absent
+
+    - name: "Remove Snap: typescript-language-server"
+      community.general.snap:
+        name: typescript-language-server
+        state: absent
+
+    - name: "Remove Snap: vscode-json-languageserver"
+      community.general.snap:
+        name: vscode-json-languageserver
+        state: absent
+
+    - name: "Remove Snap: marksman"
+      community.general.snap:
+        name: marksman
+        state: absent
+
+    # ##########################################
+    # Install Snaps
+    # ##########################################
     - name: "Install Snap: helix"
       community.general.snap:
         name: helix
@@ -25,7 +60,7 @@
       community.general.snap:
         name: hugo
         state: present
-        channel: latest/stable
+        channel: latest/edge
 
     # https://snapcraft.io/kubectl
     # https://snapcraft.io/helm
@@ -39,48 +74,11 @@
         - kubectl
         - helm
 
-    - name: "Install Snap: bash-language-server"
-      community.general.snap:
-        name: bash-language-server
-        state: present
-        channel: latest/edge
-        classic: true
-
-    - name: "Install Snap: yaml-language-server"
-      community.general.snap:
-        name: yaml-language-server
-        state: present
-        channel: latest/edge
-
-    - name: "Install Snap: pylsp"
-      community.general.snap:
-        name: pylsp
-        state: present
-        channel: latest/stable
-
-    - name: "Install Snap: typescript-language-server"
-      community.general.snap:
-        name: typescript-language-server
-        state: present
-        channel: latest/stable
-
-    - name: "Install Snap: vscode-json-languageserver"
-      community.general.snap:
-        name: vscode-json-languageserver
-        state: present
-        channel: latest/stable
-
     - name: "Install Snap: chirp-snap"
       community.general.snap:
         name: chirp-snap
         state: present
         channel: latest/edge
-
-    - name: "Install Snap: marksman"
-      community.general.snap:
-        name: marksman
-        state: present
-        channel: latest/stable
 
     - name: "Install Snap: Julia Programming Language"
       community.general.snap:
@@ -105,7 +103,6 @@
         classic: true
 
   rescue:
-
     - name: "ERROR: development-snaps.yaml"
       ansible.builtin.debug:
         msg: "ERROR: development-snaps.yaml"
