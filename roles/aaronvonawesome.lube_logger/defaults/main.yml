@@ -3,7 +3,7 @@ var_lube_logger_compose_with_default_network_input_filename: "lube-logger_compos
 var_lube_logger_compose_with_default_network_output_filename: "compose-with-default-network.yaml"
 var_lube_logger_compose_with_swag_input_filename: "lube-logger_compose-with-swag.j2"
 var_lube_logger_compose_with_swag_output_filename: "compose-with-swag.yaml"
-var_lube_logger_container_image_version: "v1.5.7"
+var_lube_logger_container_image_version: "v1.5.8"
 var_lube_logger_container_name: "lubelog-ui"
 var_lube_logger_container_port: "9001"
 var_lube_logger_container_username: ""

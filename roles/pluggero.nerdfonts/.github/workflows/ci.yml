@@ -24,7 +24,7 @@ jobs:
           path: "pluggero.nerdfonts"
 
       - name: Set up Python 3
-        uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
         with:
           python-version: "3.14"
 
@@ -36,7 +36,7 @@ jobs:
           yamllint .
 
       - name: Run ansible-lint
-        uses: ansible/ansible-lint@a9f8a4e21be85461fdc3d0f492a89e365bf4fd72 # v26.1.0
+        uses: ansible/ansible-lint@7f6abc5ef97d0fb043a0f3d416dfbc74399fbda0 # v26.1.1
         with:
           working_directory: "pluggero.nerdfonts"
           requirements_file: "requirements.yml"
@@ -59,7 +59,7 @@ jobs:
           path: "pluggero.nerdfonts"
 
       - name: Set up Python 3
-        uses: actions/setup-python@83679a892e2d95755f2dac6acb0bfd1e9ac5d548 # v6
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # v6
         with:
           python-version: "3.14"
 
