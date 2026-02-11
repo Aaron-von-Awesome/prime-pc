@@ -4,7 +4,8 @@
 var_docker_daemon_file: ""
 var_lts_codename: "noble"
 var_should_install_ansible_community_docker_collection_compatibility: false
-
+var_install_docker_should_use_snap: false
+var_should_install_extra_docker_tools: true
 
 # Example:
 #

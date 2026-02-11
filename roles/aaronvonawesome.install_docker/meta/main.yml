@@ -25,6 +25,10 @@ galaxy_info:
         - "vera"
         - "victoria"
         - "virginia"
+        - "wilma"
+        - "xia"
+        - "zara"
+        - "zena"
     - name: Ubuntu
       versions:
         - "jammy"

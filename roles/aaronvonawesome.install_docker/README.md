@@ -10,9 +10,9 @@ Ubuntu-based system.
 
 ### var_docker_daemon_file
 
-***default:*** ""
+**_default:_** ""
 
-Custom `daemon.json` file. Provide the name (or path) of a file located in the `files` folder of your Ansible Project.  If you want to use the custom `daemon.json` provided by this Role, then pass in `install-docker_custom-docker-daemon.json`.
+Custom `daemon.json` file. Provide the name (or path) of a file located in the `files` folder of your Ansible Project. If you want to use the custom `daemon.json` provided by this Role, then pass in `install-docker_custom-docker-daemon.json`.
 
 To use the default `daemon.json` file installed with Docker, pass in `""`:
 
@@ -22,19 +22,25 @@ var_docker_daemon_file: ""
 
 ### var_lts_codename
 
-***default:*** noble
+**_default:_** noble
 
-Set the codename for the version of Ubuntu you will be using.  This is especially needed if you are installing Docker on Linux Mint; you cannot use the codename of the Linux Mint version, you will need the codename of the Ubuntu version on which your version of Linux Mint is based.
+Set the codename for the version of Ubuntu you will be using. This is especially needed if you are installing Docker on Linux Mint; you cannot use the codename of the Linux Mint version, you will need the codename of the Ubuntu version on which your version of Linux Mint is based.
 
 ### var_should_install_ansible_community_docker_collection_compatibility
 
-***default:*** false
+**_default:_** false
 
-Boolean value.  Set to `true` if you want to install the `pip` packages that allow you to use Docker with Ansible Playbooks.
+Boolean value. Set to `true` if you want to install the `pip` packages that allow you to use Docker with Ansible Playbooks.
+
+### var_should_install_extra_docker_tools
+
+**_default:_** true
+
+Boolean value. Set to `false` if you do not want to install extra Docker tools like Oxker and Dockly.
 
 ### var_user_list
 
-***default:*** []
+**_default:_** []
 
 Single username or list of usernames to add into the `docker` group.
 
@@ -56,9 +62,7 @@ Be sure to run your Playbook with `gather_facts: true`.
       - username: "grimlock"
       - username: "computron"
 
-
   tasks:
-
     - name: "Install Docker on my system please!"
       ansible.builtin.include_role:
         name: "aaronvonawesome.install_docker"
@@ -73,6 +77,6 @@ AGPL-3.0-or-later
 
 ## Author Information
 
-| Name | Website |
-| --  | -- |
+| Name              | Website                     |
+| ----------------- | --------------------------- |
 | Aaron von Awesome | https://aaronvonawesome.com |

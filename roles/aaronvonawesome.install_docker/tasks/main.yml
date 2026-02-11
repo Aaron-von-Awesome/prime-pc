@@ -3,7 +3,7 @@
 #                     Role: install_docker
 # ============================================================
 
-- name: "Block: \"install_docker\" Ansible Role"
+- name: 'Block: "install_docker" Ansible Role'
   become: true
   vars:
     _var_lts_codename: "{{ var_lts_codename }}"
@@ -11,8 +11,8 @@
     _var_docker_daemon_file: "{{ var_docker_daemon_file }}"
     _var_should_install_ansible_community_docker_collection_compatibility: >
       {{ var_should_install_ansible_community_docker_collection_compatibility }}
+    _var_should_install_extra_docker_tools: "{{ var_should_install_extra_docker_tools }}"
   block:
-
     - name: "Add Docker apt key"
       ansible.builtin.get_url:
         url: "https://download.docker.com/linux/ubuntu/gpg"
@@ -96,57 +96,58 @@
         packages:
           - docker-model-plugin
 
-    - name: "Ensure group \"docker\" exists"
+    - name: 'Ensure group "docker" exists'
       ansible.builtin.group:
         name: docker
         state: present
 
-    - name: "Add user(s) to \"docker\" group"
+    - name: 'Add user(s) to "docker" group'
       ansible.builtin.user:
         name: "{{ item.username }}"
-        groups:
-          docker
+        groups: docker
         append: true
         shell: /bin/bash
       loop: "{{ _var_user_list }}"
       when: _var_user_list is defined and _var_user_list | length > 0
 
-    - name: "Backup .bashrc file"
+    - name: "Block: Install Extra Docker Tools"
       become: true
-      become_user: "{{ item.username }}"
-      ansible.builtin.command:
-        cmd: cp ~/.bashrc ~/.bashrc.backup
-      changed_when: false
-      loop: "{{ _var_user_list }}"
-      when: _var_user_list is defined and _var_user_list | length > 0
+      when: >
+        _var_should_install_extra_docker_tools and
+        (_var_user_list is defined and _var_user_list | length > 0)
+      block:
+        - name: "Backup .bashrc file"
+          become: true
+          become_user: "{{ item.username }}"
+          ansible.builtin.command:
+            cmd: cp ~/.bashrc ~/.bashrc.backup
+          changed_when: false
+          loop: "{{ _var_user_list }}"
 
-    - name: "Install Bash Alias for using Dockly"
-      become: true
-      become_user: "{{ item.username }}"
-      ansible.builtin.blockinfile:
-        path: ~/.bashrc
-        marker: "# <-- {mark} ANSIBLE MANAGED Dockly BLOCK -->"
-        block: |
-          # Dockly
-          alias dockly='docker run --rm -it --name=dockly --volume /var/run/docker.sock:/var/run/docker.sock lirantal/dockly'
-      loop: "{{ _var_user_list }}"
-      when: _var_user_list is defined and _var_user_list | length > 0
+        - name: "Install Bash Alias for using Dockly"
+          become: true
+          become_user: "{{ item.username }}"
+          ansible.builtin.blockinfile:
+            path: ~/.bashrc
+            marker: "# <-- {mark} ANSIBLE MANAGED Dockly BLOCK -->"
+            block: |
+              # Dockly
+              alias dockly='docker run --rm -it --name=dockly --volume /var/run/docker.sock:/var/run/docker.sock lirantal/dockly'
+          loop: "{{ _var_user_list }}"
 
-    - name: "Install Bash Alias for using Oxker"
-      become: true
-      become_user: "{{ item.username }}"
-      ansible.builtin.blockinfile:
-        path: ~/.bashrc
-        marker: "# <-- {mark} ANSIBLE MANAGED Oxker BLOCK -->"
-        block: |
-          # Oxker
-          alias oxker='docker run --rm -it --name=oxker --volume /var/run/docker.sock:/var/run/docker.sock:ro mrjackwills/oxker'
-      loop: "{{ _var_user_list }}"
-      when: _var_user_list is defined and _var_user_list | length > 0
+        - name: "Install Bash Alias for using Oxker"
+          become: true
+          become_user: "{{ item.username }}"
+          ansible.builtin.blockinfile:
+            path: ~/.bashrc
+            marker: "# <-- {mark} ANSIBLE MANAGED Oxker BLOCK -->"
+            block: |
+              # Oxker
+              alias oxker='docker run --rm -it --name=oxker --volume /var/run/docker.sock:/var/run/docker.sock:ro mrjackwills/oxker'
+          loop: "{{ _var_user_list }}"
 
     - name: "Install PIP Packages for Ansible community.docker collection"
       block:
-
         - name: "Install PIP Packages: docker, docker-compose, PyYAML for Ubuntu 22.04 Systems"
           become: true
           become_user: "{{ item.username }}"
@@ -180,7 +181,6 @@
             (_var_lts_codename == "noble")
 
       rescue:
-
         - name: "Did not Install python Docker pip packages"
           ansible.builtin.debug:
             msg: "Does user exist on the target machine?"
@@ -189,12 +189,10 @@
           ansible.builtin.fail:
             msg: "Error detected! Stopping Playbook :-("
 
-
   rescue:
-
-    - name: "ERROR: \"install_docker\" Ansible Role"
+    - name: 'ERROR: "install_docker" Ansible Role'
       ansible.builtin.debug:
-        msg: "ERROR: \"install_docker\" Ansible Role"
+        msg: 'ERROR: "install_docker" Ansible Role'
 
     - name: "Error detected! Stopping Playbook :-("
       ansible.builtin.fail:
