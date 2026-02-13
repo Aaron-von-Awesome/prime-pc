@@ -51,6 +51,7 @@
         - org.keepassxc.KeePassXC
         - org.kiwix.desktop
         - us.zoom.Zoom
+        - me.dumke.Reinschrift
 
   rescue:
     - name: "ERROR: desktop-flatpaks.yaml"
