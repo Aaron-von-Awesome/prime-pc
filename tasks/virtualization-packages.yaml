@@ -1,0 +1,38 @@
+---
+# ============================================================
+#                 virtualization-packages.yaml
+# ============================================================
+
+- name: "Block: virtualization-packages.yaml"
+  become: true
+  vars:
+    _var_lts_codename: "{{ var_lts_codename }}"
+  block:
+    # Repo for Quickemu & Quickgui - https://github.com/wimpysworld/quickemu
+    - name: sudo apt-add-repository ppa:flexiondotorg/quickemu
+      ansible.builtin.apt_repository:
+        repo: ppa:flexiondotorg/quickemu
+        state: present
+        codename: "{{ _var_lts_codename }}"
+        mode: "0600"
+
+    # ============================================================
+
+    - name: install quickemu
+      ansible.builtin.apt:
+        name: "{{ packages }}"
+        state: latest
+        update_cache: true
+      vars:
+        packages:
+          - quickemu
+          - quickgui
+
+  rescue:
+    - name: "ERROR: virtualization-packages.yaml"
+      ansible.builtin.debug:
+        msg: "ERROR: virtualization-packages.yaml"
+
+    - name: "Error detected! Stopping Playbook :-("
+      ansible.builtin.fail:
+        msg: "Error detected! Stopping Playbook :-("

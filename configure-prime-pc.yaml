@@ -181,6 +181,13 @@
           vars:
             nerdfonts_font: "0xProto"
 
+    # ======================     Virtualization     ==============================
+
+    - name: "-------> RUN: Virtualization Packages Tasks"
+      ansible.builtin.include_tasks: tasks/virtualization-packages.yaml
+      vars:
+        var_lts_codename: "{{ _lts_codename }}"
+
     # ======================     Communication     ============================
 
     - name: "-------> RUN: Communication Flatpaks Tasks"
