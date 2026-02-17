@@ -8,15 +8,29 @@
   vars:
     _var_lts_codename: "{{ var_lts_codename }}"
   block:
-    # Repo for Quickemu & Quickgui - https://github.com/wimpysworld/quickemu
-    - name: sudo apt-add-repository ppa:flexiondotorg/quickemu
-      ansible.builtin.apt_repository:
-        repo: ppa:flexiondotorg/quickemu
-        state: present
-        codename: "{{ _var_lts_codename }}"
-        mode: "0600"
+    - name: "Add Quickemu apt key"
+      ansible.builtin.get_url:
+        url: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xAC4983BC6500F2E768D0CF7F08C0EFB260A1EEF3"
+        dest: "/etc/apt/trusted.gpg.d/quickemu.asc"
+        mode: "0644"
+        force: true
+      changed_when: false
 
-    # ============================================================
+    - name: "Add Quickemu repo to sources list"
+      ansible.builtin.apt_repository:
+        repo: >
+          deb
+          https://ppa.launchpadcontent.net/flexiondotorg/quickemu/ubuntu
+          {{ _var_lts_codename }}
+          main
+        filename: quickemu
+        update_cache: true
+        mode: "0644"
+      register: add_quickemu_repo_result
+      until: add_quickemu_repo_result is succeeded
+      retries: 3
+      delay: 60
+      ignore_errors: true
 
     - name: install quickemu
       ansible.builtin.apt:
