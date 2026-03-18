@@ -15,6 +15,7 @@
         method: system
       loop:
         - com.github.Murmele.Gittyup
+        - org.sqlitebrowser.sqlitebrowser
         - org.wezfurlong.wezterm
 
     - name: "Backup .bashrc file for user {{ _var_username }}"
