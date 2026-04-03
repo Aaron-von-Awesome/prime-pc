@@ -36,9 +36,8 @@ jobs:
           yamllint .
 
       - name: Run ansible-lint
-        uses: ansible/ansible-lint@8ba9595a4acd1b906eb75568b34f6ef592cd1528 # v26.3.0
-        with:
-          working_directory: "pluggero.lazygit"
+        run: |
+          ansible-lint .
 
   molecule:
     name: Molecule
