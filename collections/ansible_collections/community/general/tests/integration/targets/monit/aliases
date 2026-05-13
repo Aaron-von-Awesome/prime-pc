@@ -5,7 +5,5 @@
 azp/posix/2
 destructive
 needs/target/setup_epel
-skip/osx
 skip/macos
 skip/freebsd
-skip/rhel  # FIXME
